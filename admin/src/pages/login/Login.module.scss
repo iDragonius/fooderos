@@ -10,7 +10,7 @@
 }
 
 .right {
-  @apply m-auto flex flex-col items-center;
+  @apply m-auto flex flex-col items-center  mt-96 lg:mt-auto;
 }
 .circleMain {
   @apply w-24 h-24 bg-blue-400 rounded-full bg-[#0371e8] flex justify-center items-center ;
@@ -54,7 +54,7 @@
 
 }
 .label {
-  @apply absolute text-[12px] w-10 text-center top-[-10px]  bg-white text-[#31373e];
+  @apply absolute text-[12px] w-10 text-center top-[-11px]  bg-white text-[#31373e];
 }
 
 .phone {

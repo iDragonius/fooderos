@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styles from '../VerifyModal.module.scss'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLoginMutation } from '../../../../../store/slices/api/authApiSlice'
@@ -10,7 +9,7 @@ import {
     setCredentials,
 } from '../../../../../store/slices/authSlice'
 
-const ExistUser = ({ setStep, step, setOpen, stepSc }) => {
+const ExistUser = ({ setStep, step, setOpen, stepSc, sc }) => {
     const dispatch = useDispatch()
     const [seconds, setSeconds] = useState()
     const [minutes, setMinutes] = useState()
@@ -46,10 +45,21 @@ const ExistUser = ({ setStep, step, setOpen, stepSc }) => {
             return toast.warn('OTP input is empty')
         }
         try {
-            const userData = await login({
-                phone: sessionStorage.getItem('phone'),
-                otp: otpRef.current.value,
-            }).unwrap()
+            let userData
+            if(sc){
+                userData = await login({
+                    phone: sessionStorage.getItem('phone'),
+                    otp: otpRef.current.value,
+                    email: sessionStorage.getItem('email'),
+                    name:name
+                }).unwrap()
+            } else {
+                userData = await login({
+                    phone: sessionStorage.getItem('phone'),
+                    otp: otpRef.current.value
+                }).unwrap()
+            }
+
 
             dispatch(setCredentials({ token: userData.token, name }))
 

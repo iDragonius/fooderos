@@ -16,9 +16,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
-        active: builder.mutation({
+        loginSc: builder.mutation({
             query: (credentials) => ({
-                url: '/active',
+                url: '/social/verify',
                 method: 'POST',
                 body: { ...credentials },
             }),
@@ -35,7 +35,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useLoginMutation,
-    useActiveMutation,
+    useLoginScMutation,
     usePhoneMutation,
     useLogOutMutation,
 } = authApiSlice

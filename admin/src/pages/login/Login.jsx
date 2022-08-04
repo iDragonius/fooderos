@@ -20,7 +20,7 @@ const Login = () => {
                     </div>
                     <div className={styles.phone}>
                         <label className={styles.phoneLabel}>Phone Number</label>
-                        <input type="text" className={styles.input}/>
+                        <input type="text" className={styles.input} placeholder={'0775100550'}/>
                     </div>
                 </div>
                 <button className={styles.btn}>Log In</button>

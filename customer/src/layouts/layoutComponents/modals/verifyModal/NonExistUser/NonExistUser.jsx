@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '../VerifyModal.module.scss'
-import $api from '../../../../../http'
 import { toast } from 'react-toastify'
-// import {
-//     checkAuth,
-//     setName,
-//     setToken,
-// } from '../../../../../store/slices/authSlice'
+
 import { useDispatch } from 'react-redux'
+import {useLoginMutation} from "../../../../../store/slices/api/authApiSlice";
+import {setAuth, setCredentials} from "../../../../../store/slices/authSlice";
 const NonExistUser = ({ setStep, step, setOpen }) => {
     const [seconds, setSeconds] = useState()
     const [minutes, setMinutes] = useState()
     const dispatch = useDispatch()
+    const [login] = useLoginMutation()
     const otpRef = useRef()
     const nameRef = useRef()
+
     let timer
     useEffect(() => {
         if (step) {
@@ -35,7 +34,9 @@ const NonExistUser = ({ setStep, step, setOpen }) => {
         }, 1000)
         return () => clearInterval(timer)
     })
+
     const handleVerify = async (e) => {
+
         e.preventDefault()
         if (!otpRef.current.value) {
             return toast.warn('OTP input must be filled out')
@@ -45,30 +46,25 @@ const NonExistUser = ({ setStep, step, setOpen }) => {
             return toast.warn('Name input must be filled out')
         }
 
-        await $api
-            .post('http://192.168.202.52/api/phone/verfy', {
+        await login({
                 phone: sessionStorage.getItem('phone'),
                 otp: otpRef.current.value,
                 name: nameRef.current.value,
             })
-            .then((res) => {
-                if (res.status === 200) {
+            .unwrap()
+            .then((data) => {
                     toast.success('User registered successful!')
-                    localStorage.setItem('name', nameRef.current.value)
-                    localStorage.setItem('token', res.data.token)
-                    // dispatch(setName(nameRef.current.value))
-                    // dispatch(setToken(res.data.token))
-                    // dispatch(checkAuth(true))
-
+                    dispatch(setCredentials({name:nameRef.current.value, token:data.token}))
+                    localStorage.setItem('token', data.token)
+                    dispatch(setAuth(true))
                     setStep(false)
                     setOpen(false)
-                }
             })
-            .catch((err) => {
-                if (err.response.status === 401) {
+            .catch((e) => {
+                if (e.status === 401) {
                     toast.error('User blocked for 24h')
                 }
-                if (err.response.status === 400) {
+                if (e.status === 400) {
                     toast.error('Invalid OTP')
                 }
             })

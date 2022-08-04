@@ -32,6 +32,7 @@ const VerifyModal = ({ open, setOpen, setStep, step, exist, sc }) => {
                             step={step}
                             setOpen={setOpen}
                             stepSc={stepSc}
+                            sc={sc}
                         />
                     ) : (
                         <NonExistUserSc
