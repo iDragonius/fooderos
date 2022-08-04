@@ -1,7 +1,6 @@
 import styles from '../../LoginModal.module.scss'
 import googleLogo from '../../../../../../assets/img/google.svg'
 import { useGoogleLogin } from '@react-oauth/google'
-import axios from 'axios'
 import {useDispatch} from "react-redux";
 import {setAuth, setCredentials} from "../../../../../../store/slices/authSlice";
 import {useLoginScMutation} from "../../../../../../store/slices/api/authApiSlice";
@@ -17,13 +16,13 @@ const Google = ({ setSc, setStep, setOpen }) => {
                 .then(res=> res.json())
                 .then( async  (resData) => {
                     console.log(resData)
-                dispatch(setCredentials({ name:resData.data.name,} ))
-                if (resData.status === 200) {
-                    sessionStorage.setItem('email', resData.data.email)
+                dispatch(setCredentials({ name:resData.name,} ))
+
+                    sessionStorage.setItem('email', resData.email)
 
                     await login({
-                        name:resData.data.name ,
-                        email:resData.data.email ,
+                        name:resData.name ,
+                        email:resData.email ,
                         social_providers:2
                     }).unwrap().then((data)=>{
                         console.log(res)
@@ -46,7 +45,7 @@ const Google = ({ setSc, setStep, setOpen }) => {
                     setSc(true)
                     setStep(true)
 
-                }
+
             })
     }
     const handleErr = (err) => {
