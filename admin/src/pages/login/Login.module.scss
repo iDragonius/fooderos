@@ -1,0 +1,87 @@
+.cont {
+  @apply  flex justify-between;
+}
+.left {
+  @apply h-screen w-1/2 hidden lg:block;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+
+}
+
+.right {
+  @apply m-auto flex flex-col items-center;
+}
+.circleMain {
+  @apply w-24 h-24 bg-blue-400 rounded-full bg-[#0371e8] flex justify-center items-center ;
+  box-shadow: 0 4px 10px 0 rgb(45 80 238 / 24%);
+  margin: 0 auto 40px;
+}
+
+.circle {
+  @apply w-11 h-11 bg-white rounded-full;
+}
+
+.title {
+  @apply text-4xl font-semibold text-[#31373e] mb-5;
+}
+
+.description {
+  @apply text-[#919aa7] text-xl mb-[50px];
+}
+.btn {
+  @apply w-[427px] h-[56px] text-white mt-[30px] bg-[#0371e8] rounded-[8px] text-lg;
+}
+.agreement {
+  @apply mt-12 text-[#31373e] ;
+}
+.terms {
+  @apply text-[#0371e8]
+}
+.form {
+  @apply flex justify-between;
+}
+
+.cc {
+  @apply relative mr-4 px-[10px] border-[1px] border-black border-opacity-10 flex justify-center items-center rounded-md ;
+  width: 80px;
+  height: 56px;
+
+}
+.cc:hover{
+
+    border: 2px solid black;
+
+}
+.label {
+  @apply absolute text-[12px] w-10 text-center top-[-10px]  bg-white text-[#31373e];
+}
+
+.phone {
+    @apply relative mr-4   flex justify-center items-center transition-all ease-in-out  outline-none   ;
+    width: 331px;
+  height: 56px;
+}
+
+.phone:hover {
+  .input {
+    border: 2px solid black;
+  }
+}
+
+
+  .input:focus {
+    @apply border-2 border-blue-700;
+  }
+.input:focus:hover {
+  @apply border-2 border-blue-700;
+}
+
+
+.phoneLabel {
+  @apply absolute text-[12px] w-24 text-center top-[-10px] left-3  bg-white text-[#31373e]  transition-all ease-in-out;
+}
+
+.input {
+  @apply  h-14 w-full px-[10px] border-[1px] border-black border-opacity-10 rounded-md  transition-all ease-in-out outline-none ;
+}

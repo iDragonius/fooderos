@@ -15,7 +15,7 @@ function App() {
                     <Route path={'login'} element={<Login />} />
 
                     <Route element={<RequireAuth />}>
-                        <Route index path={'/home'} element={<Home />} />
+                        <Route  path={'/home'} element={<Home />} />
                     </Route>
                 </Route>
             </Routes>

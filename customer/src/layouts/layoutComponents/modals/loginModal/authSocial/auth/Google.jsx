@@ -6,6 +6,7 @@ import axios from 'axios'
 const Google = ({ setSc, setStep }) => {
     const handeLogin = async (res) => {
         const data = res
+        console.log(res)
         await axios
             .get(
                 `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${res.access_token}`
