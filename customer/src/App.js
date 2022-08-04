@@ -45,9 +45,12 @@ function App() {
             localStorage.removeItem('token')
         }
     }
+
     const createVisitor = async () =>{
         await visitor().unwrap().then(res=>console.log(res))
     }
+
+
     useEffect(() => {
         if (localStorage.getItem('token')) {
             getUser()
@@ -57,6 +60,7 @@ function App() {
 
         }
     }, [])
+
     if (isLoading || loading) {
         return <Loader />
     }
