@@ -1,0 +1,17 @@
+.navs {
+  @apply py-1 flex flex-col font-light;
+  font-size: 14px;
+
+  .first {
+    @apply mt-2;
+  }
+  .logout {
+    @apply text-orange-500
+  }
+}
+.navElement{
+  @apply py-[5px] pr-4 pl-[28px] transition-all ease-in-out cursor-pointer h-[40px] flex items-center;
+}
+.navElement:hover{
+  @apply bg-black bg-opacity-5;
+}

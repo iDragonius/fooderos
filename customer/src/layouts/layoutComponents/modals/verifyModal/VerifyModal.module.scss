@@ -1,0 +1,46 @@
+.title {
+  @apply mb-2 font-bold;
+  font-size: 24px;
+  line-height: 1.67;
+  color: #171819;
+}
+.timerSection {
+  @apply flex justify-between mt-8;
+}
+.timerTitle {
+  @apply mb-2 ;
+  color:#33363d;
+}
+.timer{
+  @apply text-blue-700;
+}
+.inputTitle{
+  @apply mb-2 mt-8;
+  color:#33363d;
+
+}
+.formInput{
+  @apply w-full h-12 px-[11px] py-1 outline-none;
+  border-radius: 4px;
+  border: 1px solid #d3d3d8;
+  font-size: 14px;
+  color:  #33363d;
+
+}
+
+.verifyButton {
+  @apply w-full h-12 text-white cursor-pointer transition-all ease-in-out my-8 outline-none;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #ff5012;
+  margin-bottom: 29px;
+
+
+}
+.verifyButton:hover{
+  @apply scale-105
+}
+
+.content {
+  color:#33363d;
+}

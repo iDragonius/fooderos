@@ -1,0 +1,116 @@
+.title {
+  @apply mb-2 font-bold;
+  font-size: 24px;
+  line-height: 1.67;
+  color: #171819;
+}
+.description {
+  @apply text-sm mb-6 opacity-50;
+}
+.loginContent {
+  @apply mb-2;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #33363d;
+}
+.input {
+  @apply w-full flex transition-all ease-in-out mb-8;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  height: 50px !important;
+
+}
+
+.input:hover {
+  @apply border-blue-500
+}
+.cc {
+  @apply px-3 flex items-center;
+  color: rgba(0,0,0,0.65);
+  background: #fafafa;
+  border-right: 1px solid #d9d9d9;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  font-size: 14px;
+  height: 48px !important;
+  cursor: pointer;
+}
+
+.inputContainer {
+  @apply w-full pl-2;
+}
+
+.phoneInput {
+  @apply w-full outline-none h-[48px]  rounded-r-[4px] ;
+  color: #33363d;
+  font-size: 14px;
+}
+.loginButton {
+  @apply w-full h-12 text-white cursor-pointer transition-all ease-in-out outline-none;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #ff5012;
+  margin-bottom: 29px;
+
+
+}
+.loginButton:hover{
+  @apply scale-105
+}
+
+.divider::before{
+  position: relative;
+  top: 50%;
+  display: table-cell;
+  width: 50%;
+  border-top: 1px solid #f0f0f0;
+  transform: translateY(50%);
+  content: "";
+}
+.divider::after{
+  position: relative;
+  top: 50%;
+  display: table-cell;
+  width: 50%;
+  border-top: 1px solid #f0f0f0;
+  transform: translateY(50%);
+  content: "";
+}
+
+.divider {
+  display: table;
+  margin: 16px 0;
+  color: rgba(0,0,0,.85);
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  text-align: center;
+  background: 0 0;
+}
+.socialNetwork {
+  @apply transition-all ease-in-out w-[100%] md:w-[49%] mb-2 md:mb-0;
+
+  >button {
+    height: 48px;
+    width: 100%;
+    background: none;
+    border-radius: 4px;
+    border: 1px solid #4267b2;
+    transition: all .2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}
+.socialNetwork:hover {
+  @apply scale-105;
+}
+.sc{
+  @apply flex md:justify-between items-center flex-col md:flex-row my-4;
+}
+
+
+.animateModal {
+  transform: rotateY(30deg);
+}

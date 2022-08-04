@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body{
+    background:#fafafa;
+}
+
+.animateModal-enter {
+    transform:  translateY(-100px);
+    opacity: 0;
+}
+.animateModal-enter-active {
+    transform: translateY(0px) ;
+
+    opacity: 1;
+    transition:   all 1000ms;
+}
+.animateModal-enter-exit {
+    opacity: 1;
+    transform: scale(1) ;
+
+}
+.animateModal-enter-exit-active {
+    opacity: 0;
+    transform: scale(0.1);
+
+    transition:   all 500ms;
+}
+
+
+.animateDropdown-enter {
+    transform:  translateY(-100px);
+    opacity: 0;
+}
+.animateDropdown-enter-active {
+    transform: translateY(0px) ;
+
+    opacity: 1;
+    transition:   all 1000ms;
+}
+.animateDropdown-enter-exit {
+    opacity: 1;
+    transform: scale(1) ;
+
+}
+.animateDropdown-enter-exit-active {
+    opacity: 0;
+    transform: scale(0.1);
+
+    transition:   all 500ms;
+}
