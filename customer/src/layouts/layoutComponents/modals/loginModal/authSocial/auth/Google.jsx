@@ -44,8 +44,7 @@ const Google = ({ setSc, setStep, setOpen }) => {
                     }).catch(e=>{
                         console.log(e)
                     })
-                    setSc(true)
-                    setStep(true)
+
 
 
             })

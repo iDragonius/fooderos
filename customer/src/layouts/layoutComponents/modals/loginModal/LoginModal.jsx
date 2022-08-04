@@ -86,7 +86,7 @@ const LoginModal = ({ open, setOpen, setStep, setExist, setSc }) => {
             <div className={styles.divider}>or</div>
             <div className={styles.sc}>
                 <Google setSc={setSc} setStep={setStep} setOpen={setOpen} />
-                <Facebook setSc={setSc} />
+                <Facebook setSc={setSc}  setStep={setStep} setOpen={setOpen}/>
             </div>
             <Agreement />
         </AuthModal>

@@ -19,6 +19,7 @@ const Navbar = () => {
     // const [user, setUser] = useState(false)
     const [view, setView] = useState(false)
     const user = useSelector(isAuthorized)
+
     // useEffect(() => {
     //     if (localStorage.getItem('token')) {
     //         setUser(true)

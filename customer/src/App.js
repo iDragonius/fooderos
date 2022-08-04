@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { useUserMutation } from './store/slices/api/userApiSlice'
 import { setAuth, setCredentials } from './store/slices/authSlice'
 import Loader from './components/ui/loader/Loader'
+import {useVisitorMutation} from "./store/slices/api/visitorApiSlice";
 
 function App() {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ function App() {
         localStorage.setItem('lang', 'English')
     }, [])
     const [fetchUser, { isLoading }] = useUserMutation()
+    const [visitor , {isLoading:loading}] = useVisitorMutation()
     const getUser = async () => {
         try {
             await fetchUser()
@@ -43,12 +45,17 @@ function App() {
             localStorage.removeItem('token')
         }
     }
+    const createVisitor = async () =>{
+        await visitor().unwrap().then(res=>console.log(res))
+    }
     useEffect(() => {
         if (localStorage.getItem('token')) {
             getUser()
+        } else {
+            // createVisitor()
         }
     }, [])
-    if (isLoading) {
+    if (isLoading || loading) {
         return <Loader />
     }
     return (
