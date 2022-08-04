@@ -32,7 +32,9 @@ const Google = ({ setSc, setStep, setOpen }) => {
 
                         }
                         if(data.status==='1'){
+                            console.log(data.toke)
                             localStorage.setItem('token',data.toke)
+                            dispatch(setCredentials({ token:data.toke}))
                             dispatch(setAuth(true))
                             setSc(false)
 
