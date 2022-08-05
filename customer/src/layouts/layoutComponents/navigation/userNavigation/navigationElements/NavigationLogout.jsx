@@ -3,15 +3,18 @@ import $api from '../../../../../http'
 import { logOut, setAuth } from '../../../../../store/slices/authSlice'
 import { useDispatch } from 'react-redux'
 import { useLogOutMutation } from '../../../../../store/slices/api/authApiSlice'
+import {useVisitorMutation} from "../../../../../store/slices/api/visitorApiSlice";
 const NavigationLogout = () => {
     const dispatch = useDispatch()
     const [userLogout] = useLogOutMutation()
+    const [visitor] = useVisitorMutation()
     const logout = async () => {
         try {
-            await userLogout().then(() => {
+            await userLogout().then(async () => {
                 localStorage.removeItem('token')
                 dispatch(logOut())
                 dispatch(setAuth(false))
+                await visitor().then()
             })
         } catch (e) {
             console.log(e)

@@ -2,7 +2,7 @@ import styles from '../../LoginModal.module.scss'
 import googleLogo from '../../../../../../assets/img/google.svg'
 import { useGoogleLogin } from '@react-oauth/google'
 import {useDispatch} from "react-redux";
-import {setAuth, setCredentials} from "../../../../../../store/slices/authSlice";
+import {setAuth, setCredentials, setScProvider} from "../../../../../../store/slices/authSlice";
 import {useLoginScMutation} from "../../../../../../store/slices/api/authApiSlice";
 
 const Google = ({ setSc, setStep, setOpen }) => {
@@ -15,9 +15,7 @@ const Google = ({ setSc, setStep, setOpen }) => {
             )
                 .then(res=> res.json())
                 .then( async  (resData) => {
-                    console.log(resData)
-                dispatch(setCredentials({ name:resData.name,} ))
-
+                    dispatch(setCredentials({ name:resData.name,} ))
                     sessionStorage.setItem('email', resData.email)
 
                     await login({
@@ -25,16 +23,17 @@ const Google = ({ setSc, setStep, setOpen }) => {
                         email:resData.email ,
                         social_providers:2
                     }).unwrap().then((data)=>{
+                        dispatch(setScProvider(2))
+
                         console.log(res)
-                        if(data.status==='0'){
+                        if(data.status==0){
                             setSc(true)
                             setStep(true)
 
                         }
-                        if(data.status==='1'){
-                            console.log(data.toke)
-                            localStorage.setItem('token',data.toke)
-                            dispatch(setCredentials({ token:data.toke}))
+                        if(data.status==1){
+                            localStorage.setItem('token',data.token)
+                            dispatch(setCredentials({ token:data.token}))
                             dispatch(setAuth(true))
                             setSc(false)
 

@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useUserMutation } from './store/slices/api/userApiSlice'
-import { setAuth, setCredentials } from './store/slices/authSlice'
+import {setAuth, setCredentials, setVisitorToken} from './store/slices/authSlice'
 import Loader from './components/ui/loader/Loader'
 import {useVisitorMutation} from "./store/slices/api/visitorApiSlice";
 
@@ -41,13 +41,13 @@ function App() {
                     dispatch(setAuth(true))
                 })
         } catch (e) {
-            console.log(e)
+            createVisitor()
             localStorage.removeItem('token')
         }
     }
 
     const createVisitor = async () =>{
-        await visitor().unwrap().then(res=>console.log(res))
+        await visitor().unwrap().then(res=>dispatch(setVisitorToken(res.token)))
     }
 
 
@@ -55,9 +55,7 @@ function App() {
         if (localStorage.getItem('token')) {
             getUser()
         } else {
-            // createVisitor()
-
-
+            createVisitor()
         }
     }, [])
 

@@ -4,9 +4,10 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLoginMutation } from '../../../../../store/slices/api/authApiSlice'
 import {
+    scProvider,
     selectCurrentName,
     setAuth,
-    setCredentials,
+    setCredentials, setVisitorToken, visitorToken,
 } from '../../../../../store/slices/authSlice'
 
 const ExistUser = ({ setStep, step, setOpen, stepSc, sc }) => {
@@ -15,7 +16,8 @@ const ExistUser = ({ setStep, step, setOpen, stepSc, sc }) => {
     const [minutes, setMinutes] = useState()
     const [login] = useLoginMutation()
     const name = useSelector(selectCurrentName)
-
+    const token = useSelector(visitorToken)
+    const scProv = useSelector(scProvider)
     const otpRef = useRef()
     let timer
     useEffect(() => {
@@ -51,13 +53,19 @@ const ExistUser = ({ setStep, step, setOpen, stepSc, sc }) => {
                     phone: sessionStorage.getItem('phone'),
                     otp: otpRef.current.value,
                     email: sessionStorage.getItem('email'),
-                    name:name
+                    name,
+                    token,
+                    social_providers:scProv
                 }).unwrap()
             } else {
                 userData = await login({
                     phone: sessionStorage.getItem('phone'),
-                    otp: otpRef.current.value
-                }).unwrap()
+                    otp: otpRef.current.value,
+                    token,
+                }).unwrap().then(()=>{
+                    dispatch(setVisitorToken(null))
+                })
+
             }
 
 

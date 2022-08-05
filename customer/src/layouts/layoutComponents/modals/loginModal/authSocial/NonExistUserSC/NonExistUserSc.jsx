@@ -4,20 +4,25 @@ import { toast } from 'react-toastify'
 import Agreement from '../../../../../../components/agreement/Agreement'
 import Recaptcha from "../../recaptcha/Recaptcha";
 import axios from "axios";
+import {usePhoneMutation} from "../../../../../../store/slices/api/authApiSlice";
+import {useSelector} from "react-redux";
+import {scProvider} from "../../../../../../store/slices/authSlice";
 
 const NonExistUserSc = ({ setOpen, setStep, setStepSc }) => {
     const phoneRef = useRef()
     const recaptchaRef = useRef()
-
+    const [phone] = usePhoneMutation()
     const [key,setKey]= useState()
+    const sc = useSelector(scProvider)
     const [verified, setVerified] = useState(false)
     const handleRegister =  async (e) => {
         e.preventDefault()
 
         if(verified){
-            await axios.post('http://192.168.202.52/api/phone',{
+            await phone({
                 phone: `+994${phoneRef.current.value}`,
                 reKey: key,
+                social_providers:sc
             })
             localStorage.setItem('name', sessionStorage.getItem('name'))
             sessionStorage.setItem('phone', `+994${phoneRef.current.value}`)

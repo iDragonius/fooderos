@@ -1,7 +1,7 @@
 import styles from '../../LoginModal.module.scss'
 import facebook from '../../../../../../assets/img/facebook.svg'
 import FacebookAuth from 'react-facebook-auth'
-import {setAuth, setCredentials} from "../../../../../../store/slices/authSlice";
+import {setAuth, setCredentials, setScProvider} from "../../../../../../store/slices/authSlice";
 import {useDispatch} from "react-redux";
 import {useLoginScMutation} from "../../../../../../store/slices/api/authApiSlice";
 const FacebookButton = ({ onClick }) => (
@@ -25,15 +25,16 @@ const Facebook = ({setSc, setStep, setOpen}) => {
             })
                 .unwrap()
                 .then((data)=>{
+                    dispatch(setScProvider(1))
+
                     if(data.status==='0'){
                         setSc(true)
                         setStep(true)
 
                     }
                     if(data.status==='1'){
-                        console.log(data.toke)
-                        localStorage.setItem('token',data.toke)
-                        dispatch(setCredentials({ token:data.toke}))
+                        localStorage.setItem('token',data.token)
+                        dispatch(setCredentials({ token:data.token}))
                         dispatch(setAuth(true))
                         setSc(false)
 

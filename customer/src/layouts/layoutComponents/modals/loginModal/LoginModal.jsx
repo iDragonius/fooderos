@@ -58,6 +58,7 @@ const LoginModal = ({ open, setOpen, setStep, setExist, setSc }) => {
     }
 
     const change = (res) => {
+        console.log(res)
         setVerified(true)
         setKey(res)
     }
