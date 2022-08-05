@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import DropdownMenu from '../../../../components/ui/dropdown/dropdownMenu/DropdownMenu'
 import styles from './UserNavigation.module.scss'
 import NavigationElement from './navigationElements/NavigationElement'

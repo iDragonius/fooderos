@@ -26,13 +26,13 @@ const Facebook = ({setSc, setStep, setOpen}) => {
                 .unwrap()
                 .then((data)=>{
                     dispatch(setScProvider(1))
-
-                    if(data.status==='0'){
+                    console.log(data)
+                    if(data.status==0){
                         setSc(true)
                         setStep(true)
 
                     }
-                    if(data.status==='1'){
+                    if(data.status==1){
                         localStorage.setItem('token',data.token)
                         dispatch(setCredentials({ token:data.token}))
                         dispatch(setAuth(true))

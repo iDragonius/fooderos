@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useUserMutation } from './store/slices/api/userApiSlice'
+import {useGetUserQuery, useUserMutation} from './store/slices/api/userApiSlice'
 import {setAuth, setCredentials, setVisitorToken} from './store/slices/authSlice'
 import Loader from './components/ui/loader/Loader'
 import {useVisitorMutation} from "./store/slices/api/visitorApiSlice";

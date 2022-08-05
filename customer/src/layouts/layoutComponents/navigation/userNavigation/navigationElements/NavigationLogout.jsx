@@ -1,5 +1,4 @@
 import styles from '../UserNavigation.module.scss'
-import $api from '../../../../../http'
 import {logOut, setAuth, setVisitorToken} from '../../../../../store/slices/authSlice'
 import { useDispatch } from 'react-redux'
 import { useLogOutMutation } from '../../../../../store/slices/api/authApiSlice'

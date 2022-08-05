@@ -1,15 +1,11 @@
 import React, { useState } from 'react'
-import $api from '../../../http'
+import Layout from "../../../layouts/layout/Layout";
 const Profile = () => {
-    const [user, setUser] = useState('')
-    const fetch = async () => {
-        $api.post('/user').then((res) => setUser(res.data.name))
-    }
+
     return (
-        <>
-            <div onClick={fetch}>Profile</div>
-            <div>{user}</div>
-        </>
+        <Layout>
+            saad
+        </Layout>
     )
 }
 
