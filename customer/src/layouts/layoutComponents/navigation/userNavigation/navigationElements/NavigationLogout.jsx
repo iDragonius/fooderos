@@ -1,6 +1,6 @@
 import styles from '../UserNavigation.module.scss'
 import $api from '../../../../../http'
-import { logOut, setAuth } from '../../../../../store/slices/authSlice'
+import {logOut, setAuth, setVisitorToken} from '../../../../../store/slices/authSlice'
 import { useDispatch } from 'react-redux'
 import { useLogOutMutation } from '../../../../../store/slices/api/authApiSlice'
 import {useVisitorMutation} from "../../../../../store/slices/api/visitorApiSlice";
@@ -14,7 +14,7 @@ const NavigationLogout = () => {
                 localStorage.removeItem('token')
                 dispatch(logOut())
                 dispatch(setAuth(false))
-                await visitor().then()
+                await visitor().unwrap().then(res=>dispatch(setVisitorToken(res.token)))
             })
         } catch (e) {
             console.log(e)

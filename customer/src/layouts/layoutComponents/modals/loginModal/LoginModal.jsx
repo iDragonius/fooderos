@@ -36,12 +36,13 @@ const LoginModal = ({ open, setOpen, setStep, setExist, setSc }) => {
                         'phone',
                         `+994${phoneRef.current.value}`
                     )
-                    console.log(1)
                     if (res.status === 1) {
                         dispatch(setCredentials({ name: res.name }))
                         setExist(true)
                     }
-                    console.log(2)
+                    if(res.status===0){
+                        setExist(false)
+                    }
 
                     setStep(true)
                     setSc(false)

@@ -62,12 +62,10 @@ const ExistUser = ({ setStep, step, setOpen, stepSc, sc }) => {
                     phone: sessionStorage.getItem('phone'),
                     otp: otpRef.current.value,
                     token,
-                }).unwrap().then(()=>{
-                    dispatch(setVisitorToken(null))
-                })
+                }).unwrap()
 
             }
-
+            dispatch(setVisitorToken(null))
 
             dispatch(setCredentials({ token: userData.token, name }))
 

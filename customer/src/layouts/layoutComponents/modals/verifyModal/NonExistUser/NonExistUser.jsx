@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from '../VerifyModal.module.scss'
 import { toast } from 'react-toastify'
 
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {useLoginMutation} from "../../../../../store/slices/api/authApiSlice";
 import {setAuth, setCredentials} from "../../../../../store/slices/authSlice";
+import {visitorToken} from "../../../../../store/slices/authSlice";
+
 const NonExistUser = ({ setStep, step, setOpen }) => {
     const [seconds, setSeconds] = useState()
     const [minutes, setMinutes] = useState()
@@ -12,6 +14,7 @@ const NonExistUser = ({ setStep, step, setOpen }) => {
     const [login] = useLoginMutation()
     const otpRef = useRef()
     const nameRef = useRef()
+    const visitToken = useSelector(visitorToken)
 
     let timer
     useEffect(() => {
@@ -51,6 +54,7 @@ const NonExistUser = ({ setStep, step, setOpen }) => {
                 phone: sessionStorage.getItem('phone'),
                 otp: otpRef.current.value,
                 name: nameRef.current.value,
+                token:visitToken
             })
             .unwrap()
             .then((data) => {
