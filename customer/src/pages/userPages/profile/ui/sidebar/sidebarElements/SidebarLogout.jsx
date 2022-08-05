@@ -1,18 +1,20 @@
-import styles from '../UserNavigation.module.scss'
+import React from 'react'
+import styles from '../Sidebar.module.scss'
+import { useDispatch } from 'react-redux'
+import { useLogOutMutation } from '../../../../../../store/slices/api/authApiSlice'
+import { useVisitorMutation } from '../../../../../../store/slices/api/visitorApiSlice'
 import {
     logOut,
     setAuth,
     setVisitorToken,
-} from '../../../../../store/slices/authSlice'
-import { useDispatch } from 'react-redux'
-import { useLogOutMutation } from '../../../../../store/slices/api/authApiSlice'
-import { useVisitorMutation } from '../../../../../store/slices/api/visitorApiSlice'
+} from '../../../../../../store/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
-const NavigationLogout = () => {
+
+const SidebarLogout = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [userLogout] = useLogOutMutation()
     const [visitor] = useVisitorMutation()
-    const navigate = useNavigate()
     const logout = async () => {
         try {
             await userLogout().then(async () => {
@@ -29,13 +31,10 @@ const NavigationLogout = () => {
         }
     }
     return (
-        <div
-            onClick={logout}
-            className={styles.navElement + ' ' + 'text-orange-500'}
-        >
+        <div className={styles.nav + ' ' + styles.logout} onClick={logout}>
             Logout
         </div>
     )
 }
 
-export default NavigationLogout
+export default SidebarLogout

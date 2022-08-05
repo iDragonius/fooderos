@@ -69,3 +69,9 @@ body{
 
     transition:   all 500ms;
 }
+
+
+.active {
+    @apply w-full h-14 bg-white border-b-[1px] border-b-[#e7e7ea] py-4 px-6 text-[16px] text-[#26272a] cursor-pointer border-r-4 border-r-blue-700 ;
+    color: #1d4ed8 !important;
+}

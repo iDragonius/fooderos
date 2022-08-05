@@ -1,0 +1,74 @@
+.main {
+  @apply rounded-md border-[1px] border-[#e3e4e6]   mb-4 bg-white mt-5 md:mt-0 mb-8;
+}
+
+.header {
+  @apply  border-b-[1px] border-b-[#e3e4e6] w-full px-6 py-4 text-xl font-semibold;
+  color: #171819;
+}
+
+.content {
+  @apply px-6 pb-6 ;
+}
+
+.input {
+  @apply flex flex-col ;
+  label {
+    @apply mt-6 mb-2;
+    color: #33363d;
+  }
+
+}
+.nameInp, .emailInp , .birthdayInp{
+  @apply h-12 outline-none px-2 text-sm rounded-md w-full ;
+  color: #33363d;
+  border: 1px solid #d9d9d9;
+}
+
+
+.phone {
+  @apply flex h-12 outline-none  rounded-md ;
+  border: 1px solid #d9d9d9;
+
+}
+.phoneInp {
+  @apply w-full outline-none px-2 text-sm cursor-not-allowed opacity-40;
+}
+
+
+.cc {
+  @apply px-[11px] flex justify-center items-center  text-sm opacity-60 cursor-pointer;
+  border-right: 1px solid #d9d9d9;
+
+}
+
+.genderSelect{
+  @apply h-12 outline-none px-2 text-sm rounded-md w-full bg-white;
+  border: 1px solid #d9d9d9;
+  color: #33363d;
+
+
+
+}
+
+.phone:hover, .emailInp:hover, .emailInp:focus, .nameInp:hover, .nameInp:focus, .genderSelect:hover, .genderSelect:focus, .birthdayInp:focus, .birthdayInp:hover {
+  @apply border-[1px] border-blue-400
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

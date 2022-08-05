@@ -5,7 +5,11 @@ module.exports = {
         container: false,
     },
     theme: {
-        extend: {},
+        extend: {
+            screens: {
+                sm: '520px',
+            },
+        },
     },
     plugins: [
         function ({ addComponents }) {

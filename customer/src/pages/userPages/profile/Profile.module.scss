@@ -1,0 +1,8 @@
+.wrapper {
+  @apply container flex md:flex-row flex-col  px-10 mx-auto mt-12 w-full;
+}
+
+.main {
+  @apply px-4 w-full md:w-2/3 w-full
+
+}
