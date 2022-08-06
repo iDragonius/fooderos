@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Layout from '../../../layouts/layout/Layout'
 import Sidebar from './ui/sidebar/Sidebar'
 import Header from './ui/header/Header'

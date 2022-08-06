@@ -1,0 +1,17 @@
+.main {
+  @apply rounded-md border-[1px] border-[#e3e4e6]  flex justify-between  mb-4 bg-white mt-5 md:mt-0 mb-8 p-5;
+}
+.btn {
+  @apply px-10;
+  height: 32px;
+  border-radius: 4px;
+  background-color: #ff5012;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+}

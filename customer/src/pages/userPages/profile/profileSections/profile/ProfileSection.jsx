@@ -1,52 +1,103 @@
 import styles from './ProfileSection.module.scss'
-import { useSelector } from 'react-redux'
-import { selectCurrentName } from '../../../../../store/slices/authSlice'
-import { useEffect, useState } from 'react'
+import { useRef } from 'react'
+import {
+    useGetProfileQuery,
+    useUpdateProfileMutation,
+} from '../../../../../store/slices/api/userApiSlice'
+import { useDispatch } from 'react-redux'
+import { setImage, setName } from '../../../../../store/slices/userInfoSlice'
+import ImageUpload from '../../ui/imageUpload/ImageUpload'
+
 const ProfileSection = () => {
-    const name = useSelector(selectCurrentName)
-    const [newName, setNewName] = useState(() => (name ? name : ''))
+    const birthdayRef = useRef()
+    const nameRef = useRef()
+    const genderRef = useRef()
+    const dispatch = useDispatch()
+    const [update] = useUpdateProfileMutation()
+
+    const { data, isSuccess } = useGetProfileQuery()
+
+    const handleProfile = async (e) => {
+        e.preventDefault()
+
+        await update({
+            name: nameRef.current.value,
+            gender: genderRef.current.value,
+            birthday: birthdayRef.current.value,
+        })
+            .unwrap()
+            .then((res) => {
+                dispatch(setName(nameRef.current.value))
+                dispatch(setImage(data.photo))
+            })
+    }
 
     return (
-        <div className={styles.main}>
-            <div className={styles.header}>Enter your personal information</div>
-            <div className={styles.content}>
-                <div className={styles.input}>
-                    <label>Full name</label>
-                    <input
-                        type="text"
-                        className={styles.nameInp}
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                    />
-                </div>
-                <div className={styles.input}>
-                    <label>Phone number</label>
-                    <div className={styles.phone}>
-                        <div className={styles.cc}>+994</div>
-                        <input
-                            type="text"
-                            className={styles.phoneInp}
-                            disabled={true}
-                        />
+        <>
+            <ImageUpload />
+            {isSuccess && (
+                <div className={styles.main}>
+                    <div className={styles.header}>
+                        Enter your personal information
+                    </div>
+                    <div className={styles.content}>
+                        <div className={styles.input}>
+                            <label>Full name</label>
+                            <input
+                                defaultValue={data.name}
+                                ref={nameRef}
+                                type="text"
+                                className={styles.nameInp}
+                            />
+                        </div>
+                        <div className={styles.input}>
+                            <label>Phone number</label>
+                            <div className={styles.phone}>
+                                <div className={styles.cc}>+994</div>
+                                <input
+                                    type="text"
+                                    className={styles.phoneInp}
+                                    defaultValue={data.phone.substr(3, 10)}
+                                    disabled={true}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.input}>
+                            <label>E-mail</label>
+                            <input
+                                type="text"
+                                className={styles.emailInp}
+                                defaultValue={data.email}
+                                disabled={true}
+                            />
+                        </div>
+                        <div className={styles.input}>
+                            <label>Gender</label>
+                            <select
+                                className={styles.genderSelect}
+                                defaultValue={data.gender}
+                                ref={genderRef}
+                            >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div className={styles.input}>
+                            <label>Birthday</label>
+                            <input
+                                defaultValue={data.birthday}
+                                type={'date'}
+                                className={styles.birthdayInp}
+                                ref={birthdayRef}
+                            />
+                        </div>
+                        <button className={styles.btn} onClick={handleProfile}>
+                            Save
+                        </button>
                     </div>
                 </div>
-                <div className={styles.input}>
-                    <label>E-mail</label>
-                    <input type="text" className={styles.emailInp} />
-                </div>
-                <div className={styles.input}>
-                    <label>Gender</label>
-                    <select className={styles.genderSelect}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </div>
-                <div className={styles.input}>
-                    <label>Birthday</label>
-                    <input type={'date'} className={styles.birthdayInp} />
-                </div>
-            </div>
-        </div>
+            )}
+        </>
     )
 }
 

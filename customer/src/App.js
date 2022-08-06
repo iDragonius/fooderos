@@ -9,20 +9,12 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import {
-    useGetUserQuery,
-    useUserMutation,
-} from './store/slices/api/userApiSlice'
-import {
-    setAuth,
-    setCredentials,
-    setVisitorToken,
-} from './store/slices/authSlice'
+import { useGetProfileQuery } from './store/slices/api/userApiSlice'
+import { setVisitorToken } from './store/slices/authSlice'
 import Loader from './components/ui/loader/Loader'
 import { useVisitorMutation } from './store/slices/api/visitorApiSlice'
 import ProfileSection from './pages/userPages/profile/profileSections/profile/ProfileSection'
 import FreeOrdersSection from './pages/userPages/profile/profileSections/freeOrders/FreeOrdersSection'
-import Sidebar from './pages/userPages/profile/ui/sidebar/Sidebar'
 import Settings from './pages/userPages/profile/profileSections/settings/Settings'
 import Support from './pages/userPages/profile/profileSections/support/Support'
 import PaymentMethodsSection from './pages/userPages/profile/profileSections/paymentMethods/PaymentMethodsSection'
@@ -31,33 +23,11 @@ function App() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(
-            setCredentials({
-                token: localStorage.getItem('token'),
-            })
-        )
         localStorage.setItem('lang', 'English')
     }, [])
-    const [fetchUser, { isLoading }] = useUserMutation()
+
     const [visitor, { isLoading: loading }] = useVisitorMutation()
-    const getUser = async () => {
-        try {
-            await fetchUser()
-                .unwrap()
-                .then((res) => {
-                    dispatch(
-                        setCredentials({
-                            name: res.name,
-                            token: localStorage.getItem('token'),
-                        })
-                    )
-                    dispatch(setAuth(true))
-                })
-        } catch (e) {
-            createVisitor()
-            localStorage.removeItem('token')
-        }
-    }
+    const { data, isSuccess, isLoading } = useGetProfileQuery()
 
     const createVisitor = async () => {
         await visitor()
@@ -67,7 +37,7 @@ function App() {
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
-            getUser()
+            // getUser()
         } else {
             createVisitor()
         }
@@ -76,6 +46,7 @@ function App() {
     if (isLoading || loading) {
         return <Loader />
     }
+
     return (
         <>
             <ToastContainer />

@@ -13,7 +13,49 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
+        getProfile: builder.query({
+            query: (credentials) => ({
+                url: '/profile/main',
+            }),
+            providesTags: ['User'],
+        }),
+        updateProfile: builder.mutation({
+            query: (credentials) => ({
+                url: '/profile/update',
+                method: 'PUT',
+                body: { ...credentials },
+            }),
+            invalidatesTags: ['User'],
+        }),
+
+        uploadFile: builder.mutation({
+            async queryFn(file, _queryApi, _extraOptions, fetchWithBQ) {
+                // upload with multipart/form-data
+                const formData = new FormData()
+                formData.append('image', file)
+                const response = await fetchWithBQ(
+                    {
+                        url: '/profile/photo',
+                        method: 'POST',
+                        body: formData,
+                    },
+                    _queryApi,
+                    _extraOptions
+                )
+                if (response.error) throw response.error
+                return response.data
+                    ? { data: response.data }
+                    : { error: response.error }
+            },
+            invalidatesTags: ['User'],
+        }),
     }),
 })
 
-export const { useGetUserQuery, useUserMutation } = usersApiSlice
+export const {
+    useGetUserQuery,
+    useUserMutation,
+    useGetProfileQuery,
+    useUpdateProfileMutation,
+    useUploadFileMutation,
+} = usersApiSlice

@@ -50,13 +50,31 @@
 
 
 }
+.emailInp {
+  @apply cursor-not-allowed opacity-50;
+}
+
 
 .phone:hover, .emailInp:hover, .emailInp:focus, .nameInp:hover, .nameInp:focus, .genderSelect:hover, .genderSelect:focus, .birthdayInp:focus, .birthdayInp:hover {
   @apply border-[1px] border-blue-400
 }
 
 
-
+.btn {
+  @apply mt-8 mb-6;
+  width: 160px;
+  height: 56px;
+  border-radius: 4px;
+  background-color: #ff5012;
+  font-size: 16px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: center;
+  color: #fff;
+}
 
 
 
