@@ -8,7 +8,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            invalidatesTags: ['User'],
         }),
         phone: builder.mutation({
             query: (credentials) => ({
@@ -23,7 +22,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            invalidatesTags: ['User'],
         }),
         logOut: builder.mutation({
             query: (credentials) => ({
@@ -37,7 +35,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useLoginMutation,
-    usePhoneMutation,
     useLoginScMutation,
+    usePhoneMutation,
     useLogOutMutation,
 } = authApiSlice

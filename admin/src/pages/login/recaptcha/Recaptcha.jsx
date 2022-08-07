@@ -1,5 +1,4 @@
-import React from 'react'
-import styles from '../LoginModal.module.scss'
+import styles from '../Login.module.scss'
 import ReCAPTCHA from 'react-google-recaptcha'
 const Recaptcha = ({ change, refTo }) => {
     const key = '6LexJUchAAAAAEkbZCxZMQnC02eoNTHNEfHi8VlE'

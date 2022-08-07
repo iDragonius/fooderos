@@ -1,0 +1,29 @@
+.main {
+  @apply w-full bg-primary   pb-[22px] ;
+}
+.wrapper {
+  @apply flex justify-between pt-[43px]
+}
+.section {
+  @apply text-[23px] text-white font-medium ml-2;
+}
+.name {
+  @apply flex items-center pl-10 self-end;
+}
+
+.btn {
+  @apply h-12 bg-white rounded-[4px] px-6 text-primary font-medium  flex items-center;
+  span {
+    @apply mr-1;
+  }
+}
+.tagType {
+  @apply mr-5 ;
+}
+.tag {
+  @apply mr-10
+}
+
+.btns {
+  @apply flex;
+}

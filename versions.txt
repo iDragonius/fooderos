@@ -1,0 +1,2 @@
+1.11 - Adding profile pages, main-info section
+1.12 - Adding slices, and endpoints for main profile page
