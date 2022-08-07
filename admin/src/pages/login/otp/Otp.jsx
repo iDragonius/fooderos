@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '../Login.module.scss'
-import { Link, useNavigate } from 'react-router-dom'
-import userInfoSlice from '../../../store/slices/userInfoSlice'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     selectCurrentName,
     setCredentials,
+    setSkip,
     visitorToken,
 } from '../../../store/slices/authSlice'
 import { useLoginMutation } from '../../../store/slices/api/authApiSlice'
@@ -52,10 +52,11 @@ const Otp = ({ setStep, step }) => {
         })
             .unwrap()
             .then((res) => {
-                navigate('/dashboard')
-                console.log(res.token)
+                dispatch(setCredentials({ token: res.token, authorized: true }))
                 localStorage.setItem('token', res.token)
-                dispatch(setCredentials({ token: res.token }))
+                dispatch(setSkip(false))
+                navigate('/dashboard')
+                toast.success(`Logged in as ${name}`)
             })
     }
     return (

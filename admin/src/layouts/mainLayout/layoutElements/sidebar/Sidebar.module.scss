@@ -3,14 +3,14 @@
 }
 
 .dashboard {
-  @apply pt-6 mt-8 pb-6 border-b-[1px] border-b-[#ecf0f7]  px-7;
+  @apply pt-6 mt-8 pb-4 border-b-[1px] border-b-[#ecf0f7]  px-7;
 }
 .pageCont {
   @apply w-8 h-8 flex items-center justify-center;
 }
 
 .navigate {
-  @apply px-7 py-6 border-b-[1px] border-b-[#ecf0f7];
+  @apply px-7 py-4 border-b-[1px] border-b-[#ecf0f7];
 }
 
 .active .pageCont {

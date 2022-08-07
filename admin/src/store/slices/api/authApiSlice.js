@@ -1,4 +1,5 @@
 import { apiSlice } from './apiSlice'
+import { setCredentials } from '../authSlice'
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -8,6 +9,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
+            invalidatesTags: ['User'],
         }),
         phone: builder.mutation({
             query: (credentials) => ({

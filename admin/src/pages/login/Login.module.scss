@@ -34,7 +34,7 @@
   @apply text-[#919aa7] text-xl mb-[50px] flex justify-center items-center flex-wrap w-10/12 text-center;
 }
 .btn {
-  @apply w-[427px] h-[56px] text-white mt-[30px] bg-[#0371e8] rounded-[8px] text-lg;
+  @apply w-[427px] h-[56px] text-white mt-[30px] bg-[#0371e8] rounded-[8px] text-lg outline-none;
 }
 .agreement {
   @apply mt-12 text-[#31373e] ;
@@ -122,7 +122,7 @@
 }
 
 .btnOtp {
-  @apply  w-[427px] h-[56px] text-white  bg-[#0371e8] rounded-[8px] text-lg;
+  @apply  w-[427px] h-[56px] text-white  bg-[#0371e8] rounded-[8px] text-lg outline-none;
 }
 
 .resend {

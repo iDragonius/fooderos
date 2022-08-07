@@ -24,9 +24,9 @@ const userInfoSlice = createSlice({
         builder.addMatcher(
             apiSlice.endpoints.getProfile.matchFulfilled,
             (state, { payload }) => {
-                state.image = payload.photo
-                state.name = payload.name
-                state.createdAt = payload.created_at
+                state.image = payload ? payload.photo : null
+                state.name = payload ? payload.name : null
+                state.createdAt = payload ? payload.created_at : null
             }
         )
     },

@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from '../Login.module.scss'
 import Recaptcha from '../recaptcha/Recaptcha'
 import { Link } from 'react-router-dom'
 import { usePhoneMutation } from '../../../store/slices/api/authApiSlice'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCredentials, visitorToken } from '../../../store/slices/authSlice'
+import {
+    setCredentials,
+    setSkip,
+    visitorToken,
+} from '../../../store/slices/authSlice'
 
 const Auth = ({ setStep }) => {
     const phoneRef = useRef()
@@ -14,10 +18,14 @@ const Auth = ({ setStep }) => {
     const token = useSelector(visitorToken)
     const recaptchaRef = useRef()
     const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(setSkip(true))
+    }, [])
     const handleLogin = async (e) => {
         if (!phoneRef.current.value) {
             return toast.warn('Phone input must be fullfilled')
         }
+
         await phone({
             phone: `+994${phoneRef.current.value}`,
             reKey,

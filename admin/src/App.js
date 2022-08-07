@@ -14,31 +14,36 @@ import {
 } from './store/slices/api/userApiSlice'
 import { useEffect } from 'react'
 import { useVisitorMutation } from './store/slices/api/visitorApiSlice'
-import { useDispatch } from 'react-redux'
-import { setVisitorToken } from './store/slices/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    isSkip,
+    setCredentials,
+    setSkip,
+    setVisitorToken,
+} from './store/slices/authSlice'
 import login from './pages/login/Login'
+import Loader from './components/loader/Loader'
 
 function App() {
-    // const { data, isLoading } = useGetProfileQuery(undefined)
     const [check] = useUserMutation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [visitor, { isLoading: loading }] = useVisitorMutation()
-    const { data, isSuccess, isLoading } = useGetProfileQuery()
+    const skip = useSelector(isSkip)
 
-    const createVisitor = async () => {
-        await visitor()
-            .unwrap()
-            .then((res) => dispatch(setVisitorToken(res.token)))
+    const { data, isLoading, isError } = useGetProfileQuery(undefined, {
+        skip,
+    })
+
+    // useEffect(() => {
+    //     console.log(1)
+    //     dispatch(setCredentials({ token: null }))
+    //     dispatch(setSkip(true))
+    // }, [isError])
+
+    if (isLoading) {
+        return <Loader />
     }
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            // getUser()
-        } else {
-            createVisitor()
-        }
-    }, [])
     return (
         <>
             <ToastContainer />

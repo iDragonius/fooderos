@@ -8,6 +8,7 @@ const authSlice = createSlice({
         token: localStorage.getItem('token'),
         visitorToken: null,
         authorized: false,
+        skip: false,
     },
     reducers: {
         setCredentials: (state, action) => {
@@ -26,6 +27,9 @@ const authSlice = createSlice({
             state.name = null
             state.token = null
         },
+        setSkip: (state, action) => {
+            state.skip = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -36,15 +40,22 @@ const authSlice = createSlice({
             apiSlice.endpoints.login.matchFulfilled,
             (state, { payload }) => {
                 state.token = payload.token
+            },
+            apiSlice.endpoints.getProfile.matchRejected,
+            (state, { payload }) => {
+                state.authorized = false
+                state.token = ''
+                localStorage.removeItem('token')
             }
         )
     },
 })
 
-export const { setCredentials, logOut, setAuth, setVisitorToken } =
+export const { setCredentials, logOut, setAuth, setVisitorToken, setSkip } =
     authSlice.actions
 
 export default authSlice.reducer
+export const isSkip = (state) => state.auth.skip
 export const isAuthorized = (state) => state.auth.authorized
 export const selectCurrentName = (state) => state.auth.name
 export const selectCurrentToken = (state) => state.auth.token
