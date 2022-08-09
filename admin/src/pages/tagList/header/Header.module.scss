@@ -8,7 +8,7 @@
   @apply text-[23px] text-white font-medium ml-2;
 }
 .name {
-  @apply flex items-center pl-10 self-end;
+  @apply flex items-center pl-10 self-end cursor-pointer;
 }
 
 .btn {

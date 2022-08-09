@@ -41,7 +41,7 @@ const Sidebar = () => {
                 </div>
             </NavLink>
             <NavLink
-                to={'/tag-list'}
+                to={'/tags/list'}
                 className={({ isActive }) => (isActive ? styles.active : '')}
             >
                 <div className={styles.navigate}>

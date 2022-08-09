@@ -14,10 +14,23 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         getProfile: builder.query({
-            query: (credentials) => ({
-                url: '/profile/main',
-            }),
-            providesTags: ['User'],
+            async queryFn(file, _queryApi, _extraOptions, fetchWithBQ) {
+                if (!localStorage.getItem('token'))
+                    return console.log('no token')
+                const response = await fetchWithBQ(
+                    {
+                        url: '/profile/main',
+                    },
+                    _queryApi,
+                    _extraOptions
+                )
+                if (response.error) {
+                    localStorage.removeItem('token')
+                }
+                return response.data
+                    ? { data: response.data }
+                    : { error: response.error }
+            },
         }),
         updateProfile: builder.mutation({
             query: (credentials) => ({

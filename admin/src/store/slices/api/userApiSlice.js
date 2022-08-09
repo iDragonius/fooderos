@@ -1,5 +1,4 @@
 import { apiSlice } from './apiSlice'
-import login from '../../../pages/login/Login'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -26,7 +25,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                     _queryApi,
                     _extraOptions
                 )
-                if (response.error) {
+                if (response?.error) {
                     localStorage.removeItem('token')
                 }
                 return response.data

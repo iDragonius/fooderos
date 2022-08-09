@@ -23,6 +23,8 @@ import {
 } from './store/slices/authSlice'
 import login from './pages/login/Login'
 import Loader from './components/loader/Loader'
+import List from './pages/tagList/sections/list/List'
+import NewTag from './pages/tagList/sections/newTag/NewTag'
 
 function App() {
     const [check] = useUserMutation()
@@ -33,12 +35,6 @@ function App() {
     const { data, isLoading, isError } = useGetProfileQuery(undefined, {
         skip,
     })
-
-    // useEffect(() => {
-    //     console.log(1)
-    //     dispatch(setCredentials({ token: null }))
-    //     dispatch(setSkip(true))
-    // }, [isError])
 
     if (isLoading) {
         return <Loader />
@@ -54,7 +50,11 @@ function App() {
                     <Route element={<RequireAuth />}>
                         <Route element={<MainLayout />}>
                             <Route path={'dashboard'} element={<Dashboard />} />
-                            <Route path={'tag-list'} element={<TagList />} />
+                            <Route path={'tags/'} element={<TagList />}>
+                                <Route path={'new'} element={<NewTag />} />
+                                <Route path={'list'} element={<List />} />
+                            </Route>
+
                             <Route path={'orders'} element={<Orders />} />
                         </Route>
                     </Route>

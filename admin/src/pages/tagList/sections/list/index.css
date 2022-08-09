@@ -1,0 +1,32 @@
+
+
+table {
+  border: 1px solid #ecf0f7;
+  border-collapse: collapse;
+  border-radius: 10px;
+
+}
+table tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+tbody {
+  border-bottom: 1px solid #ecf0f7;
+}
+
+th {
+  border-bottom: 1px solid #ecf0f7;
+  border-right: 1px solid #ecf0f7;
+}
+
+tfoot {
+  color: gray;
+}
+
+tfoot th {
+  font-weight: normal;
+}

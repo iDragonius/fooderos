@@ -1,3 +1,4 @@
-1.11 - Adding profile pages, main-info section
-1.12 - Adding slices, and endpoints for main profile page
-1.13 - Adding image upload for customers, adding main page for cpanel and adding login
+1.11 - Added profile pages, main-info section
+1.12 - Added slices, and endpoints for main profile page
+1.13 - Added image upload for customers, added main page for cpanel and added login
+1.14 - Added table for tags,  create filter and sort
