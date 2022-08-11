@@ -21,8 +21,9 @@ import More from '../../more/More'
 import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 
 import Status from './status/Status'
-import Header from '../../header/Header'
+import NewTagHeader from '../../headers/NewTagHeader'
 import Languages from '../../languages/Languages'
+import TagListHeader from '../../headers/TagListHeader'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -55,6 +56,11 @@ function List() {
         {
             header: () => <span>#</span>,
             accessorKey: 'id',
+            cell: (info) => info.getValue(),
+        },
+        {
+            header: () => <span>Image</span>,
+            accessorKey: 'image',
             cell: (info) => info.getValue(),
         },
         {
@@ -120,7 +126,7 @@ function List() {
 
     return (
         <>
-            <Header section={'List'} />
+            <TagListHeader />
             <Languages />
             <div className={'px-10 mt-8'}>
                 {isSuccess && (
@@ -185,7 +191,6 @@ function List() {
                             </thead>
                             <tbody>
                                 {table.getRowModel().rows.map((row) => {
-                                    console.log()
                                     return (
                                         <tr key={row.id}>
                                             {row
@@ -208,9 +213,35 @@ function List() {
                                                     }
                                                     if (
                                                         cell.column.id ===
+                                                        'image'
+                                                    ) {
+                                                        return (
+                                                            <td
+                                                                key={cell.id}
+                                                                className={
+                                                                    'border-[1px] px-6 py-5 '
+                                                                }
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        'flex justify-center'
+                                                                    }
+                                                                >
+                                                                    <img
+                                                                        width={
+                                                                            60
+                                                                        }
+                                                                        src={`http://192.168.202.52/storage/tags/images/4Doner`}
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                            </td>
+                                                        )
+                                                    }
+                                                    if (
+                                                        cell.column.id ===
                                                         'status'
                                                     ) {
-                                                        console.log()
                                                         return (
                                                             <td
                                                                 key={cell.id}

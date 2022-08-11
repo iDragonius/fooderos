@@ -2,14 +2,13 @@ import { useState } from 'react'
 import styles from '../NewTag.module.scss'
 import { useDropzone } from 'react-dropzone'
 
-const ImgUpload = () => {
-    const [files, setFiles] = useState([])
+const ImgUpload = ({ file, setFile }) => {
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': [],
         },
         onDrop: (acceptedFiles) => {
-            setFiles(
+            setFile(
                 acceptedFiles.map((file) =>
                     Object.assign(file, {
                         preview: URL.createObjectURL(file),
@@ -19,14 +18,14 @@ const ImgUpload = () => {
         },
     })
 
-    const thumbs = files.map((file) => (
-        <div key={file.name}>
+    const thumbs = file.map((files) => (
+        <div key={files.name}>
             <div className={'p-3 border-[1px] rounded-md'}>
                 <img
-                    src={file.preview}
+                    src={files.preview}
                     className={'w-[88px] h-[88px]'}
                     onLoad={() => {
-                        URL.revokeObjectURL(file.preview)
+                        URL.revokeObjectURL(files.preview)
                     }}
                 />
             </div>
@@ -34,7 +33,7 @@ const ImgUpload = () => {
     ))
     return (
         <>
-            {files[0] ? (
+            {file[0] ? (
                 <div
                     {...getRootProps({ className: 'dropzone' })}
                     className={styles.drop}

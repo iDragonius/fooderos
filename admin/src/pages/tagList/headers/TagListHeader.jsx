@@ -1,35 +1,31 @@
+import React, { useState } from 'react'
 import styles from './Header.module.scss'
-import arrow from '../../../assets/img/pages/arrow.png'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { checkData, setData } from '../../../store/slices/languageSlice'
-const Header = ({ section, desc, tag, type }) => {
+import TagTypeModals from '../modals/tagTypeModals/TagTypeModals'
+
+const TagListHeader = () => {
+    const [open, setOpen] = useState(false)
     const navigate = useNavigate()
+    const [section, setSection] = useState()
     const changePage = (e) => {
         e.preventDefault()
-        navigate('/tags/new')
+        navigate('/tags/newTagType')
     }
-    const back = (e) => {
-        e.preventDefault()
-        navigate('/tags/list')
+    const openAll = () => {
+        document.body.style.overflow = 'hidden'
+        setSection('show')
+        setOpen(true)
     }
-    const dispatch = useDispatch()
-    const handleData = (e) => {
-        e.preventDefault()
-        dispatch(setData({ desc, tag, type }))
-        dispatch(checkData())
+    const openNew = () => {
+        document.body.style.overflow = 'hidden'
+        setSection('newTagType')
+        setOpen(true)
     }
     return (
-        <div className={styles.main}>
-            <div className={styles.wrapper}>
-                {section === 'NewTag' ? (
-                    <div className={styles.name} onClick={back}>
-                        <h1 className={styles.section}>
-                            <img src={arrow} alt="" />
-                        </h1>
-                        <h1 className={styles.section}> New Tag</h1>
-                    </div>
-                ) : (
+        <>
+            <TagTypeModals setOpen={setOpen} open={open} section={section} />
+            <div className={styles.main}>
+                <div className={styles.wrapper}>
                     <div className={styles.name}>
                         <svg
                             width="24px"
@@ -57,37 +53,33 @@ const Header = ({ section, desc, tag, type }) => {
                         </svg>
                         <h1 className={styles.section}>Tag List</h1>
                     </div>
-                )}
 
-                <div className={styles.btns}>
-                    {section === 'NewTag' ? (
+                    <div className={styles.btns}>
                         <button
                             className={styles.tagType + ' ' + styles.btn}
-                            onClick={handleData}
+                            onClick={openAll}
                         >
-                            Save
+                            Show all Tag Types
                         </button>
-                    ) : (
-                        <>
-                            <button
-                                className={styles.tagType + ' ' + styles.btn}
-                            >
-                                <span>+</span>
-                                New Tag Type
-                            </button>
-                            <button
-                                className={styles.tag + ' ' + styles.btn}
-                                onClick={changePage}
-                            >
-                                <span>+</span>
-                                New Tag
-                            </button>
-                        </>
-                    )}
+                        <button
+                            className={styles.tagType + ' ' + styles.btn}
+                            onClick={openNew}
+                        >
+                            <span>+</span>
+                            New Tag Type
+                        </button>
+                        <button
+                            className={styles.tag + ' ' + styles.btn}
+                            onClick={changePage}
+                        >
+                            <span>+</span>
+                            New Tag
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
-export default Header
+export default TagListHeader

@@ -6,6 +6,7 @@ import {
     changeLanguage,
     currLanguage,
     deleteData,
+    descs,
     setData,
     tags,
 } from '../../../store/slices/languageSlice'
@@ -15,15 +16,13 @@ const Languages = ({ setTag, setDesc, tag, type, desc }) => {
     const [langs, setLangs] = useState([])
     const dispatch = useDispatch()
     const currTags = useSelector(tags)
+    const currDescs = useSelector(descs)
     const currLang = useSelector(currLanguage)
     const [active, setActive] = useState('Az')
     useEffect(() => {
         dispatch(deleteData())
     }, [])
-    useEffect(() => {
-        setLangs(isSuccess ? data : [])
-        console.log(langs)
-    }, [isSuccess])
+
     if (isLoading) {
         return <Loader />
     }
@@ -32,12 +31,12 @@ const Languages = ({ setTag, setDesc, tag, type, desc }) => {
         if (lang === currLang) {
             return
         }
-        dispatch(setData({ tag, type, desc }))
-        if (currTags[lang]) {
+        dispatch(setData({ tag, type: 'Market', desc }))
+        if (currTags[`${lang}_name`]) {
             setActive(lang)
             dispatch(changeLanguage(lang))
-            setTag(currTags[lang])
-            console.log(1)
+            setTag(currTags[`${lang}_name`])
+            setDesc(currDescs[`${lang}_desc`])
             return
         }
         setDesc('')

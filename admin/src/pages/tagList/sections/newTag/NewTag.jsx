@@ -2,7 +2,7 @@ import styles from './NewTag.module.scss'
 import ImgUpload from './imgUpload/ImgUpload'
 
 import { useTagTypeQuery } from '../../../../store/slices/api/tagApiSlice'
-import Header from '../../header/Header'
+import NewTagHeader from '../../headers/NewTagHeader'
 import Languages from '../../languages/Languages'
 import { useState } from 'react'
 
@@ -11,10 +11,16 @@ const NewTag = () => {
     const [desc, setDesc] = useState('')
     const [tag, setTag] = useState('')
     const [type, setType] = useState('')
-
+    const [file, setFile] = useState([])
     return (
         <>
-            <Header section={'NewTag'} desc={desc} type={type} tag={tag} />
+            <NewTagHeader
+                section={'NewTag'}
+                desc={desc}
+                type={type}
+                tag={tag}
+                file={file}
+            />
             <Languages
                 desc={desc}
                 type={type}
@@ -26,7 +32,7 @@ const NewTag = () => {
                 <div className={styles.main}>
                     <h1 className={styles.header}>Add new Tag</h1>
                     <div className={styles.cont}>
-                        <ImgUpload />
+                        <ImgUpload file={file} setFile={setFile} />
                         <div className={'flex flex-col '}>
                             <div className={'flex'}>
                                 <div className={styles.tagName}>

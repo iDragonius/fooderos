@@ -51,7 +51,10 @@ function App() {
                         <Route element={<MainLayout />}>
                             <Route path={'dashboard'} element={<Dashboard />} />
                             <Route path={'tags/'} element={<TagList />}>
-                                <Route path={'new'} element={<NewTag />} />
+                                <Route
+                                    path={'newTagType'}
+                                    element={<NewTag />}
+                                />
                                 <Route path={'list'} element={<List />} />
                             </Route>
 
