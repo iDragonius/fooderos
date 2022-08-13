@@ -1,8 +1,8 @@
 import styles from '../TagTypeModals.module.scss'
 import { useTagTypeQuery } from '../../../../../store/slices/api/tagApiSlice'
-import Status from '../../../sections/list/status/Status'
+import TypeStatus from '../status/TypeStatus'
 
-const Show = ({ setOpen }) => {
+const ShowTagTypes = ({ setOpen }) => {
     const closeModal = () => {
         document.body.style.overflow = ''
 
@@ -22,17 +22,26 @@ const Show = ({ setOpen }) => {
                 </button>
             </div>
 
-            <div className={styles.tagType}>
+            <div className={styles.tags}>
                 {isSuccess && (
-                    <div>
+                    <div className={'px-10'}>
                         {data.map((type) => (
-                            <div key={type.id}>
-                                <div>{type.name}</div>
+                            <div
+                                key={type.id}
+                                className={
+                                    'flex justify-between items-center rounded-md py-3 px-4 border-[1px] mb-1'
+                                }
+                            >
+                                <div className={'flex'}>
+                                    <div className={'mr-1'}>{type.id}</div>
+                                    <div>{type.name}</div>
+                                </div>
+
                                 <div>
                                     {type.status === 1 ? (
-                                        <Status checked={true} />
+                                        <TypeStatus checked={true} />
                                     ) : (
-                                        <Status checked={false} />
+                                        <TypeStatus checked={false} />
                                     )}
                                 </div>
                             </div>
@@ -44,4 +53,4 @@ const Show = ({ setOpen }) => {
     )
 }
 
-export default Show
+export default ShowTagTypes

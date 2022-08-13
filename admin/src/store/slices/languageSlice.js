@@ -11,6 +11,8 @@ const languageSlice = createSlice({
         tagType: 'Market',
         description: {},
         status: false,
+        id: null,
+        image: null,
     },
     reducers: {
         setData: (state, action) => {
@@ -38,27 +40,49 @@ const languageSlice = createSlice({
                 }
             }
             state.status = true
-            state.tagType = 'Market'
         },
         destroyStatus: (state) => {
             state.status = false
         },
+        setId: (state, action) => {
+            state.id = action.payload
+        },
     },
     extraReducers: (builder) => {
-        builder.addMatcher(
-            apiSlice.endpoints.languages.matchFulfilled,
-            (state, { payload }) => {
-                for (let i = 0; i < payload.length; i++) {
-                    console.log(payload[i].lang)
-                    state.languages.push(payload[i].lang)
+        builder
+            .addMatcher(
+                apiSlice.endpoints.languages.matchFulfilled,
+                (state, { payload }) => {
+                    for (let i = 0; i < payload.length; i++) {
+                        state.languages.push(payload[i].lang)
+                    }
                 }
-            }
-        )
+            )
+            .addMatcher(
+                apiSlice.endpoints.showTag.matchFulfilled,
+                (state, { payload }) => {
+                    console.log(payload)
+                    const data = payload[0]
+                    state.image = data.image
+                    for (let i = 0; i < data.tag_locals.length; i++) {
+                        state.tagName[`${data.tag_locals[i].lang}_name`] =
+                            data.tag_locals[i].name
+                        state.description[`${data.tag_locals[i].lang}_desc`] =
+                            data.tag_locals[i].description
+                    }
+                }
+            )
     },
 })
 
-export const { setData, changeLanguage, deleteData, checkData, destroyStatus } =
-    languageSlice.actions
+export const {
+    setData,
+    changeLanguage,
+    deleteData,
+    checkData,
+    destroyStatus,
+    setId,
+} = languageSlice.actions
 
 export default languageSlice.reducer
 export const currLanguage = (state) => state.lang.language
@@ -67,3 +91,5 @@ export const descs = (state) => state.lang.description
 export const allLangs = (state) => state.lang.languages
 export const tagType = (state) => state.lang.tagType
 export const checkStatus = (state) => state.lang.status
+export const currentId = (state) => state.lang.id
+export const currImage = (state) => state.lang.image

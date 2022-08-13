@@ -22,6 +22,7 @@ const NewTagType = ({ setOpen }) => {
             .then(() => {
                 toast.success('Tag Type created successful!')
                 setOpen(false)
+                nameRef.current.value = ''
             })
             .catch((e) => {
                 toast.error('Smth get wrong')

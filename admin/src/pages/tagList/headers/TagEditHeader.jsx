@@ -1,11 +1,17 @@
+import React, { useEffect, useState } from 'react'
 import styles from './Header.module.scss'
 import arrow from '../../../assets/img/pages/arrow.png'
 import { useNavigate } from 'react-router-dom'
+import {
+    useCreateTagMutation,
+    useUpdateTagMutation,
+} from '../../../store/slices/api/tagApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     allLangs,
     checkData,
     checkStatus,
+    currentId,
     deleteData,
     descs,
     destroyStatus,
@@ -13,27 +19,25 @@ import {
     tags,
     tagType,
 } from '../../../store/slices/languageSlice'
-import { useCreateTagMutation } from '../../../store/slices/api/tagApiSlice'
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-const NewTagHeader = ({ desc, tag, type, file }) => {
-    const navigate = useNavigate()
 
+const TagEditHeader = ({ type, tag, desc, file }) => {
+    const navigate = useNavigate()
     const back = (e) => {
         e.preventDefault()
         navigate('/tags/list')
     }
-    const [clicker, setClikcer] = useState(0)
+    const [updateTag] = useUpdateTagMutation()
     const currDescs = useSelector(descs)
     const currTags = useSelector(tags)
     const langs = useSelector(allLangs)
     const tagName = useSelector(tagType)
-    const [create] = useCreateTagMutation()
     const dispatch = useDispatch()
+    const currId = useSelector(currentId)
     const status = useSelector(checkStatus)
     useEffect(() => {
         if (status) {
-            createTag()
+            save()
         }
         console.log(1)
         return destroy()
@@ -41,9 +45,19 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
     const destroy = () => {
         dispatch(destroyStatus())
     }
-    const createTag = async () => {
-        await create({
+    const save = async () => {
+        console.log({
             name: currTags['Az_name'],
+            id: currId,
+            langs,
+            tagName,
+            image: file[0],
+            ...currDescs,
+            ...currTags,
+        })
+        await updateTag({
+            name: currTags['Az_name'],
+            id: currId,
             langs,
             tagName,
             image: file[0],
@@ -61,12 +75,9 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
     }
     const handleData = async (e) => {
         e.preventDefault()
-        setClikcer(clicker + 1)
-        console.log(type)
         dispatch(setData({ desc, tag, type }))
         dispatch(checkData())
     }
-
     return (
         <div className={styles.main}>
             <div className={styles.wrapper}>
@@ -74,7 +85,7 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
                     <h1 className={styles.section}>
                         <img src={arrow} alt="" />
                     </h1>
-                    <h1 className={styles.section}> New Tag</h1>
+                    <h1 className={styles.section}> Edit Tag</h1>
                 </div>
 
                 <div className={styles.btns}>
@@ -90,4 +101,4 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
     )
 }
 
-export default NewTagHeader
+export default TagEditHeader

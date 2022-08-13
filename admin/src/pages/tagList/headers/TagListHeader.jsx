@@ -9,7 +9,7 @@ const TagListHeader = () => {
     const [section, setSection] = useState()
     const changePage = (e) => {
         e.preventDefault()
-        navigate('/tags/newTagType')
+        navigate('/tags/new')
     }
     const openAll = () => {
         document.body.style.overflow = 'hidden'

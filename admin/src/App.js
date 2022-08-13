@@ -1,5 +1,5 @@
 import 'react-toastify/dist/ReactToastify.css'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Layout from './layouts/layout/Layout'
 import Login from './pages/login/Login'
@@ -8,28 +8,17 @@ import Dashboard from './pages/dashboard/Dashboard'
 import MainLayout from './layouts/mainLayout/MainLayout'
 import TagList from './pages/tagList/TagList'
 import Orders from './pages/orders/Orders'
-import {
-    useGetProfileQuery,
-    useUserMutation,
-} from './store/slices/api/userApiSlice'
-import { useEffect } from 'react'
-import { useVisitorMutation } from './store/slices/api/visitorApiSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-    isSkip,
-    setCredentials,
-    setSkip,
-    setVisitorToken,
-} from './store/slices/authSlice'
+import { useGetProfileQuery } from './store/slices/api/userApiSlice'
+
+import { useSelector } from 'react-redux'
+import { isSkip } from './store/slices/authSlice'
 import login from './pages/login/Login'
 import Loader from './components/loader/Loader'
 import List from './pages/tagList/sections/list/List'
 import NewTag from './pages/tagList/sections/newTag/NewTag'
+import TagEdit from './pages/tagList/sections/edit/TagEdit'
 
 function App() {
-    const [check] = useUserMutation()
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
     const skip = useSelector(isSkip)
 
     const { data, isLoading, isError } = useGetProfileQuery(undefined, {
@@ -51,11 +40,12 @@ function App() {
                         <Route element={<MainLayout />}>
                             <Route path={'dashboard'} element={<Dashboard />} />
                             <Route path={'tags/'} element={<TagList />}>
-                                <Route
-                                    path={'newTagType'}
-                                    element={<NewTag />}
-                                />
+                                <Route path={'new'} element={<NewTag />} />
                                 <Route path={'list'} element={<List />} />
+                                <Route
+                                    path={'edit/:id'}
+                                    element={<TagEdit />}
+                                />
                             </Route>
 
                             <Route path={'orders'} element={<Orders />} />

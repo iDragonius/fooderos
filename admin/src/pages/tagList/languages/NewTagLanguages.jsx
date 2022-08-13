@@ -11,7 +11,7 @@ import {
     tags,
 } from '../../../store/slices/languageSlice'
 import { useDispatch, useSelector } from 'react-redux'
-const Languages = ({ setTag, setDesc, tag, type, desc }) => {
+const NewTagLanguages = ({ setTag, setDesc, tag, type, desc }) => {
     const { data, isLoading, isSuccess } = useLanguagesQuery()
     const [langs, setLangs] = useState([])
     const dispatch = useDispatch()
@@ -67,4 +67,4 @@ const Languages = ({ setTag, setDesc, tag, type, desc }) => {
     )
 }
 
-export default Languages
+export default NewTagLanguages

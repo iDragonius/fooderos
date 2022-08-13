@@ -21,13 +21,70 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ['Tag'],
         }),
-
+        showTag: builder.query({
+            query: (id) => ({
+                url: `/tag/show/${id}`,
+                keepUnusedDataFor: 5,
+            }),
+            providesTags: ['Tag'],
+        }),
         status: builder.mutation({
             query: (credentials) => ({
                 url: '/tag/status',
                 method: 'PUT',
                 body: { ...credentials },
             }),
+        }),
+        typeStatus: builder.mutation({
+            query: (credentials) => ({
+                url: '/tag/typestatus',
+                method: 'PUT',
+                body: { ...credentials },
+            }),
+        }),
+        deleteTag: builder.mutation({
+            query: (credentials) => ({
+                url: '/tag/delete',
+                method: 'DELETE',
+                body: { ...credentials },
+            }),
+            invalidatesTags: ['Tag'],
+        }),
+        updateTag: builder.mutation({
+            async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
+                const formData = new FormData()
+                for (let i = 0; i < data.langs.length; i++) {
+                    formData.append(
+                        `${data.langs[i]}_name`,
+                        data[`${data.langs[i]}_name`]
+                    )
+
+                    formData.append(
+                        `${data.langs[i]}_description`,
+                        data[`${data.langs[i]}_desc`]
+                    )
+                }
+                formData.append('tag_name', 'Restaurant')
+                formData.append('name', data.name)
+                formData.append('image', data.image)
+                formData.append('id', 7)
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ', ' + pair[1])
+                }
+                const response = await fetchWithBQ(
+                    {
+                        url: '/tag/edit',
+                        method: 'PUT',
+                        body: formData,
+                    },
+                    _queryApi,
+                    _extraOptions
+                )
+                if (response.error) throw response.error
+                return response.data
+                    ? { data: response.data }
+                    : { error: response.error }
+            },
         }),
         createTag: builder.mutation({
             async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
@@ -40,7 +97,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                         data[`${data.langs[i]}_name`]
                     )
                     formData.append(
-                        `${data.langs[i]}_desc`,
+                        `${data.langs[i]}_description`,
                         data[`${data.langs[i]}_desc`]
                     )
                 }
@@ -71,4 +128,8 @@ export const {
     useStatusMutation,
     useCreateTagMutation,
     useCreateTypeMutation,
+    useTypeStatusMutation,
+    useDeleteTagMutation,
+    useShowTagQuery,
+    useUpdateTagMutation,
 } = authApiSlice

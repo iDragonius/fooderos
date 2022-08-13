@@ -21,8 +21,7 @@ import More from '../../more/More'
 import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 
 import Status from './status/Status'
-import NewTagHeader from '../../headers/NewTagHeader'
-import Languages from '../../languages/Languages'
+
 import TagListHeader from '../../headers/TagListHeader'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -127,7 +126,6 @@ function List() {
     return (
         <>
             <TagListHeader />
-            <Languages />
             <div className={'px-10 mt-8'}>
                 {isSuccess && (
                     <div className="p-2">
@@ -231,7 +229,7 @@ function List() {
                                                                         width={
                                                                             60
                                                                         }
-                                                                        src={`http://192.168.202.52/storage/tags/images/4Doner`}
+                                                                        src={`http://192.168.202.52/storage/tags/images/${cell.getValue()}`}
                                                                         alt=""
                                                                     />
                                                                 </div>
