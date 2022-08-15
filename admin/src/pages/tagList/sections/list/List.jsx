@@ -23,6 +23,9 @@ import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 import Status from './status/Status'
 
 import TagListHeader from '../../headers/TagListHeader'
+import { useDispatch, useSelector } from 'react-redux'
+import { currData } from '../../../../store/slices/tagSlice'
+import Loader from '../../../../components/loader/Loader'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -85,13 +88,16 @@ function List() {
             header: '',
         },
     ])
+    const currentData = useSelector(currData)
     const [data, setData] = useState([])
-    const { data: result, isSuccess } = useTagsQuery()
+    const { data: result, isSuccess, isLoading } = useTagsQuery()
+    const dispatch = useDispatch()
     useEffect(() => {
-        setData(isSuccess ? result.Tags : [])
+        setData(isSuccess ? currentData : [])
     }, [isSuccess])
+
     const table = useReactTable({
-        data,
+        data: currentData,
         columns,
         filterFns: {
             fuzzy: fuzzyFilter,
@@ -122,7 +128,12 @@ function List() {
             }
         }
     }, [table.getState().columnFilters[0]?.id])
-
+    // useEffect(() => {
+    //     dispatch(deleteData())
+    // })
+    if (isLoading) {
+        return <Loader />
+    }
     return (
         <>
             <TagListHeader />
@@ -244,7 +255,7 @@ function List() {
                                                             <td
                                                                 key={cell.id}
                                                                 className={
-                                                                    'border-[1px] px-6 py-5 '
+                                                                    'border-[1px] px-6 py-5  '
                                                                 }
                                                             >
                                                                 {cell.getValue() ===
@@ -285,19 +296,22 @@ function List() {
                                 })}
                             </tbody>
                         </table>
-
-                        <button
-                            className={
-                                'w-full bg-[#eee] flex justify-center items-center py-4 mt-10 mb-[72px]'
-                            }
-                            onClick={(e) => {
-                                table.setPageSize(
-                                    6 + table.getState().pagination.pageSize
-                                )
-                            }}
-                        >
-                            Load More
-                        </button>
+                        {currentData.length < 11 ? (
+                            <div></div>
+                        ) : (
+                            <button
+                                className={
+                                    'w-full bg-[#eee] flex justify-center items-center py-4 mt-10 mb-[72px]'
+                                }
+                                onClick={(e) => {
+                                    table.setPageSize(
+                                        6 + table.getState().pagination.pageSize
+                                    )
+                                }}
+                            >
+                                Load More
+                            </button>
+                        )}
                     </div>
                 )}
             </div>

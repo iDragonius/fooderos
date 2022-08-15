@@ -4,7 +4,6 @@ import { apiSlice } from './api/apiSlice'
 const languageSlice = createSlice({
     name: 'lang',
     initialState: {
-        currSection: 'newTagType',
         languages: [],
         language: 'Az',
         tagName: {},
@@ -13,6 +12,7 @@ const languageSlice = createSlice({
         status: false,
         id: null,
         image: null,
+        change: 1,
     },
     reducers: {
         setData: (state, action) => {
@@ -61,7 +61,10 @@ const languageSlice = createSlice({
             .addMatcher(
                 apiSlice.endpoints.showTag.matchFulfilled,
                 (state, { payload }) => {
-                    console.log(payload)
+                    state.tagName = {}
+                    state.description = {}
+                    state.tagType = null
+                    state.image = null
                     const data = payload[0]
                     state.image = data.image
                     for (let i = 0; i < data.tag_locals.length; i++) {
@@ -70,6 +73,7 @@ const languageSlice = createSlice({
                         state.description[`${data.tag_locals[i].lang}_desc`] =
                             data.tag_locals[i].description
                     }
+                    state.change = state.change + 1
                 }
             )
     },
@@ -85,11 +89,12 @@ export const {
 } = languageSlice.actions
 
 export default languageSlice.reducer
-export const currLanguage = (state) => state.lang.language
-export const tags = (state) => state.lang.tagName
-export const descs = (state) => state.lang.description
-export const allLangs = (state) => state.lang.languages
-export const tagType = (state) => state.lang.tagType
-export const checkStatus = (state) => state.lang.status
-export const currentId = (state) => state.lang.id
-export const currImage = (state) => state.lang.image
+export const currLanguage = (state) => state.tagData.language
+export const tags = (state) => state.tagData.tagName
+export const descs = (state) => state.tagData.description
+export const allLangs = (state) => state.tagData.languages
+export const tagType = (state) => state.tagData.tagType
+export const checkStatus = (state) => state.tagData.status
+export const currentId = (state) => state.tagData.id
+export const currImage = (state) => state.tagData.image
+export const changeId = (state) => state.tagData.change

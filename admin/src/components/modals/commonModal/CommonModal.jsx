@@ -2,7 +2,6 @@ import styles from './CommonModal.module.scss'
 const CommonModal = ({ setOpen, open, children }) => {
     const closeModal = () => {
         document.body.style.overflow = ''
-
         setOpen(false)
     }
     return (

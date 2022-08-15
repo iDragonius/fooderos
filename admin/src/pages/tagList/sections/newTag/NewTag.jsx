@@ -67,12 +67,21 @@ const NewTag = () => {
                                             {isSuccess && (
                                                 <>
                                                     {data.map((type) => (
-                                                        <option
-                                                            key={type.id}
-                                                            value={type.name}
-                                                        >
-                                                            {type.name}
-                                                        </option>
+                                                        <>
+                                                            {type.status ===
+                                                                1 && (
+                                                                <option
+                                                                    key={
+                                                                        type.id
+                                                                    }
+                                                                    value={
+                                                                        type.name
+                                                                    }
+                                                                >
+                                                                    {type.name}
+                                                                </option>
+                                                            )}
+                                                        </>
                                                     ))}
                                                 </>
                                             )}

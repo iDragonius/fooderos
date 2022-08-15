@@ -33,20 +33,32 @@ const ImgUpload = ({ file, setFile, path }) => {
     return (
         <>
             {path ? (
-                <div
-                    {...getRootProps({ className: 'dropzone' })}
-                    className={styles.drop}
-                >
-                    <div className={'p-3 border-[1px] rounded-md'}>
-                        <img
-                            src={`http://192.168.202.52/storage/tags/images/${path}`}
-                            className={'w-[88px] h-[88px]'}
-                            alt=""
-                        />
-                    </div>
+                <>
+                    {file[0] ? (
+                        <div
+                            {...getRootProps({ className: 'dropzone' })}
+                            className={styles.drop}
+                        >
+                            {thumbs}
+                            <input {...getInputProps()} />
+                        </div>
+                    ) : (
+                        <div
+                            {...getRootProps({ className: 'dropzone' })}
+                            className={styles.drop}
+                        >
+                            <div className={'p-3 border-[1px] rounded-md'}>
+                                <img
+                                    src={`http://192.168.202.52/storage/tags/images/${path}`}
+                                    className={'w-[88px] h-[88px]'}
+                                    alt=""
+                                />
+                            </div>
 
-                    <input {...getInputProps()} />
-                </div>
+                            <input {...getInputProps()} />
+                        </div>
+                    )}
+                </>
             ) : (
                 <>
                     {file[0] ? (

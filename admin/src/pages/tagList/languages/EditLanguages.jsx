@@ -19,9 +19,6 @@ const EditLanguages = ({ setDesc, setTag, type, tag, desc }) => {
     const currDescs = useSelector(descs)
     const currLang = useSelector(currLanguage)
     const [active, setActive] = useState('Az')
-    useEffect(() => {
-        dispatch(deleteData())
-    }, [])
 
     if (isLoading) {
         return <Loader />

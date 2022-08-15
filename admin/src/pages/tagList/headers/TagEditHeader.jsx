@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Header.module.scss'
 import arrow from '../../../assets/img/pages/arrow.png'
-import { useNavigate } from 'react-router-dom'
-import {
-    useCreateTagMutation,
-    useUpdateTagMutation,
-} from '../../../store/slices/api/tagApiSlice'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useUpdateTagMutation } from '../../../store/slices/api/tagApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     allLangs,
@@ -27,6 +24,7 @@ const TagEditHeader = ({ type, tag, desc, file }) => {
         e.preventDefault()
         navigate('/tags/list')
     }
+    const locale = useLocation()
     const [updateTag] = useUpdateTagMutation()
     const currDescs = useSelector(descs)
     const currTags = useSelector(tags)
@@ -39,34 +37,26 @@ const TagEditHeader = ({ type, tag, desc, file }) => {
         if (status) {
             save()
         }
-        console.log(1)
         return destroy()
     }, [status])
     const destroy = () => {
         dispatch(destroyStatus())
     }
+
     const save = async () => {
-        console.log({
-            name: currTags['Az_name'],
-            id: currId,
-            langs,
-            tagName,
-            image: file[0],
-            ...currDescs,
-            ...currTags,
-        })
         await updateTag({
             name: currTags['Az_name'],
-            id: currId,
+            id: locale.pathname.split('/')[3],
             langs,
-            tagName,
             image: file[0],
+            tagName,
             ...currDescs,
             ...currTags,
         })
             .unwrap()
             .then(() => {
                 dispatch(deleteData())
+                navigate('/tags/list')
                 toast.success('New Tag created !')
             })
             .catch((e) => {

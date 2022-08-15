@@ -8,7 +8,8 @@ const ShowTagTypes = ({ setOpen }) => {
 
         setOpen(false)
     }
-    const { data, isSuccess } = useTagTypeQuery()
+    const { data, isSuccess, isLoading } = useTagTypeQuery()
+
     return (
         <>
             <div className={styles.header}>

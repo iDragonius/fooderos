@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {
+    changeId,
     currentId,
     currImage,
     descs,
@@ -15,6 +16,7 @@ import EditLanguages from '../../languages/EditLanguages'
 import { useLocation } from 'react-router-dom'
 import styles from '../newTag/NewTag.module.scss'
 import ImgUpload from '../newTag/imgUpload/ImgUpload'
+import Loader from '../../../../components/loader/Loader'
 
 const TagEdit = () => {
     const currTags = useSelector(tags)
@@ -26,22 +28,26 @@ const TagEdit = () => {
     const [file, setFile] = useState([])
     const id = useSelector(currentId)
     const locale = useLocation()
+    const change = useSelector(changeId)
     const image = useSelector(currImage)
     const {
         data,
         refetch,
         isSuccess: success,
+        isLoading,
     } = useShowTagQuery(locale.pathname.split('/')[3])
     useEffect(() => {
         setDesc(currDescs['Az_desc'])
         setTag(currTags['Az_name'])
-        console.log(1)
-    }, [success])
+    }, [change])
     useEffect(() => {
         refetch()
     }, [id])
     const changeType = (e) => {
         setType(e.target.value)
+    }
+    if (isLoading) {
+        return <Loader />
     }
     return (
         <>
@@ -55,7 +61,7 @@ const TagEdit = () => {
             />
             <div>
                 <div className={styles.main}>
-                    <h1 className={styles.header}>Add new Tag</h1>
+                    <h1 className={styles.header}>Edit Tag</h1>
                     <div className={styles.cont}>
                         <ImgUpload file={file} setFile={setFile} path={image} />
 

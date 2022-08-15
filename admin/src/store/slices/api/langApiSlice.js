@@ -7,7 +7,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 url: '/lang',
             }),
         }),
+        createLanguage: builder.mutation({
+            query: (credentials) => ({
+                url: '/lang',
+                method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
     }),
 })
 
-export const { useLanguagesQuery } = authApiSlice
+export const { useLanguagesQuery, useCreateLanguageMutation } = authApiSlice

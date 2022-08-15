@@ -1,0 +1,14 @@
+.main {
+  @apply px-10 mt-10 ;
+}
+
+.lang {
+  @apply py-4 px-10 border-[1px] rounded-md flex justify-between items-center shadow-md ;
+  input {
+    @apply pt-3 pb-1 outline-none border-b-[1px]  hover:border-b-primary  hover:border-b-2 focus:border-b-primary  focus:border-b-2 ;
+  }
+
+  button {
+    @apply py-2 px-10 font-bold text-white bg-primary flex items-center rounded-md ;
+  }
+}

@@ -23,7 +23,10 @@ const More = () => {
     return (
         <>
             <Dropdown setView={setView} view={view} />
-            <div className={'cursor-pointer'} onClick={actions}>
+            <div
+                className={'cursor-pointer mb-4 text-2xl text-[#a0a5ad]'}
+                onClick={actions}
+            >
                 ...
             </div>
         </>

@@ -6,12 +6,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
             query: () => ({
                 url: '/tag/list',
             }),
+            providesTags: ['Tag'],
         }),
         tagType: builder.query({
             query: () => ({
                 url: '/tag/type',
             }),
-            providesTags: ['Tag'],
+            providesTags: ['TagType'],
         }),
         createType: builder.mutation({
             query: (credentials) => ({
@@ -19,14 +20,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
-            invalidatesTags: ['Tag'],
+            invalidatesTags: ['TagType'],
         }),
         showTag: builder.query({
             query: (id) => ({
                 url: `/tag/show/${id}`,
                 keepUnusedDataFor: 5,
             }),
-            providesTags: ['Tag'],
         }),
         status: builder.mutation({
             query: (credentials) => ({
@@ -64,17 +64,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
                         data[`${data.langs[i]}_desc`]
                     )
                 }
-                formData.append('tag_name', 'Restaurant')
+                formData.append('tag_name', data.tagName)
                 formData.append('name', data.name)
                 formData.append('image', data.image)
-                formData.append('id', 7)
-                for (var pair of formData.entries()) {
+                formData.append('id', data.id)
+                for (let pair of formData.entries()) {
                     console.log(pair[0] + ', ' + pair[1])
                 }
                 const response = await fetchWithBQ(
                     {
                         url: '/tag/edit',
-                        method: 'PUT',
+                        method: 'POST',
                         body: formData,
                     },
                     _queryApi,
@@ -118,6 +118,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     ? { data: response.data }
                     : { error: response.error }
             },
+            invalidatesTags: ['Tag'],
         }),
     }),
 })

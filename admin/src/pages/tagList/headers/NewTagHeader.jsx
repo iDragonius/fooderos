@@ -53,6 +53,7 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
             .unwrap()
             .then(() => {
                 dispatch(deleteData())
+                navigate('/tags/list')
                 toast.success('New Tag created !')
             })
             .catch((e) => {

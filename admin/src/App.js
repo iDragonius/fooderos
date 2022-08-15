@@ -17,6 +17,7 @@ import Loader from './components/loader/Loader'
 import List from './pages/tagList/sections/list/List'
 import NewTag from './pages/tagList/sections/newTag/NewTag'
 import TagEdit from './pages/tagList/sections/edit/TagEdit'
+import Settings from './pages/settings/Settings'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -49,6 +50,7 @@ function App() {
                             </Route>
 
                             <Route path={'orders'} element={<Orders />} />
+                            <Route path={'settings'} element={<Settings />} />
                         </Route>
                     </Route>
                 </Route>
