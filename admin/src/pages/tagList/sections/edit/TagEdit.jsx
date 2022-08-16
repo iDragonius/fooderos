@@ -35,7 +35,7 @@ const TagEdit = () => {
         refetch,
         isSuccess: success,
         isLoading,
-    } = useShowTagQuery(locale.pathname.split('/')[3])
+    } = useShowTagQuery(locale.pathname.split('/')[4])
     useEffect(() => {
         setDesc(currDescs['Az_desc'])
         setTag(currTags['Az_name'])

@@ -1,4 +1,4 @@
-import styles from '../NewTag.module.scss'
+import styles from '../NewStore.module.scss'
 import { useDropzone } from 'react-dropzone'
 
 const ImgUpload = ({ file, setFile, path }) => {

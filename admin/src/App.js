@@ -18,6 +18,11 @@ import List from './pages/tagList/sections/list/List'
 import NewTag from './pages/tagList/sections/newTag/NewTag'
 import TagEdit from './pages/tagList/sections/edit/TagEdit'
 import Settings from './pages/settings/Settings'
+import Users from './pages/users/Users'
+import UsersList from './pages/users/sections/list/UsersList'
+import Store from './pages/store/Store'
+import StoreList from './pages/store/sections/list/StoreList'
+import NewStore from './pages/store/sections/new/NewStore'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -41,12 +46,65 @@ function App() {
                         <Route element={<MainLayout />}>
                             <Route path={'dashboard'} element={<Dashboard />} />
                             <Route path={'tags/'} element={<TagList />}>
-                                <Route path={'new'} element={<NewTag />} />
-                                <Route path={'list'} element={<List />} />
-                                <Route
-                                    path={'edit/:id'}
-                                    element={<TagEdit />}
-                                />
+                                <Route path={'restaurant/'}>
+                                    <Route path={'new'} element={<NewTag />} />
+                                    <Route path={'list'} element={<List />} />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<TagEdit />}
+                                    />
+                                </Route>
+                                <Route path={'grocery/'}>
+                                    <Route path={'new'} element={<NewTag />} />
+                                    <Route path={'list'} element={<List />} />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<TagEdit />}
+                                    />
+                                </Route>
+                                <Route path={'pastries/'}>
+                                    <Route path={'new'} element={<NewTag />} />
+                                    <Route path={'list'} element={<List />} />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<TagEdit />}
+                                    />
+                                </Route>
+                            </Route>
+                            <Route path={'store/'} element={<Store />}>
+                                <Route path={'restaurant/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<StoreList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewStore />}
+                                    />
+                                </Route>
+                                <Route path={'grocery/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<StoreList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewStore />}
+                                    />
+                                </Route>
+                                <Route path={'pastries/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<StoreList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewStore />}
+                                    />
+                                </Route>
+                            </Route>
+                            <Route path={'users/'} element={<Users />}>
+                                <Route path={'list'} element={<UsersList />} />
                             </Route>
 
                             <Route path={'orders'} element={<Orders />} />

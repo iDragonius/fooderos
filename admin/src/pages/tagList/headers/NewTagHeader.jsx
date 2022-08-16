@@ -1,6 +1,6 @@
 import styles from './Header.module.scss'
 import arrow from '../../../assets/img/pages/arrow.png'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     allLangs,
@@ -21,7 +21,7 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
 
     const back = (e) => {
         e.preventDefault()
-        navigate('/tags/list')
+        navigate(`/tags/${location.pathname.split('/')[2]}/list`)
     }
     const [clicker, setClikcer] = useState(0)
     const currDescs = useSelector(descs)
@@ -30,6 +30,7 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
     const tagName = useSelector(tagType)
     const [create] = useCreateTagMutation()
     const dispatch = useDispatch()
+    const location = useLocation()
     const status = useSelector(checkStatus)
     useEffect(() => {
         if (status) {
@@ -53,7 +54,8 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
             .unwrap()
             .then(() => {
                 dispatch(deleteData())
-                navigate('/tags/list')
+
+                navigate(`/tags/${location.pathname.split('/')[2]}/list`)
                 toast.success('New Tag created !')
             })
             .catch((e) => {

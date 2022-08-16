@@ -36,9 +36,7 @@ function App() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            // getUser()
-        } else {
+        if (!localStorage.getItem('token')) {
             createVisitor()
         }
     }, [])

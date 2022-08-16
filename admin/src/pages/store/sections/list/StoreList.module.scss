@@ -1,0 +1,52 @@
+
+
+table {
+  border: 1px solid #ecf0f7;
+  border-collapse: collapse;
+  border-radius: 10px;
+
+}
+table tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+tbody {
+  border-bottom: 1px solid #ecf0f7;
+}
+
+th {
+  border-bottom: 1px solid #ecf0f7;
+  border-right: 1px solid #ecf0f7;
+}
+
+tfoot {
+  color: gray;
+}
+
+tfoot th {
+  font-weight: normal;
+}
+
+
+.inp {
+  width: 100%;
+  height: 48px;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-inline: 10px;
+  border: 1px solid #e1e6ee;
+}
+.inpNum {
+  width: 50%;
+  margin-bottom: 10px;
+
+  height: 48px;
+  padding-inline: 10px;
+  border: 1px solid #e1e6ee;
+  margin-top: 10px;
+}

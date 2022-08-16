@@ -5,11 +5,6 @@ const TagList = () => {
     return (
         <div className={styles.wrapper}>
             <Outlet />
-
-            {/*<div className={styles.cont}>*/}
-            {/*    /!*{section === 'List' && <List />}*!/*/}
-            {/*    /!*{section === 'NewTag' && <NewTag />}*!/*/}
-            {/*</div>*/}
         </div>
     )
 }

@@ -3,15 +3,15 @@
 }
 
 .dashboard {
-  @apply pt-6 mt-8 pb-4  px-7;
+  @apply pt-6 mt-8 pb-4  px-7 flex items-center transition-all ease-in-out ;
   border-bottom: 1px solid #ecf0f7;
 }
 .pageCont {
-  @apply w-8 h-8 flex items-center justify-center;
+  @apply w-8 h-8 flex items-center justify-center ;
 }
 
 .navigate {
-  @apply px-7 py-4 ;
+  @apply px-7 py-4 flex items-center w-full ;
   border-bottom: 1px solid #ecf0f7;
 }
 
@@ -25,4 +25,35 @@
 .active .tag path {
   fill: white;
 
+}
+.hoverNav {
+  animation: animateNav 0.2s ease-in;
+}
+.submenu {
+  animation: animateNavSec 0.25s ease-in;
+
+}
+@keyframes animateNavSec {
+  0%{
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes animateNav {
+  0%{
+    transform: translateX(-40px) scale(0.4);
+    opacity: 0;
+  }
+
+  100%{
+    transform: translateX(0px) scale(1);
+
+    opacity: 1;
+  }
 }

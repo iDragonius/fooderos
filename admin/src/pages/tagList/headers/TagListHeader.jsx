@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import styles from './Header.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import TagTypeModals from '../modals/tagTypeModals/TagTypeModals'
 
 const TagListHeader = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const [section, setSection] = useState()
+    const location = useLocation()
     const changePage = (e) => {
         e.preventDefault()
-        navigate('/tags/new')
+        navigate(`/tags/${location.pathname.split('/')[2]}/new`)
     }
     const openAll = () => {
         document.body.style.overflow = 'hidden'

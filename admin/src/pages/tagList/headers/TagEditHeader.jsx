@@ -20,11 +20,12 @@ import { toast } from 'react-toastify'
 
 const TagEditHeader = ({ type, tag, desc, file }) => {
     const navigate = useNavigate()
+    const locale = useLocation()
+
     const back = (e) => {
         e.preventDefault()
-        navigate('/tags/list')
+        navigate(`/tags/${locale.pathname.split('/')[2]}/list`)
     }
-    const locale = useLocation()
     const [updateTag] = useUpdateTagMutation()
     const currDescs = useSelector(descs)
     const currTags = useSelector(tags)
@@ -46,7 +47,7 @@ const TagEditHeader = ({ type, tag, desc, file }) => {
     const save = async () => {
         await updateTag({
             name: currTags['Az_name'],
-            id: locale.pathname.split('/')[3],
+            id: locale.pathname.split('/')[4],
             langs,
             image: file[0],
             tagName,

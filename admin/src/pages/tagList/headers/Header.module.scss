@@ -1,5 +1,5 @@
 .main {
-  @apply w-full bg-primary    ;
+  @apply w-full bg-primary;
   padding-bottom: 14px;
 }
 .wrapper {
@@ -7,11 +7,12 @@
   padding-top: 43px;
 }
 .section {
-  @apply  text-white font-medium ml-2;
+  @apply  text-white font-medium ml-2 ;
   font-size: 23px;
+
 }
 .name {
-  @apply flex items-center pl-10 self-end cursor-pointer;
+  @apply flex items-center pl-10 self-end cursor-pointer w-max;
 }
 
 .btn {

@@ -1,6 +1,6 @@
 import CommonDropdown from '../../../../components/dropdown/commonDropdown/CommonDropdown'
 import { useDeleteTagMutation } from '../../../../store/slices/api/tagApiSlice'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentId, deleteData } from '../../../../store/slices/languageSlice'
 import { toast } from 'react-toastify'
@@ -10,6 +10,7 @@ const Dropdown = ({ view, id, setView }) => {
     const navigate = useNavigate()
     const currId = useSelector(currentId)
     const dispatch = useDispatch()
+    const location = useLocation()
     const deleteTag = async () => {
         setView(false)
 
@@ -24,7 +25,7 @@ const Dropdown = ({ view, id, setView }) => {
     const editTag = async () => {
         setView(false)
         // dispatch(deleteData())
-        navigate(`/tags/edit/${currId}`)
+        navigate(`/tags/${location.pathname.split('/')[2]}/edit/${currId}`)
     }
     return (
         <div className={'relative z-[1000000]'}>
