@@ -6,6 +6,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             query: () => ({
                 url: '/lang',
             }),
+            providesTags: ['Lang'],
         }),
         createLanguage: builder.mutation({
             query: (credentials) => ({
@@ -13,8 +14,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
+            invalidatesTags: ['Lang'],
+        }),
+        deleteLanguage: builder.mutation({
+            query: (credentials) => ({
+                url: '/lang',
+                method: 'DELETE',
+                body: { ...credentials },
+            }),
+            providesTags: ['Lang'],
         }),
     }),
 })
 
-export const { useLanguagesQuery, useCreateLanguageMutation } = authApiSlice
+export const {
+    useLanguagesQuery,
+    useCreateLanguageMutation,
+    useDeleteLanguageMutation,
+} = authApiSlice

@@ -3,26 +3,36 @@
   box-shadow: 0px 1px 4px rgba(0,0,0,0.4);
 }
 .block {
-  @apply h-10 w-10 bg-[#1063fb] mr-16;
+  @apply h-10 w-10  mr-16;
+  background: #1063fb;
 }
 .wrapper {
   @apply flex items-center
 }
 .logo {
-  @apply text-[20px] text-[#1d1d1d];
+  font-size: 20px;
+  color: #1d1d1d;
 }
 .notification{
-  @apply relative px-4 border-x-[1px] border-x-[#ecf0f7] cursor-pointer;
+  @apply relative px-4  cursor-pointer;
+  border-inline: 1px solid #ecf0f7;
 }
 
+
 .notificationNum {
-  @apply w-[18px] h-[18px] bg-primary absolute rounded-full -top-2 right-[7px] flex justify-center items-center text-white text-[12px];
+  @apply  bg-primary absolute rounded-full -top-2  flex justify-center items-center text-white ;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  right: 7px;
 }
 .status {
   @apply flex items-center;
 }
 .statusCont {
-  @apply mr-3 text-[14px] text-[#393a3a];
+  @apply mr-3 ;
+  font-size: 14px;
+  color: #393a3a;
 }
 
 .switch {
@@ -89,9 +99,14 @@ input:checked + .slider:before {
 }
 
 .avatar {
-  @apply bg-[#cdcfd1] h-8 w-8 rounded-[8px] flex justify-center items-center text-white text-[14px] ml-6 mr-3;
+  @apply  h-8 w-8  flex justify-center items-center text-white ml-6 mr-3;
+  background: #cdcfd1;
+  border-radius: 8px;
+  font-size: 14px;
 }
 
 .name {
-  @apply text-[#393a3a] text-[14px] mr-2;
- }
+  @apply mr-2;
+  color: #393a3a;
+  font-size: 14px;
+}

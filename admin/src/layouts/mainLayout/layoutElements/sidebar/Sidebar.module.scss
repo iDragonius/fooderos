@@ -3,18 +3,21 @@
 }
 
 .dashboard {
-  @apply pt-6 mt-8 pb-4 border-b-[1px] border-b-[#ecf0f7]  px-7;
+  @apply pt-6 mt-8 pb-4  px-7;
+  border-bottom: 1px solid #ecf0f7;
 }
 .pageCont {
   @apply w-8 h-8 flex items-center justify-center;
 }
 
 .navigate {
-  @apply px-7 py-4 border-b-[1px] border-b-[#ecf0f7];
+  @apply px-7 py-4 ;
+  border-bottom: 1px solid #ecf0f7;
 }
 
 .active .pageCont {
-  @apply bg-primary rounded-[8px] ;
+  @apply bg-primary ;
+  border-radius: 8px;
 }
 .active svg{
   fill: white;

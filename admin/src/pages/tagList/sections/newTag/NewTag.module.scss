@@ -4,7 +4,10 @@
   border-radius: 6px;
 }
 .header {
-  @apply text-[#1a242f] text-[24px] px-12 border-b-[1px] border-b-[#ecf0f7] font-medium py-6;
+  @apply px-12  font-medium py-6;
+  color: #1a242f;
+  border-bottom: 1px solid #ecf0f7;
+  font-size: 24px;
 }
 
 .cont {
@@ -13,7 +16,10 @@
 }
 
 .label {
-  @apply absolute text-[12px] w-10 text-center top-[-11px]  bg-white text-[#31373e];
+  @apply absolute  w-10 text-center   bg-white ;
+  font-size: 12px;
+  top: -11px;
+  color: #31373e;
 }
 
 .phone {
@@ -28,22 +34,34 @@
   height: 56px;
 }
 .drop {
-  @apply border-dashed border-2 w-[180px] h-[180px] border-[#d0e3fc] rounded-[8px] flex justify-center items-center cursor-pointer;
+  @apply  flex justify-center items-center cursor-pointer;
+  width: 180px;
+  height: 180px;
+  border: 2px dashed #d0e3fc;
+  border-radius:8px ;
 }
 .dropContent {
-  @apply text-[20px]  px-6 py-[5px] border-[1px] border-[#ced4dd] bg-[#fbfbfc] rounded-[4px];
+  @apply   px-6 ;
+  font-size: 20px;
+  padding-block: 5px;
+  border: 1px solid #ced4dd;
+  background: #fbfbfc;
+  border-radius: 4px;
 }
 .orr {
-  @apply text-[#90a2b2] w-32 text-center mt-2;
+  @apply  w-32 text-center mt-2;
+  color:#90a2b2 ;
 }
 .tagName {
   @apply mx-10;
 }
 
 .file {
-  @apply  h-[180px] w-[300px] flex flex-col items-center justify-center ;
+  @apply   flex flex-col items-center justify-center ;
   border: 2px dashed #d0e3fc;
   border-radius: 10px;
+  height: 180px;
+  width: 300px;
 
 }
 
@@ -54,14 +72,17 @@
 }
 
 .inp {
-  @apply h-14 w-full px-[10px]  border-[1px] bg-white border-black border-opacity-10 rounded-md  transition-all ease-in-out outline-none;
+  @apply h-14 w-full  bg-white   rounded-md  transition-all ease-in-out outline-none;
+  padding-inline: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
   width: 100%;
   height: 100%;
 }
 
 
 .phoneL {
-  @apply absolute left-3 bg-white w-28 text-center  pointer-events-none transition-all ease-in-out text-[#31373e];
+  @apply absolute left-3 bg-white w-28 text-center  pointer-events-none transition-all ease-in-out ;
+  color: #31373e;
 }
 
 .inp:focus + .phoneL  , .inp:valid + .phoneL  {
@@ -75,7 +96,7 @@
   @apply border-2 border-blue-600
 }
 .inp:hover, .textArea:hover {
-  @apply border-2 border-[#31373e]
+  border: 2px solid #31373e;
 
 }
 .inp:focus + .phoneL {
@@ -83,8 +104,14 @@
 
 }
 .textArea {
-  @apply mt-7 w-full border-[1px] bg-white border-black border-opacity-10 rounded-md outline-none px-5 py-2 transition-all ease-in-out;
+  @apply mt-7 w-full bg-white border-opacity-10 rounded-md outline-none px-5 py-2 transition-all ease-in-out;
+  border: 1px solid rgba(0,0,0,0.1);
+
+
 }
 .textAre {
-  @apply absolute left-4 top-[18px] text-[14px] bg-white px-5 text-[#31373e];
+  @apply absolute left-4  bg-white px-5 ;
+  top: 18px;
+  font-size: 14px;
+  color: #31373e;
 }

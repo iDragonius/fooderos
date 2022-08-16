@@ -1,0 +1,111 @@
+.main {
+  @apply px-6 flex justify-between py-3 ;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.4);
+}
+.block {
+  @apply h-10 w-10  mr-16;
+  background: #1063fb;
+}
+.wrapper {
+  @apply flex items-center
+}
+.logo {
+  color: #1d1d1d;
+  font-size: 20px;
+}
+.notification{
+  @apply relative px-4  cursor-pointer;
+  border-bottom: 1px solid #ecf0f7;
+}
+
+.notificationNum {
+  @applybg-primary absolute rounded-full -top-2 flex justify-center items-center text-white ;
+  width: 18px;
+  height: 18px;
+  right: 7px;
+  font-size: 12px;
+}
+.status {
+  @apply flex items-center;
+}
+.statusCont {
+  @apply mr-3 ;
+  font-size: 14px;
+  color: #393a3a;
+}
+
+.switch {
+  @apply mr-6;
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  top: 1px;
+  height: 17px;
+  width: 17px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  @apply bg-green-500;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(17px);
+  -ms-transform: translateX(17px);
+  transform: translateX(17px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.profile {
+  @apply flex items-center;
+}
+
+.avatar {
+  @apply h-8 w-8  flex justify-center items-center text-white  ml-6 mr-3;
+  background: #cdcfd1;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.name {
+  @apply  mr-2;
+  color: #393a3a;
+  font-size: 14px;
+}

@@ -1,4 +1,4 @@
-import styles from '../../../../../layouts/mainLayout/layoutElements/header/Header.module.scss'
+import styles from './TypeStatus.module.scss'
 import { useTypeStatusMutation } from '../../../../../store/slices/api/tagApiSlice'
 
 const TypeStatus = ({ checked }) => {

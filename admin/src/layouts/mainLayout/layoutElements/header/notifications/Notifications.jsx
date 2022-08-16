@@ -1,4 +1,4 @@
-import styles from '../Header.module.scss'
+import styles from './Notifications.module.scss'
 import notification from '../../../../../assets/img/notification.svg'
 const Notifications = () => {
     return (

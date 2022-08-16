@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../../../../layouts/mainLayout/layoutElements/header/Header.module.scss'
+import styles from './Status.module.scss'
 import { useStatusMutation } from '../../../../../store/slices/api/tagApiSlice'
 
 const Status = ({ checked }) => {

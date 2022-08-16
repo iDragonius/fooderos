@@ -69,13 +69,20 @@ const NewTag = () => {
                                                     {data.map((type) => (
                                                         <>
                                                             {type.status ===
-                                                                1 && (
+                                                            1 ? (
                                                                 <option
-                                                                    key={
-                                                                        type.id
-                                                                    }
+                                                                    key={`tag_${type.id}`}
                                                                     value={
                                                                         type.name
+                                                                    }
+                                                                >
+                                                                    {type.name}
+                                                                </option>
+                                                            ) : (
+                                                                <option
+                                                                    key={`tag_${type.id}`}
+                                                                    className={
+                                                                        'hidden'
                                                                     }
                                                                 >
                                                                     {type.name}

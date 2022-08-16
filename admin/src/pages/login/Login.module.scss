@@ -12,10 +12,12 @@
   @apply text-primary;
 }
 .right {
-  @apply m-auto flex flex-col items-center mt-[150px] lg:mt-auto;
+  @apply m-auto flex flex-col items-center  lg:mt-auto;
+  margin-top: 150px;
 }
 .circleMain {
-  @apply w-24 h-24 bg-blue-400 rounded-full bg-[#0371e8] flex justify-center items-center ;
+  @apply w-24 h-24 bg-blue-400 rounded-full  flex justify-center items-center ;
+  background: #0371e8;
   box-shadow: 0 4px 10px 0 rgb(45 80 238 / 24%);
   margin: 0 auto 40px;
 }
@@ -31,26 +33,36 @@
 }
 
 .description {
-  @apply text-[#919aa7] text-xl mb-[50px] flex justify-center items-center flex-wrap w-10/12 text-center;
+  @apply  text-xl  flex justify-center items-center flex-wrap w-10/12 text-center;
+  color:#919aa7 ;
+  margin-bottom: 50px;
 }
+
 .btn {
-  @apply w-[427px] h-[56px] text-white mt-[30px] bg-[#0371e8] rounded-[8px] text-lg outline-none;
+  @apply  text-white text-lg outline-none;
+  width: 427px;
+  height: 56px;
+  margin-top: 30px;
+  background: #0371e8;
+  border-radius: 8px;
 }
 .agreement {
-  @apply mt-12 text-[#31373e] ;
+  @apply mt-12  ;
+  color:#31373e ;
 }
 .terms {
-  @apply text-[#0371e8]
+  color:#0371e8;
 }
 .form {
   @apply flex justify-between;
 }
 
 .cc {
-  @apply relative mr-4 px-[10px] border-[1px] border-black border-opacity-10 flex justify-center items-center rounded-md ;
+  @apply relative mr-4  border-black border-opacity-10 flex justify-center items-center rounded-md ;
   width: 80px;
   height: 56px;
-
+  border: 1px solid #e5e6e8;
+  padding-inline: 10px;
 }
 .cc:hover{
 
@@ -58,7 +70,10 @@
 
 }
 .label {
-  @apply absolute text-[12px] w-10 text-center top-[-11px]  bg-white text-[#31373e];
+  @apply absolute  w-10 text-center  bg-white;
+  font-size: 12px;
+  top: -11px;
+  color:#31373e ;
 }
 
 .phone {
@@ -86,9 +101,12 @@
   @apply h-14 w-full px-[10px]  border-[1px] border-black border-opacity-10 rounded-md  transition-all ease-in-out outline-none;
   width: 100%;
   height: 100%;
+  padding-inline: 10px;
+  border: 1px solid #e5e6e8;
 }
 .phoneL {
-  @apply absolute left-3 bg-white w-28 text-center  pointer-events-none transition-all ease-in-out text-[#31373e];
+  @apply absolute left-3 bg-white w-28 text-center  pointer-events-none transition-all ease-in-out;
+  color: #31373e;
 }
 
 .inp:focus + .phoneL  , .inp:valid + .phoneL  {
@@ -102,7 +120,7 @@
   @apply border-2 border-blue-600
 }
 .inp:hover {
-  @apply border-2 border-[#31373e]
+  border: 2px solid #31373e;
 
 }
 .inp:focus + .phoneL {
@@ -115,18 +133,27 @@
 }
 
 .timerSec{
-  @apply text-[#63676c] text-[14px] self-end mb-2;
+  @apply  self-end mb-2;
+  color: #63676c;
+  font-size: 14px;
 }
 .btnSec {
-  @apply flex flex-col mt-[30px];
+  @apply flex flex-col ;
+  margin-top: 30px;
 }
 
 .btnOtp {
-  @apply  w-[427px] h-[56px] text-white  bg-[#0371e8] rounded-[8px] text-lg outline-none;
+  @apply  text-white  text-lg outline-none;
+  width: 427px;
+  height: 56px;
+  background: #0371e8;
+  border-radius: 8px;
 }
 
 .resend {
-  @apply text-[#8b94a0] text-[16px] mt-5;
+  @apply mt-5;
+  color:#8b94a0 ;
+  font-size: 16px;
   span {
     @apply underline cursor-pointer;
   }

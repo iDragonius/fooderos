@@ -26,7 +26,7 @@ const ProfileSection = () => {
             birthday: birthdayRef.current.value,
         })
             .unwrap()
-            .then((res) => {
+            .then(() => {
                 dispatch(setName(nameRef.current.value))
                 dispatch(setImage(data.photo))
             })

@@ -1,18 +1,22 @@
 .main {
-  @apply w-full bg-primary   pb-[14px] ;
+  @apply w-full bg-primary    ;
+  padding-bottom: 14px;
 }
 .wrapper {
-  @apply flex justify-between pt-[43px]
+  @apply flex justify-between ;
+  padding-top: 43px;
 }
 .section {
-  @apply text-[23px] text-white font-medium ml-2;
+  @apply  text-white font-medium ml-2;
+  font-size: 23px;
 }
 .name {
   @apply flex items-center pl-10 self-end cursor-pointer;
 }
 
 .btn {
-  @apply h-12 bg-white rounded-[4px] px-6 text-primary font-medium  flex items-center;
+  @apply h-12 bg-white  px-6 text-primary font-medium  flex items-center;
+  border-radius: 4px;
   span {
     @apply mr-1;
   }

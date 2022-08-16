@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../Header.module.scss'
+import styles from './User.module.scss'
 import down from '../../../../../assets/img/down.png'
 import { useSelector } from 'react-redux'
 import { currName } from '../../../../../store/slices/userInfoSlice'

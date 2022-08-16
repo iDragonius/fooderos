@@ -2,3 +2,6 @@
 1.12 - Added slices, and endpoints for main profile page
 1.13 - Added image upload for customers, added main page for cpanel and added login
 1.14 - Added table for tags,  create filter and sort
+1.15 - Added created apis for lang and tags
+1.16 - Added tag creating with dinamic langs, adding creating tag type and show all
+1.17 - Added edit tag

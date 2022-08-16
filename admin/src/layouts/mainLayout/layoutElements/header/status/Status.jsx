@@ -1,4 +1,4 @@
-import styles from '../Header.module.scss'
+import styles from './Status.module.scss'
 import { useRef, useState } from 'react'
 
 const Status = () => {

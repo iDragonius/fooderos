@@ -1,11 +1,17 @@
 .cont {
-  @apply flex px-6 border-b-[1px] border-b-[#ecf0f7];
+  @apply flex px-6 ;
+  border-bottom: 1px solid #ecf0f7 ;
 }
 
 .language {
-  @apply h-[72px] w-[72px] flex justify-center items-center cursor-pointer text-[#8f9bb3] text-[16px] font-medium;
+  @apply flex justify-center items-center cursor-pointer  font-medium;
+  height: 72px;
+  width: 72px;
+  color: #8f9bb3;
+  font-size: 16px;
 }
 
 .active {
-  @apply border-b-[3px] border-b-primary text-primary
+  @apply text-primary;
+  border-bottom: 3px solid #067cff;
 }
