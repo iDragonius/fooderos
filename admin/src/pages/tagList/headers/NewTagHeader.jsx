@@ -48,6 +48,9 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
             langs,
             tagName,
             image: file[0],
+            rest:
+                location.pathname.split('/')[2][0].toUpperCase() +
+                location.pathname.split('/')[2].slice(1),
             ...currDescs,
             ...currTags,
         })

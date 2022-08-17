@@ -176,7 +176,7 @@ const Sidebar = () => {
                         style={{ borderBottom: '1px solid #ecf0f7' }}
                     >
                         <NavLink
-                            to={'/tags/restaurant/list'}
+                            to={'/tags/restaurants/list'}
                             className={({ isActive }) =>
                                 isActive
                                     ? 'px-24 py-3 bg-primary text-white font-bold '
@@ -303,7 +303,7 @@ const Sidebar = () => {
                         style={{ borderBottom: '1px solid #ecf0f7' }}
                     >
                         <NavLink
-                            to={'/store/restaurant/list'}
+                            to={'/store/restaurants/list'}
                             className={({ isActive }) =>
                                 isActive
                                     ? 'px-24 py-3 bg-primary text-white font-bold '

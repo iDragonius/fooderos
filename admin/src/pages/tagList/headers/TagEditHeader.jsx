@@ -51,14 +51,17 @@ const TagEditHeader = ({ type, tag, desc, file }) => {
             langs,
             image: file[0],
             tagName,
+            rest:
+                locale.pathname.split('/')[2][0].toUpperCase() +
+                locale.pathname.split('/')[2].slice(1),
             ...currDescs,
             ...currTags,
         })
             .unwrap()
             .then(() => {
                 dispatch(deleteData())
-                navigate('/tags/list')
-                toast.success('New Tag created !')
+                navigate(`/tags/${locale.pathname.split('/')[2]}/list`)
+                toast.success('Tag edited !')
             })
             .catch((e) => {
                 console.log(e)

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 const More = () => {
     const [view, setView] = useState(false)
     const dispatch = useDispatch()
+
     useEffect(() => {
         document.addEventListener('click', () => {
             setView(false)

@@ -46,7 +46,7 @@ function App() {
                         <Route element={<MainLayout />}>
                             <Route path={'dashboard'} element={<Dashboard />} />
                             <Route path={'tags/'} element={<TagList />}>
-                                <Route path={'restaurant/'}>
+                                <Route path={'restaurants/'}>
                                     <Route path={'new'} element={<NewTag />} />
                                     <Route path={'list'} element={<List />} />
                                     <Route
@@ -72,7 +72,7 @@ function App() {
                                 </Route>
                             </Route>
                             <Route path={'store/'} element={<Store />}>
-                                <Route path={'restaurant/'}>
+                                <Route path={'restaurants/'}>
                                     <Route
                                         path={'list'}
                                         element={<StoreList />}

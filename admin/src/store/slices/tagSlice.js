@@ -13,7 +13,7 @@ const tagSlice = createSlice({
         builder.addMatcher(
             apiSlice.endpoints.tags.matchFulfilled,
             (state, { payload }) => {
-                state.data = [...payload.Tags]
+                state.data = [...payload]
             }
         )
     },

@@ -7,7 +7,7 @@ const languageSlice = createSlice({
         languages: [],
         language: 'Az',
         tagName: {},
-        tagType: 'Market',
+        tagType: null,
         description: {},
         status: false,
         id: null,
@@ -65,14 +65,21 @@ const languageSlice = createSlice({
                     state.description = {}
                     state.tagType = null
                     state.image = null
-                    const data = payload[0]
-                    state.image = data.image
-                    for (let i = 0; i < data.tag_locals.length; i++) {
-                        state.tagName[`${data.tag_locals[i].lang}_name`] =
-                            data.tag_locals[i].name
-                        state.description[`${data.tag_locals[i].lang}_desc`] =
-                            data.tag_locals[i].description
+
+                    state.image = payload.tags.tag.image
+                    for (
+                        let i = 0;
+                        i < payload.tags.tag.tag_locals.length;
+                        i++
+                    ) {
+                        state.tagName[
+                            `${payload.tags.tag.tag_locals[i].lang}_name`
+                        ] = payload.tags.tag.tag_locals[i].name
+                        state.description[
+                            `${payload.tags.tag.tag_locals[i].lang}_desc`
+                        ] = payload.tags.tag.tag_locals[i].description
                     }
+                    state.tagType = payload.tags.type_name
                     state.change = state.change + 1
                 }
             )

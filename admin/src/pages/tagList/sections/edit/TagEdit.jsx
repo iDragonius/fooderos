@@ -6,6 +6,7 @@ import {
     currImage,
     descs,
     tags,
+    tagType,
 } from '../../../../store/slices/languageSlice'
 import {
     useShowTagQuery,
@@ -24,12 +25,14 @@ const TagEdit = () => {
     const { data: types, isSuccess } = useTagTypeQuery()
     const [desc, setDesc] = useState()
     const [tag, setTag] = useState()
-    const [type, setType] = useState('Restaurant')
     const [file, setFile] = useState([])
     const id = useSelector(currentId)
     const locale = useLocation()
     const change = useSelector(changeId)
     const image = useSelector(currImage)
+    const typeName = useSelector(tagType)
+    const [type, setType] = useState(typeName)
+
     const {
         data,
         refetch,
@@ -85,26 +88,27 @@ const TagEdit = () => {
                                 </div>
                                 <div className={styles.tagType}>
                                     <div className={styles.phoneOpt}>
-                                        <select
-                                            type="text"
-                                            className={styles.inp}
-                                            required={true}
-                                            onChange={changeType}
-                                            value={type}
-                                        >
-                                            {isSuccess && (
+                                        {isSuccess && (
+                                            <select
+                                                type="text"
+                                                className={styles.inp}
+                                                required={true}
+                                                onChange={changeType}
+                                                value={type}
+                                            >
                                                 <>
                                                     {types.map((type) => (
                                                         <option
                                                             key={type.id}
                                                             value={type.name}
+                                                            selected={typeName}
                                                         >
                                                             {type.name}
                                                         </option>
                                                     ))}
                                                 </>
-                                            )}
-                                        </select>
+                                            </select>
+                                        )}
                                         <label className={styles.phoneL}>
                                             Tag Type
                                         </label>

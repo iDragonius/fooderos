@@ -95,7 +95,7 @@ input:checked + .slider:before {
 }
 
 .profile {
-  @apply flex items-center;
+  @apply flex items-center cursor-pointer;
 }
 
 .avatar {

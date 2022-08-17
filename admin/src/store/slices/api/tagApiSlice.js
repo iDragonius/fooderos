@@ -3,8 +3,8 @@ import { apiSlice } from './apiSlice'
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         tags: builder.query({
-            query: () => ({
-                url: '/tag/list',
+            query: (params) => ({
+                url: `/tag/list/${params.lang}/${params.rest}`,
             }),
             providesTags: ['Tag'],
         }),
@@ -68,6 +68,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 formData.append('name', data.name)
                 formData.append('image', data.image)
                 formData.append('id', data.id)
+                formData.append('rest', data.rest)
                 for (let pair of formData.entries()) {
                     console.log(pair[0] + ', ' + pair[1])
                 }
@@ -104,6 +105,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 formData.append('tag_name', data.tagName)
                 formData.append('name', data.name)
                 formData.append('image', data.image)
+                formData.append('rest', data.rest)
                 const response = await fetchWithBQ(
                     {
                         url: '/tag/create',

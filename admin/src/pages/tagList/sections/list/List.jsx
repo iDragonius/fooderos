@@ -26,6 +26,7 @@ import TagListHeader from '../../headers/TagListHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { currData } from '../../../../store/slices/tagSlice'
 import Loader from '../../../../components/loader/Loader'
+import { useLocation } from 'react-router-dom'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -71,7 +72,7 @@ function List() {
             cell: (info) => info.getValue(),
         },
         {
-            accessorKey: 'tag_name',
+            accessorKey: 'type',
             cell: (info) => info.getValue(),
             header: () => <span>Tag Type</span>,
         },
@@ -88,9 +89,17 @@ function List() {
             header: '',
         },
     ])
+    const locate = useLocation()
     const currentData = useSelector(currData)
     const [data, setData] = useState([])
-    const { data: result, isSuccess, isLoading } = useTagsQuery()
+    const {
+        data: result,
+        isSuccess,
+        isLoading,
+    } = useTagsQuery({
+        lang: localStorage.getItem('lang'),
+        rest: locate.pathname.split('/')[2],
+    })
     const dispatch = useDispatch()
     useEffect(() => {
         setData(isSuccess ? currentData : [])
@@ -128,9 +137,7 @@ function List() {
             }
         }
     }, [table.getState().columnFilters[0]?.id])
-    // useEffect(() => {
-    //     dispatch(deleteData())
-    // })
+
     if (isLoading) {
         return <Loader />
     }
@@ -356,7 +363,7 @@ function Filter({ column, table }) {
             </>
         )
     }
-    if (column.id === 'tag_name') {
+    if (column.id === 'type') {
         return (
             <>
                 <datalist id={column.id + 'list'}>

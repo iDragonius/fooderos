@@ -10,7 +10,7 @@ const NewTag = () => {
     const { data, isSuccess } = useTagTypeQuery()
     const [desc, setDesc] = useState('')
     const [tag, setTag] = useState('')
-    const [type, setType] = useState('Restaurant')
+    const [type, setType] = useState('General')
     const [file, setFile] = useState([])
     const typeRef = useRef()
     const changeType = (e) => {
