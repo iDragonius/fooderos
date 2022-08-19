@@ -3,7 +3,12 @@ import { apiSlice } from './api/apiSlice'
 
 const userInfoSlice = createSlice({
     name: 'user',
-    initialState: { name: null, createdAt: null, image: null },
+    initialState: {
+        name: null,
+        createdAt: null,
+        image: null,
+        language: localStorage.getItem('lang'),
+    },
     reducers: {
         setData: (state, action) => {
             const { createdAt, name } = action.payload
@@ -19,6 +24,9 @@ const userInfoSlice = createSlice({
         setImage: (state, action) => {
             state.image = action.payload
         },
+        setLanguage: (state, action) => {
+            state.language = action.payload
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -32,9 +40,11 @@ const userInfoSlice = createSlice({
     },
 })
 
-export const { setData, setName, setCreated, setImage } = userInfoSlice.actions
+export const { setData, setName, setCreated, setImage, setLanguage } =
+    userInfoSlice.actions
 
 export default userInfoSlice.reducer
 export const currName = (state) => state.user.name
 export const currCreatedAt = (state) => state.user.createdAt
 export const avatar = (state) => state.user.image
+export const currLanguage = (state) => state.user.language

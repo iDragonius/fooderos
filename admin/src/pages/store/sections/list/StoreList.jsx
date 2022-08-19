@@ -17,6 +17,9 @@ import {
 import { rankItem, compareItems } from '@tanstack/match-sorter-utils'
 import Status from './status/Status'
 import StoreListLanguages from '../../languages/storeListLanguages/StoreListLanguages'
+import { useLocation } from 'react-router-dom'
+import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
+import { useStoresQuery } from '../../../../store/slices/api/storeApiSlice'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -104,7 +107,11 @@ const StoreList = () => {
         debugHeaders: true,
         debugColumns: false,
     })
-
+    const locate = useLocation()
+    const { data: result, refetch } = useStoresQuery({
+        lang: localStorage.getItem('lang'),
+        rest: locate.pathname.split('/')[2],
+    })
     useEffect(() => {
         if (table.getState().columnFilters[0]?.id === 'fullName') {
             if (table.getState().sorting[0]?.id !== 'fullName') {

@@ -52,9 +52,7 @@
   @apply  w-32 text-center mt-2;
   color:#90a2b2 ;
 }
-.tagName {
-  @apply mx-10;
-}
+
 
 .file {
   @apply   flex flex-col items-center justify-center ;
@@ -81,11 +79,12 @@
 
 
 .phoneL {
-  @apply absolute left-3 bg-white w-28 text-center  pointer-events-none transition-all ease-in-out ;
+  @apply absolute left-3 bg-white w-32 ml-3     pointer-events-none transition-all ease-in-out ;
   color: #31373e;
 }
 
 .inp:focus + .phoneL  , .inp:valid + .phoneL  {
+  @apply text-center;
   transform: translateY(-160%);
   font-size: 12px;
 }
@@ -100,7 +99,7 @@
 
 }
 .inp:focus + .phoneL {
-  @apply text-blue-600
+  @apply text-blue-600 text-center
 
 }
 .textArea {
@@ -109,9 +108,16 @@
 
 
 }
+.tagName {
+  @apply mt-6;
+}
 .textAre {
   @apply absolute left-4  bg-white px-5 ;
   top: 18px;
   font-size: 14px;
   color: #31373e;
+}
+
+.selectBtn {
+  @apply mt-6;
 }

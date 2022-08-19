@@ -34,7 +34,7 @@ const Sidebar = () => {
                 onMouseLeave={handleClose}
             >
                 <NavLink
-                    to={'/dashboard'}
+                    to={'/'}
                     className={({ isActive }) =>
                         isActive ? styles.active : ''
                     }

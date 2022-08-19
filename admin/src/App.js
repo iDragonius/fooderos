@@ -44,7 +44,7 @@ function App() {
 
                     <Route element={<RequireAuth />}>
                         <Route element={<MainLayout />}>
-                            <Route path={'dashboard'} element={<Dashboard />} />
+                            <Route index element={<Dashboard />} />
                             <Route path={'tags/'} element={<TagList />}>
                                 <Route path={'restaurants/'}>
                                     <Route path={'new'} element={<NewTag />} />

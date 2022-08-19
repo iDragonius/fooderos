@@ -7,6 +7,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 url: `/tag/list/${params.lang}/${params.rest}`,
             }),
             providesTags: ['Tag'],
+            keepUnusedDataFor: 1,
         }),
         tagType: builder.query({
             query: () => ({
@@ -106,6 +107,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 formData.append('name', data.name)
                 formData.append('image', data.image)
                 formData.append('rest', data.rest)
+
                 const response = await fetchWithBQ(
                     {
                         url: '/tag/create',

@@ -36,7 +36,6 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
         if (status) {
             createTag()
         }
-        console.log(1)
         return destroy()
     }, [status])
     const destroy = () => {

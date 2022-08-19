@@ -3,9 +3,12 @@ import CommonDropdown from '../../../../../../components/dropdown/commonDropdown
 import { useLanguagesQuery } from '../../../../../../store/slices/api/langApiSlice'
 import up from '../../../../../../assets/img/arrowUp.png'
 import down from '../../../../../../assets/img/downSide.png'
+import { useDispatch } from 'react-redux'
+import { setLanguage } from '../../../../../../store/slices/userInfoSlice'
 const UserDropdown = ({ view, currLang, setCurrLang }) => {
     const { data: languages, isSuccess } = useLanguagesQuery()
     const [langView, setLangView] = useState(false)
+    const dispatch = useDispatch()
     return (
         <CommonDropdown view={view} width={220} margintop={30} r={0}>
             <div className={'px-3 py-4'}>
@@ -48,6 +51,7 @@ const UserDropdown = ({ view, currLang, setCurrLang }) => {
                                                 'lang',
                                                 lang.lang
                                             )
+                                            dispatch(setLanguage(lang.lang))
                                         }}
                                     >
                                         {lang.lang}

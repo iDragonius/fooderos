@@ -55,7 +55,7 @@ const Otp = ({ setStep, step }) => {
                 dispatch(setCredentials({ token: res.token, authorized: true }))
                 localStorage.setItem('token', res.token)
                 dispatch(setSkip(false))
-                navigate('/dashboard')
+                navigate('/')
                 toast.success(`Logged in as ${name}`)
             })
     }

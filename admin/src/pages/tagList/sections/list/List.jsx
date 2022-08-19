@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { currData } from '../../../../store/slices/tagSlice'
 import Loader from '../../../../components/loader/Loader'
 import { useLocation } from 'react-router-dom'
+import { currLanguage } from '../../../../store/slices/userInfoSlice'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -89,22 +90,27 @@ function List() {
             header: '',
         },
     ])
-    const locate = useLocation()
+
     const currentData = useSelector(currData)
     const [data, setData] = useState([])
+    const locate = useLocation()
     const {
         data: result,
         isSuccess,
         isLoading,
+        refetch,
     } = useTagsQuery({
         lang: localStorage.getItem('lang'),
         rest: locate.pathname.split('/')[2],
     })
     const dispatch = useDispatch()
+    const currentLanguage = useSelector(currLanguage)
     useEffect(() => {
         setData(isSuccess ? currentData : [])
     }, [isSuccess])
-
+    useEffect(() => {
+        refetch()
+    }, [currentLanguage])
     const table = useReactTable({
         data: currentData,
         columns,
@@ -247,7 +253,7 @@ function List() {
                                                                         width={
                                                                             60
                                                                         }
-                                                                        src={`http://192.168.202.52/storage/tags/images/${cell.getValue()}`}
+                                                                        src={`http://192.168.202.52:81/storage/tags/images/${cell.getValue()}`}
                                                                         alt=""
                                                                     />
                                                                 </div>

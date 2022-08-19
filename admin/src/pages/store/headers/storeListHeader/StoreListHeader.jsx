@@ -1,12 +1,13 @@
 import React from 'react'
 import styles from '../../../tagList/headers/Header.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const StoreListHeader = () => {
     const navigate = useNavigate()
+    const location = useLocation()
     const changePage = (e) => {
         e.preventDefault()
-        navigate('/store/new')
+        navigate(`/store/${location.pathname.split('/')[2]}/new`)
     }
     return (
         <>
