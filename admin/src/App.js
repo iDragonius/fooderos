@@ -23,6 +23,7 @@ import UsersList from './pages/users/sections/list/UsersList'
 import Store from './pages/store/Store'
 import StoreList from './pages/store/sections/list/StoreList'
 import NewStore from './pages/store/sections/new/NewStore'
+import { useEffect } from 'react'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -30,7 +31,9 @@ function App() {
     const { data, isLoading, isError } = useGetProfileQuery(undefined, {
         skip,
     })
-
+    useEffect(() => {
+        if (!localStorage.getItem('lang')) localStorage.setItem('lang', 'Az')
+    })
     if (isLoading) {
         return <Loader />
     }

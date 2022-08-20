@@ -9,6 +9,7 @@ const storeSlice = createSlice({
         language: 'Az',
         storeName: {},
         status: false,
+        data: [],
     },
     reducers: {
         setManagers: (state, action) => {
@@ -51,6 +52,26 @@ const storeSlice = createSlice({
                 (state, { payload }) => {
                     for (let i = 0; i < payload.length; i++) {
                         state.languages.push(payload[i].lang)
+                    }
+                }
+            )
+            .addMatcher(
+                apiSlice.endpoints.stores.matchFulfilled,
+                (state, { payload }) => {
+                    const store = payload.restaurants
+                    for (let i = 0; i < store.length; i++) {
+                        let tagsStr = ''
+                        for (let j = 0; j < store.tags.length; j++) {
+                            console.log(store.tags[j].tag[0])
+                            tagsStr = tagsStr + ' ' + store.tags[j].tag[0].name
+                        }
+                        state.data.push({
+                            id: store[i].id,
+                            name: store[i].name,
+                            image: store[i].image,
+                            tags: tagsStr,
+                            status: store[i].status,
+                        })
                     }
                 }
             )

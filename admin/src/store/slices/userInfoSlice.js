@@ -27,6 +27,11 @@ const userInfoSlice = createSlice({
         setLanguage: (state, action) => {
             state.language = action.payload
         },
+        deleteData: (state) => {
+            state.name = null
+            state.image = null
+            state.createdAt = null
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(
@@ -40,8 +45,14 @@ const userInfoSlice = createSlice({
     },
 })
 
-export const { setData, setName, setCreated, setImage, setLanguage } =
-    userInfoSlice.actions
+export const {
+    setData,
+    setName,
+    setCreated,
+    setImage,
+    setLanguage,
+    deleteData,
+} = userInfoSlice.actions
 
 export default userInfoSlice.reducer
 export const currName = (state) => state.user.name
