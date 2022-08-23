@@ -1,38 +1,20 @@
 import React, { useState } from 'react'
-import styles from '../Languages.module.scss'
 import { useLanguagesQuery } from '../../../../store/slices/api/langApiSlice'
-
 import { useDispatch, useSelector } from 'react-redux'
 import {
     changeLanguage,
     currLang,
     currStoreNames,
-    setData,
-    setLastLanguage,
     setNames,
 } from '../../../../store/slices/storeSlice'
+import styles from '../Languages.module.scss'
 
-const StoreListLanguages = ({ name, setName }) => {
+const StoreEditLanguages = () => {
     const { data, isLoading, isSuccess } = useLanguagesQuery()
     const [active, setActive] = useState('Az')
     const dispatch = useDispatch()
-    const currentLang = useSelector(currLang)
-    const currentStoreNames = useSelector(currStoreNames)
 
     const activeLang = (lang) => {
-        if (lang === currentLang) {
-            return
-        }
-        dispatch(setLastLanguage(currentLang))
-        dispatch(setNames({ name }))
-        if (currentStoreNames[`${lang}_name`]) {
-            setActive(lang)
-            dispatch(changeLanguage(lang))
-            setName(currentStoreNames[`${lang}_name`])
-            return
-        }
-        setName('')
-        dispatch(changeLanguage(lang))
         setActive(lang)
     }
     return (
@@ -57,4 +39,4 @@ const StoreListLanguages = ({ name, setName }) => {
     )
 }
 
-export default StoreListLanguages
+export default StoreEditLanguages

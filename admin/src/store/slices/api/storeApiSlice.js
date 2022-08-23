@@ -4,13 +4,23 @@ export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         stores: builder.query({
             query: (params) => ({
-                url: `/store/${params.lang}/${params.rest}`,
+                url: `/store/list/${params.lang}/${params.rest}`,
             }),
             keepUnusedDataFor: 1,
         }),
         managers: builder.query({
             query: () => ({
                 url: '/store/manager',
+            }),
+        }),
+        showStore: builder.query({
+            query: (id) => ({
+                url: `/store/show/${id}`,
+            }),
+        }),
+        allTags: builder.query({
+            query: (rest) => ({
+                url: `/tag/list/${rest}`,
             }),
         }),
         createStore: builder.mutation({
@@ -54,5 +64,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
 })
 
-export const { useManagersQuery, useCreateStoreMutation, useStoresQuery } =
-    authApiSlice
+export const {
+    useManagersQuery,
+    useCreateStoreMutation,
+    useStoresQuery,
+    useShowStoreQuery,
+    useAllTagsQuery,
+} = authApiSlice

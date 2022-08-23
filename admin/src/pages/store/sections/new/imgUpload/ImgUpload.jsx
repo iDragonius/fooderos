@@ -16,12 +16,11 @@ const ImgUpload = ({ file, setFile, path }) => {
             )
         },
     })
-    const thumbs = file.map((files) => (
+    const thumbs = file?.map((files) => (
         <div key={files.name}>
-            <div className={'p-3 border-[1px] rounded-md'}>
+            <div>
                 <img
                     src={files.preview}
-                    className={'w-[88px] h-[88px]'}
                     onLoad={() => {
                         URL.revokeObjectURL(files.preview)
                     }}
@@ -46,10 +45,9 @@ const ImgUpload = ({ file, setFile, path }) => {
                             {...getRootProps({ className: 'dropzone' })}
                             className={styles.drop}
                         >
-                            <div className={'p-3 border-[1px] rounded-md'}>
+                            <div>
                                 <img
-                                    src={`http://192.168.202.52/storage/tags/images/${path}`}
-                                    className={'w-[88px] h-[88px]'}
+                                    src={`http://192.168.202.52:81/storage/stores/images/${path}`}
                                     alt=""
                                 />
                             </div>

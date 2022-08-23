@@ -69,6 +69,7 @@ const TagEditHeader = ({ type, tag, desc, file }) => {
     }
     const handleData = async (e) => {
         e.preventDefault()
+
         dispatch(setData({ desc, tag, type }))
         dispatch(checkData())
     }

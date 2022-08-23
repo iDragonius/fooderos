@@ -24,6 +24,7 @@ import Store from './pages/store/Store'
 import StoreList from './pages/store/sections/list/StoreList'
 import NewStore from './pages/store/sections/new/NewStore'
 import { useEffect } from 'react'
+import StoreEdit from './pages/store/sections/edit/StoreEdit'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -84,6 +85,10 @@ function App() {
                                         path={'new'}
                                         element={<NewStore />}
                                     />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<StoreEdit />}
+                                    />
                                 </Route>
                                 <Route path={'grocery/'}>
                                     <Route
@@ -94,15 +99,24 @@ function App() {
                                         path={'new'}
                                         element={<NewStore />}
                                     />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<StoreEdit />}
+                                    />
                                 </Route>
                                 <Route path={'pastries/'}>
                                     <Route
                                         path={'list'}
                                         element={<StoreList />}
                                     />
+
                                     <Route
                                         path={'new'}
                                         element={<NewStore />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<StoreEdit />}
                                     />
                                 </Route>
                             </Route>

@@ -20,6 +20,9 @@ import StoreListLanguages from '../../languages/storeListLanguages/StoreListLang
 import { useLocation } from 'react-router-dom'
 import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 import { useStoresQuery } from '../../../../store/slices/api/storeApiSlice'
+import { useSelector } from 'react-redux'
+import { currData } from '../../../../store/slices/storeSlice'
+import More from './more/More'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -47,7 +50,6 @@ const fuzzySort = (rowA, rowB, columnId) => {
 const StoreList = () => {
     const [columnFilters, setColumnFilters] = useState([])
     const [globalFilter, setGlobalFilter] = useState('')
-    const [currentData, setCurrentData] = useState([])
     const isSuccess = true
     const columns = useMemo(() => [
         {
@@ -55,22 +57,22 @@ const StoreList = () => {
             accessorKey: 'id',
             cell: (info) => info.getValue(),
         },
-
+        {
+            header: () => <span>Image</span>,
+            accessorKey: 'image',
+            cell: (info) => info.getValue(),
+        },
         {
             header: () => <span>Restaurant Name</span>,
             accessorKey: 'name',
             cell: (info) => info.getValue(),
         },
         {
-            accessorKey: 'tag_name',
+            accessorKey: 'tags',
             cell: (info) => info.getValue(),
             header: () => <span>Tags</span>,
         },
-        {
-            cell: (info) => info.getValue(),
-            accessorKey: 'store_count',
-            header: () => <span>Sort by</span>,
-        },
+
         {
             cell: (info) => info.getValue(),
 
@@ -82,7 +84,7 @@ const StoreList = () => {
             header: '',
         },
     ])
-
+    const currentData = useSelector(currData)
     const table = useReactTable({
         data: currentData,
         columns,
@@ -211,10 +213,25 @@ const StoreList = () => {
                                                                         width={
                                                                             60
                                                                         }
-                                                                        src={`http://192.168.202.52/storage/tags/images/${cell.getValue()}`}
+                                                                        src={`http://192.168.202.52:81/storage/stores/images/${cell.getValue()}`}
                                                                         alt=""
                                                                     />
                                                                 </div>
+                                                            </td>
+                                                        )
+                                                    }
+                                                    if (
+                                                        cell.column.id ===
+                                                        'more'
+                                                    ) {
+                                                        return (
+                                                            <td
+                                                                key={cell.id}
+                                                                className={
+                                                                    'border-[1px] px-6 py-5 '
+                                                                }
+                                                            >
+                                                                <More />
                                                             </td>
                                                         )
                                                     }
@@ -294,7 +311,6 @@ function Filter({ column, table }) {
     const firstValue = table
         .getPreFilteredRowModel()
         .flatRows[0]?.getValue(column.id)
-    const head = table.getFlatHeaders()
     const columnFilterValue = column.getFilterValue()
     const sortedUniqueValues = useMemo(
         () =>
@@ -327,7 +343,7 @@ function Filter({ column, table }) {
             </>
         )
     }
-    if (column.id === 'tag_name') {
+    if (column.id === 'tags') {
         return (
             <>
                 <datalist id={column.id + 'list'}>
@@ -347,7 +363,7 @@ function Filter({ column, table }) {
             </>
         )
     }
-    if (column.id === 'store_count') {
+    if (column.id === 'sort') {
         return (
             <>
                 <datalist id={column.id + 'list'}>

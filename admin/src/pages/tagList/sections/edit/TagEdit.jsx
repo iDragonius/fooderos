@@ -32,7 +32,6 @@ const TagEdit = () => {
     const image = useSelector(currImage)
     const typeName = useSelector(tagType)
     const [type, setType] = useState(typeName)
-
     const {
         data,
         refetch,
@@ -42,6 +41,7 @@ const TagEdit = () => {
     useEffect(() => {
         setDesc(currDescs['Az_desc'])
         setTag(currTags['Az_name'])
+        setType(typeName)
     }, [change])
     useEffect(() => {
         refetch()
@@ -101,7 +101,7 @@ const TagEdit = () => {
                                                         <option
                                                             key={type.id}
                                                             value={type.name}
-                                                            selected={typeName}
+                                                            selected={type}
                                                         >
                                                             {type.name}
                                                         </option>

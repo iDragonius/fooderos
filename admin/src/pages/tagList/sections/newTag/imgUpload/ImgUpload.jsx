@@ -48,7 +48,7 @@ const ImgUpload = ({ file, setFile, path }) => {
                         >
                             <div className={'p-3 border-[1px] rounded-md'}>
                                 <img
-                                    src={`http://192.168.202.52/storage/tags/images/${path}`}
+                                    src={`http://192.168.202.52:81/storage/tags/images/${path}`}
                                     className={'w-[88px] h-[88px]'}
                                     alt=""
                                 />

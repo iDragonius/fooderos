@@ -8,10 +8,19 @@ import styles from './NewStore.module.scss'
 import axios from 'axios'
 import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 import { useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { currData } from '../../../../store/slices/tagSlice'
-import { useManagersQuery } from '../../../../store/slices/api/storeApiSlice'
-import { currManagers } from '../../../../store/slices/storeSlice'
+import {
+    useAllTagsQuery,
+    useManagersQuery,
+} from '../../../../store/slices/api/storeApiSlice'
+import {
+    currManagers,
+    allTags,
+    currLang,
+    setSelectedTag,
+} from '../../../../store/slices/storeSlice'
+import { currLanguage } from '../../../../store/slices/userInfoSlice'
 
 const NewStore = () => {
     const [file, setFile] = useState([])
@@ -21,27 +30,28 @@ const NewStore = () => {
     const [commission, setCommission] = useState()
     const [name, setName] = useState('')
     const location = useLocation()
-
-    const { data: tags, isSuccess } = useTagsQuery({
-        lang: localStorage.getItem('lang'),
-        rest: location.pathname.split('/')[2],
-    })
+    const { data: tags, isSuccess } = useAllTagsQuery(
+        location.pathname.split('/')[2]
+    )
     const { data: managers, isSuccess: success } = useManagersQuery()
-    const [allTags, setAllTags] = useState([])
+    const [allTag, setAllTag] = useState([])
     const [allManagers, setAllManagers] = useState([])
-    const currentTags = useSelector(currData)
+    const currentTags = useSelector(allTags)
     const currentManagers = useSelector(currManagers)
+    const dispatch = useDispatch()
+    const activeLanguage = useSelector(currLang)
     useEffect(() => {
+        setAllTag([])
         for (let i = 0; i < currentTags.length; i++) {
-            setAllTags((old) => [
+            setAllTag((old) => [
                 ...old,
                 {
-                    value: currentTags[i].name,
-                    label: currentTags[i].name,
+                    value: currentTags[i][activeLanguage],
+                    label: currentTags[i][activeLanguage],
                 },
             ])
         }
-    }, [currentTags])
+    }, [currentTags, activeLanguage])
     useEffect(() => {
         for (let i = 0; i < currentManagers.length; i++) {
             setAllManagers((old) => [
@@ -53,6 +63,12 @@ const NewStore = () => {
             ])
         }
     }, [currentManagers])
+    useEffect(() => {
+        dispatch(setSelectedTag(multiSelectData))
+    }, [activeLanguage])
+    const save = () => {
+        console.log(multiSelectData)
+    }
     const customStyles = {
         valueContainer: () => ({
             height: '56px',
@@ -86,11 +102,7 @@ const NewStore = () => {
             color: '#858c99',
         }),
     }
-    const save = async () => {
-        await axios.post('http://192.168.202.52:81/api/kasha', {
-            tags: multiSelectData,
-        })
-    }
+
     return (
         <>
             <NewStoreHeader
@@ -122,7 +134,7 @@ const NewStore = () => {
 
                     <Select
                         isMulti={true}
-                        options={allTags}
+                        options={allTag}
                         styles={customStyles}
                         placeholder={'Choose tags'}
                         className={styles.selectBtn}
@@ -162,6 +174,7 @@ const NewStore = () => {
                             <label className={styles.phoneL}>Commission</label>
                         </div>
                     </div>
+                    <button onClick={save}>save</button>
                 </div>
             </div>
         </>

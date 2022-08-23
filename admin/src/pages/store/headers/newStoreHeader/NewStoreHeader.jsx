@@ -13,6 +13,7 @@ import {
     deleteData,
     destroyStatus,
     setData,
+    setNames,
 } from '../../../../store/slices/storeSlice'
 import { useCreateStoreMutation } from '../../../../store/slices/api/storeApiSlice'
 
@@ -70,7 +71,7 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
     }
     const handleData = async (e) => {
         e.preventDefault()
-        dispatch(setData({ name }))
+        dispatch(setNames({ name }))
         dispatch(checkStoreData())
     }
     return (
