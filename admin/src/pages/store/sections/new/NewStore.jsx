@@ -5,11 +5,8 @@ import ImgUpload from './imgUpload/ImgUpload'
 import Select from 'react-select'
 import styles from './NewStore.module.scss'
 
-import axios from 'axios'
-import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 import { useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { currData } from '../../../../store/slices/tagSlice'
 import {
     useAllTagsQuery,
     useManagersQuery,
@@ -19,8 +16,8 @@ import {
     allTags,
     currLang,
     setSelectedTag,
+    currTags,
 } from '../../../../store/slices/storeSlice'
-import { currLanguage } from '../../../../store/slices/userInfoSlice'
 
 const NewStore = () => {
     const [file, setFile] = useState([])
@@ -36,22 +33,24 @@ const NewStore = () => {
     const { data: managers, isSuccess: success } = useManagersQuery()
     const [allTag, setAllTag] = useState([])
     const [allManagers, setAllManagers] = useState([])
-    const currentTags = useSelector(allTags)
+    const alllTags = useSelector(allTags)
+    const currentTags = useSelector(currTags)
     const currentManagers = useSelector(currManagers)
     const dispatch = useDispatch()
     const activeLanguage = useSelector(currLang)
+
     useEffect(() => {
         setAllTag([])
-        for (let i = 0; i < currentTags.length; i++) {
+        for (let i = 0; i < alllTags.length; i++) {
             setAllTag((old) => [
                 ...old,
                 {
-                    value: currentTags[i][activeLanguage],
-                    label: currentTags[i][activeLanguage],
+                    value: alllTags[i][activeLanguage],
+                    label: alllTags[i][activeLanguage],
                 },
             ])
         }
-    }, [currentTags, activeLanguage])
+    }, [alllTags, activeLanguage])
     useEffect(() => {
         for (let i = 0; i < currentManagers.length; i++) {
             setAllManagers((old) => [
@@ -66,9 +65,10 @@ const NewStore = () => {
     useEffect(() => {
         dispatch(setSelectedTag(multiSelectData))
     }, [activeLanguage])
-    const save = () => {
-        console.log(multiSelectData)
-    }
+    useEffect(() => {
+        setMultiSelectData(currentTags)
+    }, [currentTags])
+
     const customStyles = {
         valueContainer: () => ({
             height: '56px',
@@ -136,6 +136,7 @@ const NewStore = () => {
                         isMulti={true}
                         options={allTag}
                         styles={customStyles}
+                        value={multiSelectData}
                         placeholder={'Choose tags'}
                         className={styles.selectBtn}
                         onChange={(data) => setMultiSelectData(data)}
@@ -174,7 +175,6 @@ const NewStore = () => {
                             <label className={styles.phoneL}>Commission</label>
                         </div>
                     </div>
-                    <button onClick={save}>save</button>
                 </div>
             </div>
         </>

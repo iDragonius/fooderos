@@ -1,8 +1,8 @@
 import styles from './Status.module.scss'
-import { useStatusMutation } from '../../../../../store/slices/api/tagApiSlice'
+import { useStoreStatusMutation } from '../../../../../store/slices/api/storeApiSlice'
 
 const Status = ({ checked }) => {
-    const [changeStatus] = useStatusMutation()
+    const [changeStatus] = useStoreStatusMutation()
 
     const handleStatus = async (e) => {
         console.log(

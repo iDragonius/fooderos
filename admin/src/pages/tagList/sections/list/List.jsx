@@ -110,7 +110,7 @@ function List() {
     }, [isSuccess])
     useEffect(() => {
         refetch()
-    }, [currentLanguage])
+    }, [currentLanguage, locate])
     const table = useReactTable({
         data: currentData,
         columns,

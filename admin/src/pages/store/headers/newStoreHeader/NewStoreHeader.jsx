@@ -8,12 +8,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
     allLangs,
     checkStoreData,
+    currLang,
+    currSeleetedTags,
     currStoreNames,
     currStoreStatus,
     deleteData,
     destroyStatus,
     setData,
+    setLastLanguage,
     setNames,
+    setSelectedTag,
 } from '../../../../store/slices/storeSlice'
 import { useCreateStoreMutation } from '../../../../store/slices/api/storeApiSlice'
 
@@ -24,10 +28,11 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
         navigate(`/store/${location.pathname.split('/')[2]}/list`)
     }
     const dispatch = useDispatch()
+    const currentLang = useSelector(currLang)
     const status = useSelector(currStoreStatus)
     const langs = useSelector(allLangs)
-    const [formString, setFormString] = useState('a')
     const currentStoreNames = useSelector(currStoreNames)
+    const selectedTags = useSelector(currSeleetedTags)
     const [create] = useCreateStoreMutation()
     useEffect(() => {
         if (status) {
@@ -39,16 +44,10 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
         dispatch(destroyStatus())
     }
     const createStore = async () => {
-        // console.log(tags)
-        // for (let i = 0; i < tags.length; i++) {
-        //     console.log(tags[i].label)
-        //     setFormString(tags[i].label)
-        // }
-        console.log(formString)
         await create({
             name: currentStoreNames['Az_name'],
             langs,
-            tags,
+            tags: selectedTags,
             manager: manager.label,
             image: file[0],
             price,
@@ -62,7 +61,7 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
             .then(() => {
                 dispatch(deleteData())
 
-                // navigate(`/tags/${location.pathname.split('/')[2]}/list`)
+                navigate(`/store/${location.pathname.split('/')[2]}/list`)
                 toast.success('New Tag created !')
             })
             .catch((e) => {
@@ -73,6 +72,8 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
         e.preventDefault()
         dispatch(setNames({ name }))
         dispatch(checkStoreData())
+        dispatch(setLastLanguage(currentLang))
+        dispatch(setSelectedTag(tags))
     }
     return (
         <>

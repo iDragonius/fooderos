@@ -15,7 +15,6 @@ import {
 } from '@tanstack/react-table'
 
 import { rankItem, compareItems } from '@tanstack/match-sorter-utils'
-import Status from './status/Status'
 import StoreListLanguages from '../../languages/storeListLanguages/StoreListLanguages'
 import { useLocation } from 'react-router-dom'
 import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
@@ -23,6 +22,8 @@ import { useStoresQuery } from '../../../../store/slices/api/storeApiSlice'
 import { useSelector } from 'react-redux'
 import { currData } from '../../../../store/slices/storeSlice'
 import More from './more/More'
+import Status from './status/Status'
+import { currLanguage } from '../../../../store/slices/userInfoSlice'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -72,7 +73,6 @@ const StoreList = () => {
             cell: (info) => info.getValue(),
             header: () => <span>Tags</span>,
         },
-
         {
             cell: (info) => info.getValue(),
 
@@ -110,10 +110,15 @@ const StoreList = () => {
         debugColumns: false,
     })
     const locate = useLocation()
+    const currentLanguage = useSelector(currLanguage)
+
     const { data: result, refetch } = useStoresQuery({
         lang: localStorage.getItem('lang'),
         rest: locate.pathname.split('/')[2],
     })
+    useEffect(() => {
+        refetch()
+    }, [locate, currentLanguage])
     useEffect(() => {
         if (table.getState().columnFilters[0]?.id === 'fullName') {
             if (table.getState().sorting[0]?.id !== 'fullName') {
@@ -124,7 +129,6 @@ const StoreList = () => {
     return (
         <div>
             <StoreListHeader />
-            <StoreListLanguages />
             <div className={'px-10 mt-8'}>
                 {isSuccess && (
                     <div className="p-2">

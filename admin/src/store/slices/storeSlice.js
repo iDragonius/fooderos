@@ -13,6 +13,7 @@ const storeSlice = createSlice({
         data: [],
         tags: [],
         selectedTags: [],
+        currentTags: [],
         currStore: {},
     },
     reducers: {
@@ -22,6 +23,7 @@ const storeSlice = createSlice({
         deleteData: (state) => {
             state.language = 'Az'
             state.storeName = []
+            state.lastLanguage = 'Az'
         },
         checkStoreData: (state) => {
             for (let i = 0; i < state.languages.length; i++) {
@@ -43,9 +45,22 @@ const storeSlice = createSlice({
             state.lastLanguage = action.payload
         },
         setSelectedTag: (state, action) => {
+            state.selectedTags = []
+            state.selectedTagsNumbers = []
+            state.currentTags = []
             for (let i = 0; i < action.payload.length; i++) {
-                console.log(action.payload[i])
-                console.log(state.language)
+                for (let k = 0; k < state.tags.length; k++) {
+                    if (
+                        action.payload[i].label ===
+                        state.tags[k][state.lastLanguage]
+                    ) {
+                        state.selectedTags.push(state.tags[k]['Az'])
+                        state.currentTags.push({
+                            label: state.tags[k][state.language],
+                            value: state.tags[k][state.language],
+                        })
+                    }
+                }
             }
         },
         destroyStatus: (state) => {
@@ -72,16 +87,21 @@ const storeSlice = createSlice({
                 apiSlice.endpoints.stores.matchFulfilled,
                 (state, { payload }) => {
                     state.data = []
-                    const store = payload.restaurants
+                    const store =
+                        payload.restaurants ||
+                        payload.grocery ||
+                        payload.pastries
                     for (let i = 0; i < store.length; i++) {
                         let tagsStr = ''
                         for (let j = 0; j < store[i].tags.length; j++) {
                             tagsStr =
-                                tagsStr + ',' + store[i].tags[j].tag[0].name
+                                tagsStr + ', ' + store[i].tags[j].tag[0].name
                         }
+                        console.log(store)
+
                         state.data.push({
                             id: store[i].id,
-                            name: store[i].name,
+                            name: store[i].store_locals[0].name,
                             image: store[i].image,
                             tags: tagsStr.slice(1),
                             status: store[i].status,
@@ -95,17 +115,22 @@ const storeSlice = createSlice({
                     let tags = []
                     let names = {}
                     for (let i = 0; i < payload.tags.length; i++) {
-                        let temp = {}
-
                         for (let j = 0; j < payload.tags[i].tags.length; j++) {
-                            temp[`${state.languages[j]}`] =
-                                payload.tags[i].tags[j].name
+                            if (payload.tags[i].tags[j].lang === 'Az') {
+                                state.selectedTags.push(
+                                    payload.tags[i].tags[j].name
+                                )
+                                state.currentTags.push({
+                                    label: payload.tags[i].tags[j].name,
+                                    value: payload.tags[i].tags[j].name,
+                                })
+                            }
                         }
-                        tags.push(temp)
                     }
                     for (let i = 0; i < payload.store_locales.length; i++) {
-                        names[`${payload.store_locales[i].lang}_name`] =
-                            payload.store_locales[i].name
+                        state.storeName[
+                            `${payload.store_locales[i].lang}_name`
+                        ] = payload.store_locales[i].name
                     }
 
                     state.currStore = {
@@ -113,7 +138,6 @@ const storeSlice = createSlice({
                         price: Number(payload.store_data.price),
                         image: payload.store_data.image,
                         commission: payload.store_data.commission,
-                        tags,
                         names,
                     }
                 }
@@ -121,6 +145,7 @@ const storeSlice = createSlice({
             .addMatcher(
                 apiSlice.endpoints.allTags.matchFulfilled,
                 (state, { payload }) => {
+                    state.tags = []
                     for (let i = 0; i < payload.length; i++) {
                         let temp = {}
                         for (let j = 0; j < state.languages.length; j++) {
@@ -155,3 +180,5 @@ export const allLangs = (state) => state.store.languages
 export const currData = (state) => state.store.data
 export const currStore = (state) => state.store.currStore
 export const allTags = (state) => state.store.tags
+export const currTags = (state) => state.store.currentTags
+export const currSeleetedTags = (state) => state.store.selectedTags
