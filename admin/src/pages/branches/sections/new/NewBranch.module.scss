@@ -1,0 +1,153 @@
+.main {
+  @apply  mx-10 mt-10;
+  //box-shadow: 1px 1px 10px #cfcfcf;
+  border-radius: 6px;
+}
+
+
+.header {
+  @apply px-12  font-medium py-6;
+  color: #1a242f;
+  border-bottom: 1px solid #ecf0f7;
+  font-size: 24px;
+}
+
+.cont {
+  @apply px-12 flex mt-5 pb-10;
+
+}
+
+.label {
+  @apply absolute  w-10 text-center   bg-white ;
+  font-size: 12px;
+  top: -11px;
+  color: #31373e;
+}
+
+.phone {
+  @apply relative    flex flex-col justify-center  transition-all ease-in-out  outline-none   ;
+  width: 400px;
+  height: 56px;
+}
+
+.phoneOpt {
+  @apply relative   flex flex-col justify-center  transition-all ease-in-out  outline-none   ;
+  width: 528px;
+  height: 56px;
+}
+.phoneXs {
+  @apply relative   flex flex-col justify-center  transition-all ease-in-out  outline-none   ;
+  width: 260px;
+  height: 56px;
+}
+.drop {
+  @apply  flex justify-center items-center cursor-pointer;
+  width: 256px;
+  height: 256px;
+  border: 2px dashed #d0e3fc;
+  border-radius:8px ;
+}
+.banner {
+  @apply  flex justify-center items-center cursor-pointer w-full;
+  height: 200px;
+  border: 2px dashed #d0e3fc;
+  border-radius:8px ;
+}
+.dropContent {
+  @apply   px-6 ;
+  font-size: 20px;
+  padding-block: 5px;
+  border: 1px solid #ced4dd;
+  background: #fbfbfc;
+  border-radius: 4px;
+}
+.orr {
+  @apply  w-32 text-center mt-2;
+  color:#90a2b2 ;
+}
+
+
+.file {
+  @apply   flex flex-col items-center justify-center ;
+  border: 2px dashed #d0e3fc;
+  border-radius: 10px;
+  height: 180px;
+  width: 300px;
+
+}
+
+
+
+.recaptcha {
+  @apply self-start mt-6;
+}
+
+.inp {
+  @apply h-14 w-full  bg-white   rounded-md  transition-all ease-in-out outline-none;
+  padding-inline: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  width: 100%;
+  height: 100%;
+}
+
+
+.phoneL {
+  @apply absolute left-3 bg-white w-max ml-3     pointer-events-none transition-all ease-in-out ;
+  color: #31373e;
+}
+
+.inp:focus + .phoneL  , .inp:valid + .phoneL  {
+  @apply text-center px-4 ;
+
+  transform: translateY(-160%);
+  font-size: 12px;
+}
+.inp:focus, .textArea:focus {
+  @apply border-2 border-blue-600
+}
+.inp:focus:hover, .textArea:focus:hover {
+  @apply border-2 border-blue-600
+}
+.inp:hover, .textArea:hover {
+  border: 2px solid #31373e;
+
+}
+.inp:focus + .phoneL {
+  @apply text-blue-600 text-center
+
+}
+.textArea {
+  @apply mt-7 w-full bg-white border-opacity-10 rounded-md outline-none px-5 py-2 transition-all ease-in-out;
+  border: 1px solid rgba(0,0,0,0.1);
+
+
+}
+.tagName {
+  @apply mt-6;
+}
+.textAre {
+  @apply absolute left-4  bg-white px-5 ;
+  top: 18px;
+  font-size: 14px;
+  color: #31373e;
+}
+
+.selectBtn {
+  @apply mt-6;
+}
+.form {
+  @apply flex justify-between;
+}
+
+.cc {
+  @apply relative  border-black border-opacity-10 flex justify-center items-center rounded-md ;
+  width: 80px;
+  height: 56px;
+  border: 1px solid #e5e6e8;
+  padding-inline: 10px;
+}
+.cc:hover{
+
+  border: 2px solid black;
+
+}

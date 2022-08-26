@@ -17,11 +17,11 @@ const TagListHeader = () => {
         setSection('show')
         setOpen(true)
     }
-    const openNew = () => {
-        document.body.style.overflow = 'hidden'
-        setSection('newTagType')
-        setOpen(true)
-    }
+    // const openNew = () => {
+    //     document.body.style.overflow = 'hidden'
+    //     setSection('newTagType')
+    //     setOpen(true)
+    // }
     return (
         <>
             <TagTypeModals setOpen={setOpen} open={open} section={section} />
@@ -62,13 +62,13 @@ const TagListHeader = () => {
                         >
                             Show all Tag Types
                         </button>
-                        <button
-                            className={styles.tagType + ' ' + styles.btn}
-                            onClick={openNew}
-                        >
-                            <span>+</span>
-                            New Tag Type
-                        </button>
+                        {/*<button*/}
+                        {/*    className={styles.tagType + ' ' + styles.btn}*/}
+                        {/*    onClick={openNew}*/}
+                        {/*>*/}
+                        {/*    <span>+</span>*/}
+                        {/*    New Tag Type*/}
+                        {/*</button>*/}
                         <button
                             className={styles.tag + ' ' + styles.btn}
                             onClick={changePage}

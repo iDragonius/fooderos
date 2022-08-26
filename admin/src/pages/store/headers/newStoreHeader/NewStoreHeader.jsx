@@ -44,6 +44,9 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
         dispatch(destroyStatus())
     }
     const createStore = async () => {
+        if (!currentStoreNames['Az_name']) {
+            return toast.warn('Fill the <Az> store name')
+        }
         await create({
             name: currentStoreNames['Az_name'],
             langs,
@@ -62,7 +65,7 @@ const NewStoreHeader = ({ name, file, tags, manager, price, commission }) => {
                 dispatch(deleteData())
 
                 navigate(`/store/${location.pathname.split('/')[2]}/list`)
-                toast.success('New Tag created !')
+                toast.success('New Store created !')
             })
             .catch((e) => {
                 console.log(e)

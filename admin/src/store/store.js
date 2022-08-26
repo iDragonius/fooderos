@@ -5,6 +5,7 @@ import UserInfoSlice from './slices/userInfoSlice'
 import languageSlice from './slices/languageSlice'
 import tagSlice from './slices/tagSlice'
 import storeSlice from './slices/storeSlice'
+import branchListSlice from './slices/branchListSlice'
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
         tagData: languageSlice,
         tags: tagSlice,
         store: storeSlice,
+        branchList: branchListSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),

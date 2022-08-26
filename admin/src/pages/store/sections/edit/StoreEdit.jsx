@@ -84,7 +84,6 @@ const StoreEdit = () => {
         setCommission(currentStore.commission)
         setPrice(currentStore.price)
         setName(currentStoreName['Az_name'])
-        console.log(currentStoreName)
     }, [currentStore])
     useEffect(() => {
         setAllManagers([])

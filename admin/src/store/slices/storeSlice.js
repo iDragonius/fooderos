@@ -24,6 +24,9 @@ const storeSlice = createSlice({
             state.language = 'Az'
             state.storeName = []
             state.lastLanguage = 'Az'
+            state.currStore = {}
+            state.currentTags = []
+            state.storeName = {}
         },
         checkStoreData: (state) => {
             for (let i = 0; i < state.languages.length; i++) {
@@ -97,7 +100,6 @@ const storeSlice = createSlice({
                             tagsStr =
                                 tagsStr + ', ' + store[i].tags[j].tag[0].name
                         }
-                        console.log(store)
 
                         state.data.push({
                             id: store[i].id,
@@ -105,6 +107,7 @@ const storeSlice = createSlice({
                             image: store[i].image,
                             tags: tagsStr.slice(1),
                             status: store[i].status,
+                            sort: store[i].status,
                         })
                     }
                 }

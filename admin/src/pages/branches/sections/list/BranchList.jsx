@@ -1,6 +1,7 @@
-import StoreListHeader from '../../headers/storeListHeader/StoreListHeader'
+import { useBranchStoresQuery } from '../../../../store/slices/api/branchApiSlice'
+
 import { useEffect, useMemo, useState } from 'react'
-import styles from './StoreList.module.scss'
+import styles from './BranchList.module.scss'
 import {
     useReactTable,
     getCoreRowModel,
@@ -15,15 +16,15 @@ import {
 } from '@tanstack/react-table'
 
 import { rankItem, compareItems } from '@tanstack/match-sorter-utils'
-import StoreListLanguages from '../../languages/storeListLanguages/StoreListLanguages'
 import { useLocation } from 'react-router-dom'
-import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
+
 import { useStoresQuery } from '../../../../store/slices/api/storeApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { currData, deleteData } from '../../../../store/slices/storeSlice'
 import More from './more/More'
 import Status from './status/Status'
 import { currLanguage } from '../../../../store/slices/userInfoSlice'
+import BranchListHeader from '../../headers/branchListHeader/BranchListHeader'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -48,7 +49,8 @@ const fuzzySort = (rowA, rowB, columnId) => {
     return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
 }
 
-const StoreList = () => {
+const BranchList = () => {
+    const { data } = useBranchStoresQuery()
     const [columnFilters, setColumnFilters] = useState([])
     const [globalFilter, setGlobalFilter] = useState('')
     const isSuccess = true
@@ -58,20 +60,22 @@ const StoreList = () => {
             accessorKey: 'id',
             cell: (info) => info.getValue(),
         },
+
         {
-            header: () => <span>Image</span>,
-            accessorKey: 'image',
-            cell: (info) => info.getValue(),
-        },
-        {
-            header: () => <span>Restaurant Name</span>,
+            header: () => <span>Branch Name</span>,
             accessorKey: 'name',
             cell: (info) => info.getValue(),
         },
         {
-            accessorKey: 'tags',
+            accessorKey: 'location',
             cell: (info) => info.getValue(),
-            header: () => <span>Tags</span>,
+            header: () => <span>Location</span>,
+        },
+        {
+            cell: (info) => info.getValue(),
+
+            accessorKey: 'phone',
+            header: 'Phone',
         },
         {
             cell: (info) => info.getValue(),
@@ -116,19 +120,9 @@ const StoreList = () => {
         debugColumns: false,
     })
     const locate = useLocation()
-    const currentLanguage = useSelector(currLanguage)
 
-    const { data: result, refetch } = useStoresQuery({
-        lang: localStorage.getItem('lang'),
-        rest: locate.pathname.split('/')[2],
-    })
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(deleteData())
-    }, [])
-    useEffect(() => {
-        refetch()
-    }, [locate, currentLanguage])
+
     useEffect(() => {
         if (table.getState().columnFilters[0]?.id === 'fullName') {
             if (table.getState().sorting[0]?.id !== 'fullName') {
@@ -138,7 +132,7 @@ const StoreList = () => {
     }, [table.getState().columnFilters[0]?.id])
     return (
         <div>
-            <StoreListHeader />
+            <BranchListHeader />
             <div className={'px-10 mt-8'}>
                 {isSuccess && (
                     <div className="p-2">
@@ -403,7 +397,7 @@ function Filter({ column, table }) {
             </>
         )
     }
-    if (column.id === 'tags') {
+    if (column.id === 'phone') {
         return (
             <>
                 <datalist id={column.id + 'list'}>
@@ -423,7 +417,26 @@ function Filter({ column, table }) {
             </>
         )
     }
-
+    if (column.id === 'location') {
+        return (
+            <>
+                <datalist id={column.id + 'list'}>
+                    {sortedUniqueValues.slice(0, 5000).map((value) => (
+                        <option value={value} key={value} />
+                    ))}
+                </datalist>
+                <DebouncedInput
+                    type="text"
+                    value={columnFilterValue ?? ''}
+                    onChange={(value) => column.setFilterValue(value)}
+                    placeholder={`Search... `}
+                    className={styles.inp}
+                    list={column.id + 'list'}
+                />
+                <div className="h-1" />
+            </>
+        )
+    }
     if (column.id === 'status') {
         return <div />
     }
@@ -458,4 +471,4 @@ function DebouncedInput({
     )
 }
 
-export default StoreList
+export default BranchList

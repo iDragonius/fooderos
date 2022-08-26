@@ -25,6 +25,9 @@ import StoreList from './pages/store/sections/list/StoreList'
 import NewStore from './pages/store/sections/new/NewStore'
 import { useEffect } from 'react'
 import StoreEdit from './pages/store/sections/edit/StoreEdit'
+import Branches from './pages/branches/Branches'
+import BranchList from './pages/branches/sections/list/BranchList'
+import NewBranch from './pages/branches/sections/new/NewBranch'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -122,6 +125,10 @@ function App() {
                             </Route>
                             <Route path={'users/'} element={<Users />}>
                                 <Route path={'list'} element={<UsersList />} />
+                            </Route>
+                            <Route path={'branches/'} element={<Branches />}>
+                                <Route path={'list'} element={<BranchList />} />
+                                <Route path={'new'} element={<NewBranch />} />
                             </Route>
 
                             <Route path={'orders'} element={<Orders />} />

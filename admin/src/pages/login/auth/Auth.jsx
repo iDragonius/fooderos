@@ -40,7 +40,6 @@ const Auth = ({ setStep }) => {
     }
     const change = (res) => {
         setReKey(res)
-        console.log(res)
     }
     return (
         <>

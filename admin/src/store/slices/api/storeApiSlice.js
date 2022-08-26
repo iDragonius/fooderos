@@ -7,6 +7,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 url: `/store/list/${params.lang}/${params.rest}`,
             }),
             keepUnusedDataFor: 1,
+            providesTags: ['Store'],
         }),
         managers: builder.query({
             query: () => ({
@@ -30,6 +31,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials },
             }),
+            invalidatesTags: ['Store'],
         }),
         deleteStore: builder.mutation({
             query: (credentials) => ({
@@ -37,6 +39,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: 'DELETE',
                 body: { ...credentials },
             }),
+            invalidatesTags: ['Store'],
         }),
         createStore: builder.mutation({
             async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {

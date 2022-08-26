@@ -5,17 +5,13 @@ const Status = ({ checked }) => {
     const [changeStatus] = useStoreStatusMutation()
 
     const handleStatus = async (e) => {
-        console.log(
-            e.target.parentNode.parentNode.parentNode.childNodes[0].innerHTML,
-            e.target.checked
-        )
         await changeStatus({
             id: Number(
                 e.target.parentNode.parentNode.parentNode.childNodes[0]
                     .innerHTML
             ),
             status: e.target.checked ? 1 : 0,
-        }).then((res) => console.log(res))
+        })
     }
     return (
         <label className={styles.switch}>

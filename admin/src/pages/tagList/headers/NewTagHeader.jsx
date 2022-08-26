@@ -42,6 +42,9 @@ const NewTagHeader = ({ desc, tag, type, file }) => {
         dispatch(destroyStatus())
     }
     const createTag = async () => {
+        if (!currTags['Az_name']) {
+            return toast.warn('Fill the <Az> tag name')
+        }
         await create({
             name: currTags['Az_name'],
             langs,
