@@ -8,7 +8,9 @@ const AuthModal = ({ open, setOpen, setStep, children }) => {
     return (
         <div className={open ? styles.main : 'hidden'} onClick={closeModal}>
             <div
-                className={styles.cont + ' md:w-[600px] '}
+                className={
+                    'w-full min-h-screen md:min-h-max md:h-max  h-60 bg-white mt-20 md:mt-24 md:w-[600px] rounded-md p-6 relative transition-all'
+                }
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className={styles.xContainer} onClick={closeModal}>
