@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NewStoreHeader from '../../headers/newStoreHeader/NewStoreHeader'
 import NewStoreLanguages from '../../languages/newStoreLanguages/NewStoreLanguages'
 import ImgUpload from './imgUpload/ImgUpload'
-import Select from 'react-select/base'
+import Select from 'react-select'
 import styles from './NewStore.module.scss'
 
 import { useLocation } from 'react-router-dom'

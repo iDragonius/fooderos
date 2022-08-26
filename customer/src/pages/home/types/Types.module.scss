@@ -1,0 +1,15 @@
+.type {
+  @apply flex items-center mr-6 cursor-pointer;
+  background: #f4f4fa;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  img {
+    @apply mr-2;
+  }
+
+}
+.typeActive {
+  @apply bg-white;
+  border: 2px solid  #ff5012;
+}

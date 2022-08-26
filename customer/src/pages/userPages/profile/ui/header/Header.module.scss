@@ -1,13 +1,18 @@
 .main {
-  @apply px-6 py-4 rounded-md border-[1px] border-[#e3e4e6] flex flex-col justify-center sm:justify-start sm:flex-row items-center mb-4 bg-white mt-5 md:mt-0 mb-8 ;
+  @apply px-6 py-4 rounded-md  flex flex-col justify-center sm:justify-start sm:flex-row items-center mb-4 bg-white mt-5 md:mt-0 mb-8 ;
+  border: 1px solid #e3e4e6;
   color: #171819;
 }
 
 .img {
-  @apply w-[72px] h-[72px] rounded-full bg-gray-100  flex items-center justify-center text-3xl text-gray-400 mr-6 mb-3 sm:mb-0;
+  @apply rounded-full bg-gray-100  flex items-center justify-center text-3xl text-gray-400 mr-6 mb-3 sm:mb-0;
+  width: 72px;
+  height: 72px;
 }
 .imgCont {
-  @apply w-[72px] h-[72px] rounded-full bg-gray-100  ;
+  @apply rounded-full bg-gray-100  ;
+  width: 72px;
+  height: 72px;
 
 }
 .name {
@@ -15,7 +20,8 @@
 }
 
 .date {
-  @apply font-light text-[14px]
+  @apply font-light ;
+  font-size: 14px;
 }
 .file {
   @apply mt-2;

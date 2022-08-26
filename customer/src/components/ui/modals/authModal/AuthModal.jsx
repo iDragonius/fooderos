@@ -7,7 +7,10 @@ const AuthModal = ({ open, setOpen, setStep, children }) => {
     }
     return (
         <div className={open ? styles.main : 'hidden'} onClick={closeModal}>
-            <div className={styles.cont} onClick={(e) => e.stopPropagation()}>
+            <div
+                className={styles.cont + ' md:w-[600px] '}
+                onClick={(e) => e.stopPropagation()}
+            >
                 <div className={styles.xContainer} onClick={closeModal}>
                     <i>
                         <svg
