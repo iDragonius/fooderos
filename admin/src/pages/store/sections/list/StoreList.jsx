@@ -15,9 +15,7 @@ import {
 } from '@tanstack/react-table'
 
 import { rankItem, compareItems } from '@tanstack/match-sorter-utils'
-import StoreListLanguages from '../../languages/storeListLanguages/StoreListLanguages'
 import { useLocation } from 'react-router-dom'
-import { useTagsQuery } from '../../../../store/slices/api/tagApiSlice'
 import { useStoresQuery } from '../../../../store/slices/api/storeApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { currData, deleteData } from '../../../../store/slices/storeSlice'

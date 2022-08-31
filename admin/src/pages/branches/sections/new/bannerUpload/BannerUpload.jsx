@@ -49,7 +49,7 @@ const ImgUpload = ({ file, setFile, path }) => {
                         >
                             <div>
                                 <img
-                                    src={`http://192.168.202.52:81/storage/stores/images/${path}`}
+                                    src={`http://192.168.202.52:81/storage/branch/covers/${path}`}
                                     alt=""
                                 />
                             </div>

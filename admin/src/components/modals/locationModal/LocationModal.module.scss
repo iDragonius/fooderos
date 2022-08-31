@@ -1,0 +1,15 @@
+.main {
+  @apply fixed left-0 right-0 top-0 bottom-0 flex justify-center items-center  ;
+  background: rgba(0,0,0,0.5);
+  z-index: 100000;
+}
+
+.cont {
+  @apply w-full md:w-min min-w-[1200px] min-h-screen md:min-h-max md:h-max  h-60 bg-white mt-32 md:mt-0 rounded-b-md  relative transition-all;
+}
+.x {
+  @apply h-4 w-4;
+}
+.xContainer {
+  @apply h-14 w-14 absolute right-0 top-0 flex items-center justify-center cursor-pointer
+}

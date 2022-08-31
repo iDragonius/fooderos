@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import styles from '../../../tagList/headers/Header.module.scss'
 import arrow from '../../../../assets/img/pages/arrow.png'
-import { useNavigate } from 'react-router-dom'
-import { useCreateBranchMutation } from '../../../../store/slices/api/branchApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     branchStatus,
@@ -13,11 +11,12 @@ import {
     destroyStatus,
     setBranchData,
 } from '../../../../store/slices/branchListSlice'
-
+import { useNavigate } from 'react-router-dom'
 import { allLangs } from '../../../../store/slices/languageSlice'
+import { useCreateBranchMutation } from '../../../../store/slices/api/branchApiSlice'
 import { toast } from 'react-toastify'
 
-const NewBranchHeader = ({
+const BranchEditHeader = (
     name,
     phone,
     address,
@@ -32,8 +31,8 @@ const NewBranchHeader = ({
     amount,
     payload,
     max_distance,
-    schedule,
-}) => {
+    schedule
+) => {
     const dispatch = useDispatch()
     const currentId = useSelector(currId)
     const navigate = useNavigate()
@@ -96,7 +95,7 @@ const NewBranchHeader = ({
                         <h1 className={styles.section}>
                             <img src={arrow} alt="" />
                         </h1>
-                        <h1 className={styles.section}> New Branch</h1>
+                        <h1 className={styles.section}> Edit Branch</h1>
                     </div>
 
                     <div className={styles.btns}>
@@ -113,4 +112,4 @@ const NewBranchHeader = ({
     )
 }
 
-export default NewBranchHeader
+export default BranchEditHeader

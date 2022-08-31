@@ -9,7 +9,6 @@ import MainLayout from './layouts/mainLayout/MainLayout'
 import TagList from './pages/tagList/TagList'
 import Orders from './pages/orders/Orders'
 import { useGetProfileQuery } from './store/slices/api/userApiSlice'
-
 import { useSelector } from 'react-redux'
 import { isSkip } from './store/slices/authSlice'
 import login from './pages/login/Login'
@@ -28,6 +27,7 @@ import StoreEdit from './pages/store/sections/edit/StoreEdit'
 import Branches from './pages/branches/Branches'
 import BranchList from './pages/branches/sections/list/BranchList'
 import NewBranch from './pages/branches/sections/new/NewBranch'
+import BranchEdit from './pages/branches/sections/edit/BranchEdit'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -129,6 +129,10 @@ function App() {
                             <Route path={'branches/'} element={<Branches />}>
                                 <Route path={'list'} element={<BranchList />} />
                                 <Route path={'new'} element={<NewBranch />} />
+                                <Route
+                                    path={'edit/:id'}
+                                    element={<BranchEdit />}
+                                />
                             </Route>
 
                             <Route path={'orders'} element={<Orders />} />

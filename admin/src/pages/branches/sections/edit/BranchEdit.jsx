@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import NewBranchHeader from '../../headers/newBranchHeader/NewBranchHeader'
-import NewBranchLanguages from '../../languages/newBranchLanguage/NewBranchLanguages'
+import BranchEditLanguages from '../../languages/branchEditLanguages/BranchEditLanguages'
+import BranchEditHeader from '../../headers/branchEditHeader/BranchEditHeader'
+import LocationMap from '../new/locationMap/LocationMap'
+import styles from '../new/NewBranch.module.scss'
+import BannerUpload from '../new/bannerUpload/BannerUpload'
+import ImgUpload from '../new/imgUpload/ImgUpload'
+import Select from 'react-select'
+import pin from '../../../../assets/img/pin.png'
+import Schedule from './schedule/Schedule'
 import {
     useCitiesQuery,
     useCountriesQuery,
     usePaymentQuery,
+    useShowBranchQuery,
 } from '../../../../store/slices/api/branchApiSlice'
-import styles from './NewBranch.module.scss'
-import Select from 'react-select'
-import ImgUpload from './imgUpload/ImgUpload'
-import BannerUpload from './bannerUpload/BannerUpload'
-import Schedule from './schedule/Schedule'
 import { useSelector } from 'react-redux'
-import pin from '../../../../assets/img/pin.png'
 import {
     allCurrencies,
     allPaymentMethods,
     changed,
+    currBranch,
+    currBranchSchedule,
 } from '../../../../store/slices/branchListSlice'
-import LocationModal from '../../../../components/modals/locationModal/LocationModal'
-import LocationMap from './locationMap/LocationMap'
+import { useLocation } from 'react-router-dom'
+
 const customStyles = {
     valueContainer: () => ({
         height: '56px',
@@ -54,7 +58,7 @@ const customStyles = {
     }),
 }
 
-const NewBranch = () => {
+const BranchEdit = () => {
     const [schedule, setSchedule] = useState({
         Monday: {
             start: '09:00',
@@ -106,9 +110,11 @@ const NewBranch = () => {
     const [file, setFile] = useState([])
     const [banner, setBanner] = useState([])
     const [defaultVal, setDefaultVal] = useState([])
-    const [currentCountry, setCurrentCountry] = useState('Azerbaijan')
+    const [currentCountry, setCurrentCountry] = useState({
+        label: 'Azerbaijan',
+        value: 'Azerbaijan',
+    })
     const [currentCity, setCurrentCity] = useState('')
-    const { data: cities, isSuccess: success } = useCitiesQuery(currentCountry)
     const { data: paymentMet } = usePaymentQuery()
     const currencies = useSelector(allCurrencies)
     const paymentMethods = useSelector(allPaymentMethods)
@@ -122,7 +128,33 @@ const NewBranch = () => {
     const [amount, setAmount] = useState()
     const [payload, setPayload] = useState()
     const [maxDist, setMaxDist] = useState()
+    const location = useLocation()
+    const [country, setCountry] = useState('Azerbaijan')
 
+    const currentBranch = useSelector(currBranch)
+
+    const currentBranchSchedule = useSelector(currBranchSchedule)
+    const { data: cities, isSuccess: success } = useCitiesQuery(
+        currentCountry.value
+    )
+    const { data: branch } = useShowBranchQuery(location.pathname.split('/')[3])
+    useEffect(() => {
+        setPayment(currentBranch.payment)
+        setCurrency(currentBranch.currency)
+        // setCurrentCountry(currentBranch.country)
+        setCurrentCity(currentBranch.city)
+        setPayload(currentBranch.paylaod)
+        setPhone(currentBranch.phone)
+        setCashLimit(currentBranch.cash_limit)
+        setAmount(currentBranch.amount)
+        setMaxDist(currentBranch.maxDistance)
+        setMaxDistance(true)
+        console.log(currentBranch.coordinates)
+        setSchedule(currentBranchSchedule)
+        console.log(currentBranchSchedule)
+        // setCountry(currentBranch.country.value)
+        // setCurrentLoc(currentBranch.coordinates)
+    }, [currentBranch])
     useEffect(() => {
         if (isSuccess) {
             setAllCountries([])
@@ -181,6 +213,7 @@ const NewBranch = () => {
     const changeCountry = (data) => {
         setCurrentCountry(data.value)
     }
+
     return (
         <>
             <LocationMap
@@ -189,33 +222,20 @@ const NewBranch = () => {
                 currentLoc={currentLoc}
                 setCurrentLoc={setCurrentLoc}
             />
-            <NewBranchHeader
-                name={name}
-                coordinates={currentLoc}
-                phone={phone}
-                payment={payment}
-                currency={currency}
-                address={locate}
-                country={currentCountry}
-                city={currentCity}
-                cash_limit={cashLimit}
-                payload={payload}
-                amount={amount}
-                cover={banner[0]}
-                profile={file[0]}
-                max_distance={maxDist}
-                schedule={schedule}
-            />
-            <NewBranchLanguages
-                name={name}
-                setName={setName}
-                setAddress={setLocate}
-                address={locate}
-            />
+            <BranchEditHeader />
+            <BranchEditLanguages />
             <div className={styles.main}>
-                <BannerUpload file={banner} setFile={setBanner} />
+                <BannerUpload
+                    file={banner}
+                    setFile={setBanner}
+                    path={currentBranch.banner}
+                />
                 <div className={'flex mt-8 flex-wrap mb-32'}>
-                    <ImgUpload setFile={setFile} file={file} />
+                    <ImgUpload
+                        setFile={setFile}
+                        file={file}
+                        path={currentBranch.profile}
+                    />
                     <div className={'ml-8'}>
                         <div>
                             <div className={styles.phoneOpt}>
@@ -257,6 +277,7 @@ const NewBranch = () => {
                             styles={customStyles}
                             options={allCountries}
                             onChange={changeCountry}
+                            value={currentCountry}
                             className={'w-[528px] mt-4'}
                             defaultValue={{
                                 label: '🇦🇿 Azerbaijan',
@@ -268,6 +289,7 @@ const NewBranch = () => {
                             className={'w-[528px] mt-4'}
                             styles={customStyles}
                             options={allCities}
+                            value={currentCity}
                             onChange={(data) => setCurrentCity(data.value)}
                         />
                         <div className={styles.form + ' mt-4'}>
@@ -310,6 +332,7 @@ const NewBranch = () => {
                                 styles={customStyles}
                                 options={allCurr}
                                 className={'w-[260px] mr-2'}
+                                value={currency}
                                 onChange={(data) => setCurrency(data)}
                             />
                             <Select
@@ -318,6 +341,7 @@ const NewBranch = () => {
                                 options={allPayment}
                                 styles={customStyles}
                                 className={'w-[260px]'}
+                                value={payment}
                                 onChange={(data) => setPayment(data)}
                             />
                         </div>
@@ -402,4 +426,4 @@ const NewBranch = () => {
     )
 }
 
-export default NewBranch
+export default BranchEdit

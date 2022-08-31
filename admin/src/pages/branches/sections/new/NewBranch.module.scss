@@ -141,7 +141,7 @@
 
 .cc {
   @apply relative  border-black border-opacity-10 flex justify-center items-center rounded-md ;
-  width: 80px;
+  width: max-content;
   height: 56px;
   border: 1px solid #e5e6e8;
   padding-inline: 10px;

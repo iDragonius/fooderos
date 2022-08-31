@@ -3,14 +3,14 @@ import styles from '../../../store/languages/Languages.module.scss'
 import { useLanguagesQuery } from '../../../../store/slices/api/langApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-    currLanguage,
     changeLanguage,
-    setBranchData,
-    currNames,
     currAddresses,
+    currLanguage,
+    currNames,
+    setBranchData,
 } from '../../../../store/slices/branchListSlice'
 
-const NewBranchLanguages = ({ setName, setAddress, name, address }) => {
+const BranchEditLanguages = ({ setName, setAddress, name, address }) => {
     const { data, isSuccess } = useLanguagesQuery()
     const [active, setActive] = useState('Az')
     const dispatch = useDispatch()
@@ -58,4 +58,4 @@ const NewBranchLanguages = ({ setName, setAddress, name, address }) => {
     )
 }
 
-export default NewBranchLanguages
+export default BranchEditLanguages

@@ -1,4 +1,7 @@
-import { useBranchStoresQuery } from '../../../../store/slices/api/branchApiSlice'
+import {
+    useBranchStoreListQuery,
+    useBranchStoresQuery,
+} from '../../../../store/slices/api/branchApiSlice'
 
 import { useEffect, useMemo, useState } from 'react'
 import styles from './BranchList.module.scss'
@@ -25,6 +28,8 @@ import More from './more/More'
 import Status from './status/Status'
 import { currLanguage } from '../../../../store/slices/userInfoSlice'
 import BranchListHeader from '../../headers/branchListHeader/BranchListHeader'
+import { branchData, currId } from '../../../../store/slices/branchListSlice'
+import { current } from '@reduxjs/toolkit'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -50,7 +55,6 @@ const fuzzySort = (rowA, rowB, columnId) => {
 }
 
 const BranchList = () => {
-    const { data } = useBranchStoresQuery()
     const [columnFilters, setColumnFilters] = useState([])
     const [globalFilter, setGlobalFilter] = useState('')
     const isSuccess = true
@@ -67,7 +71,7 @@ const BranchList = () => {
             cell: (info) => info.getValue(),
         },
         {
-            accessorKey: 'location',
+            accessorKey: 'address',
             cell: (info) => info.getValue(),
             header: () => <span>Location</span>,
         },
@@ -94,7 +98,9 @@ const BranchList = () => {
             header: '',
         },
     ])
-    const currentData = useSelector(currData)
+    const currentData = useSelector(branchData)
+    const currentId = useSelector(currId)
+    const { data } = useBranchStoreListQuery(currentId)
     const table = useReactTable({
         data: currentData,
         columns,
@@ -417,7 +423,7 @@ function Filter({ column, table }) {
             </>
         )
     }
-    if (column.id === 'location') {
+    if (column.id === 'address') {
         return (
             <>
                 <datalist id={column.id + 'list'}>
