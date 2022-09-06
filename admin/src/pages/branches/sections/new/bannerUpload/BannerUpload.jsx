@@ -51,6 +51,8 @@ const ImgUpload = ({ file, setFile, path }) => {
                                 <img
                                     src={`http://192.168.202.52:81/storage/branch/covers/${path}`}
                                     alt=""
+                                    height={100}
+                                    width={170}
                                 />
                             </div>
 

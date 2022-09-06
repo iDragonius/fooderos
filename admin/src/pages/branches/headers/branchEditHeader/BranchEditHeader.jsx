@@ -11,12 +11,12 @@ import {
     destroyStatus,
     setBranchData,
 } from '../../../../store/slices/branchListSlice'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { allLangs } from '../../../../store/slices/languageSlice'
-import { useCreateBranchMutation } from '../../../../store/slices/api/branchApiSlice'
+import { useEditBranchMutation } from '../../../../store/slices/api/branchApiSlice'
 import { toast } from 'react-toastify'
 
-const BranchEditHeader = (
+const BranchEditHeader = ({
     name,
     phone,
     address,
@@ -31,8 +31,8 @@ const BranchEditHeader = (
     amount,
     payload,
     max_distance,
-    schedule
-) => {
+    schedule,
+}) => {
     const dispatch = useDispatch()
     const currentId = useSelector(currId)
     const navigate = useNavigate()
@@ -46,15 +46,16 @@ const BranchEditHeader = (
 
     useEffect(() => {
         if (status) {
-            createBranch()
+            editBranch()
         }
         return destroy()
     }, [status])
     const destroy = () => {
         dispatch(destroyStatus())
     }
-    const [create] = useCreateBranchMutation()
-    const createBranch = () => {
+    const location = useLocation()
+    const [create] = useEditBranchMutation()
+    const editBranch = () => {
         create({
             name: currentBranchNames['Az_name'],
             phone,
@@ -64,6 +65,7 @@ const BranchEditHeader = (
             store_id: currentId,
             lat: coordinates.lat,
             lng: coordinates.lng,
+            id: location.pathname.split('/')[3],
             profile,
             cover,
             currency,
@@ -77,7 +79,7 @@ const BranchEditHeader = (
             ...currentAddresses,
             languages,
         }).then(() => {
-            toast.success('Branch created successfully!')
+            toast.success('Branch edited successfully!')
             navigate('/branches/list')
         })
     }

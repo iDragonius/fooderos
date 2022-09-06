@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import schedule from '../Schedule'
 
-const Day = ({ day, options, setSchedule, schedule }) => {
+const Day = ({ day, options, setSchedule, schedule, auto, setAuto }) => {
     const [closed, setClosed] = useState(false)
     const [tempStart, setTempStart] = useState('')
     const [tempEnd, setTempEnd] = useState('')
@@ -18,6 +18,15 @@ const Day = ({ day, options, setSchedule, schedule }) => {
         }),
     }
     useEffect(() => {
+        let days = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+        ]
         const temp = {
             ...schedule,
         }
@@ -28,7 +37,6 @@ const Day = ({ day, options, setSchedule, schedule }) => {
             temp[day].end = tempEnd
         }
         temp[day].closed = closed
-
         setSchedule((old) => ({ ...temp }))
     }, [tempStart, tempEnd, closed])
 

@@ -9,7 +9,7 @@ import MainLayout from './layouts/mainLayout/MainLayout'
 import TagList from './pages/tagList/TagList'
 import Orders from './pages/orders/Orders'
 import { useGetProfileQuery } from './store/slices/api/userApiSlice'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { isSkip } from './store/slices/authSlice'
 import login from './pages/login/Login'
 import Loader from './components/loader/Loader'
@@ -28,15 +28,31 @@ import Branches from './pages/branches/Branches'
 import BranchList from './pages/branches/sections/list/BranchList'
 import NewBranch from './pages/branches/sections/new/NewBranch'
 import BranchEdit from './pages/branches/sections/edit/BranchEdit'
+import { setCurrent } from './store/slices/branchListSlice'
+import Catalogs from './pages/catalogs/Catalogs'
+import CatalogList from './pages/catalogs/sections/list/CatalogList'
+import NewCatalog from './pages/catalogs/sections/new/NewCatalog'
+import CatalogEdit from './pages/catalogs/sections/edit/CatalogEdit'
 
 function App() {
     const skip = useSelector(isSkip)
-
-    const { data, isLoading, isError } = useGetProfileQuery(undefined, {
+    const dispatch = useDispatch()
+    const { data, isLoading } = useGetProfileQuery(undefined, {
         skip,
     })
     useEffect(() => {
         if (!localStorage.getItem('lang')) localStorage.setItem('lang', 'Az')
+        if (localStorage.getItem('store_id') && localStorage.getItem('store')) {
+            dispatch(
+                setCurrent({
+                    id: localStorage.getItem('store_id'),
+                    name: localStorage.getItem('store'),
+                })
+            )
+        } else {
+            localStorage.removeItem('store')
+            localStorage.removeItem('store_id')
+        }
     })
     if (isLoading) {
         return <Loader />
@@ -120,6 +136,50 @@ function App() {
                                     <Route
                                         path={'edit/:id'}
                                         element={<StoreEdit />}
+                                    />
+                                </Route>
+                            </Route>
+                            <Route path={'catalogs/'} element={<Catalogs />}>
+                                <Route path={'restaurants/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<CatalogList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewCatalog />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<CatalogEdit />}
+                                    />
+                                </Route>
+                                <Route path={'grocery/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<CatalogList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewCatalog />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<CatalogEdit />}
+                                    />
+                                </Route>
+                                <Route path={'pastries/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<CatalogList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewCatalog />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<CatalogEdit />}
                                     />
                                 </Route>
                             </Route>

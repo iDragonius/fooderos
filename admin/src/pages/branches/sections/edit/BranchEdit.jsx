@@ -14,15 +14,20 @@ import {
     usePaymentQuery,
     useShowBranchQuery,
 } from '../../../../store/slices/api/branchApiSlice'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     allCurrencies,
     allPaymentMethods,
     changed,
+    completed,
+    currAddresses,
     currBranch,
     currBranchSchedule,
+    currId,
+    currNames,
+    destroyCompleted,
 } from '../../../../store/slices/branchListSlice'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const customStyles = {
     valueContainer: () => ({
@@ -96,6 +101,7 @@ const BranchEdit = () => {
             closed: false,
         },
     })
+    const [baseData, setBaseData] = useState({})
     const [currentLoc, setCurrentLoc] = useState({
         lat: 40.409264,
         lng: 49.867092,
@@ -121,40 +127,69 @@ const BranchEdit = () => {
     const countryChanged = useSelector(changed)
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [currency, setCurrency] = useState()
-    const [payment, setPayment] = useState()
-    const [locate, setLocate] = useState()
-    const [cashLimit, setCashLimit] = useState()
-    const [amount, setAmount] = useState()
-    const [payload, setPayload] = useState()
-    const [maxDist, setMaxDist] = useState()
+    const [currency, setCurrency] = useState('')
+    const [payment, setPayment] = useState('')
+    const [locate, setLocate] = useState('')
+    const [cashLimit, setCashLimit] = useState('')
+    const [amount, setAmount] = useState('')
+    const [payload, setPayload] = useState('')
+    const [maxDist, setMaxDist] = useState('')
     const location = useLocation()
     const [country, setCountry] = useState('Azerbaijan')
-
+    const currentBranchNames = useSelector(currNames)
+    const currentAddresses = useSelector(currAddresses)
     const currentBranch = useSelector(currBranch)
-
+    const dataCompleted = useSelector(completed)
     const currentBranchSchedule = useSelector(currBranchSchedule)
     const { data: cities, isSuccess: success } = useCitiesQuery(
         currentCountry.value
     )
-    const { data: branch } = useShowBranchQuery(location.pathname.split('/')[3])
+    const { data: branch, refetch } = useShowBranchQuery(
+        location.pathname.split('/')[3]
+    )
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const currentStore = useSelector(currId)
     useEffect(() => {
-        setPayment(currentBranch.payment)
-        setCurrency(currentBranch.currency)
-        // setCurrentCountry(currentBranch.country)
-        setCurrentCity(currentBranch.city)
-        setPayload(currentBranch.paylaod)
-        setPhone(currentBranch.phone)
-        setCashLimit(currentBranch.cash_limit)
-        setAmount(currentBranch.amount)
-        setMaxDist(currentBranch.maxDistance)
+        refetch()
+    }, [])
+    useEffect(() => {
+        setPayment(currentBranch.payment ?? '')
+        setCurrency(currentBranch.currency ?? '')
+        setCurrentCountry(
+            currentBranch.country
+                ? currentBranch.country
+                : { value: 'Azerbaijan' }
+        )
+        setCurrentCity(currentBranch.city ?? '')
+        setPayload(currentBranch.paylaod ?? '')
+        setPhone(currentBranch.phone ?? '')
+        setCashLimit(currentBranch.cash_limit ?? '')
+        setAmount(currentBranch.amount ?? '')
+        setMaxDist(currentBranch.maxDistance ?? '')
         setMaxDistance(true)
-        console.log(currentBranch.coordinates)
-        setSchedule(currentBranchSchedule)
-        console.log(currentBranchSchedule)
-        // setCountry(currentBranch.country.value)
-        // setCurrentLoc(currentBranch.coordinates)
+        setCurrentLoc(
+            currentBranch.coordinates ?? {
+                lat: 40.409264,
+                lng: 49.867092,
+            }
+        )
+        setName(currentBranchNames['Az_name'] ?? '')
+        setLocate(currentAddresses['Az_address'] ?? '')
     }, [currentBranch])
+    useEffect(() => {
+        if (dataCompleted) {
+            setSchedule(currentBranchSchedule)
+            setBaseData(currentBranchSchedule)
+        }
+        dispatch(destroyCompleted())
+    }, [dataCompleted])
+    useEffect(() => {
+        if (!currentStore) {
+            navigate('/branches/list')
+        }
+    }, [])
     useEffect(() => {
         if (isSuccess) {
             setAllCountries([])
@@ -211,7 +246,8 @@ const BranchEdit = () => {
         }
     }, [countryChanged])
     const changeCountry = (data) => {
-        setCurrentCountry(data.value)
+        setCurrentCountry(data)
+        setCurrentCity({})
     }
 
     return (
@@ -222,8 +258,29 @@ const BranchEdit = () => {
                 currentLoc={currentLoc}
                 setCurrentLoc={setCurrentLoc}
             />
-            <BranchEditHeader />
-            <BranchEditLanguages />
+            <BranchEditHeader
+                name={name}
+                coordinates={currentLoc}
+                phone={phone}
+                payment={payment}
+                currency={currency}
+                address={locate}
+                country={currentCountry}
+                city={currentCity}
+                cash_limit={cashLimit}
+                payload={payload}
+                amount={amount}
+                cover={banner[0]}
+                profile={file[0]}
+                max_distance={maxDist}
+                schedule={schedule}
+            />
+            <BranchEditLanguages
+                name={name}
+                address={locate}
+                setName={setName}
+                setAddress={setLocate}
+            />
             <div className={styles.main}>
                 <BannerUpload
                     file={banner}
@@ -290,7 +347,7 @@ const BranchEdit = () => {
                             styles={customStyles}
                             options={allCities}
                             value={currentCity}
-                            onChange={(data) => setCurrentCity(data.value)}
+                            onChange={(data) => setCurrentCity(data)}
                         />
                         <div className={styles.form + ' mt-4'}>
                             <div className={styles.phone}>
@@ -400,6 +457,7 @@ const BranchEdit = () => {
                                 onChange={(e) =>
                                     setMaxDistance(e.target.checked)
                                 }
+                                checked={maxDistance}
                             />
                             <p>Maximum delivery distance</p>
                         </div>
@@ -419,7 +477,11 @@ const BranchEdit = () => {
                             />
                         </div>
                     </div>
-                    <Schedule schedule={schedule} setSchedule={setSchedule} />
+                    <Schedule
+                        schedule={schedule}
+                        setSchedule={setSchedule}
+                        base={baseData}
+                    />
                 </div>
             </div>
         </>

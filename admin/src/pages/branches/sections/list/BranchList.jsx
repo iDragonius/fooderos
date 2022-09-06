@@ -1,7 +1,4 @@
-import {
-    useBranchStoreListQuery,
-    useBranchStoresQuery,
-} from '../../../../store/slices/api/branchApiSlice'
+import { useBranchStoreListQuery } from '../../../../store/slices/api/branchApiSlice'
 
 import { useEffect, useMemo, useState } from 'react'
 import styles from './BranchList.module.scss'
@@ -21,15 +18,12 @@ import {
 import { rankItem, compareItems } from '@tanstack/match-sorter-utils'
 import { useLocation } from 'react-router-dom'
 
-import { useStoresQuery } from '../../../../store/slices/api/storeApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { currData, deleteData } from '../../../../store/slices/storeSlice'
 import More from './more/More'
 import Status from './status/Status'
-import { currLanguage } from '../../../../store/slices/userInfoSlice'
 import BranchListHeader from '../../headers/branchListHeader/BranchListHeader'
 import { branchData, currId } from '../../../../store/slices/branchListSlice'
-import { current } from '@reduxjs/toolkit'
+import { currLanguage } from '../../../../store/slices/userInfoSlice'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
     const itemRank = rankItem(row.getValue(columnId), value)
@@ -100,7 +94,14 @@ const BranchList = () => {
     ])
     const currentData = useSelector(branchData)
     const currentId = useSelector(currId)
-    const { data } = useBranchStoreListQuery(currentId)
+    const currentLang = useSelector(currLanguage)
+    const { data, refetch } = useBranchStoreListQuery({
+        id: currentId,
+        lang: currentLang,
+    })
+    useEffect(() => {
+        refetch()
+    }, [currentId, currentLang])
     const table = useReactTable({
         data: currentData,
         columns,
@@ -137,233 +138,269 @@ const BranchList = () => {
         }
     }, [table.getState().columnFilters[0]?.id])
     return (
-        <div>
-            <BranchListHeader />
-            <div className={'px-10 mt-8'}>
-                {isSuccess && (
-                    <div className="p-2">
-                        <div className="h-2" />
-                        <table className={'mx-auto w-full'}>
-                            <thead>
-                                {table.getHeaderGroups().map((headerGroup) => (
-                                    <tr key={headerGroup.id}>
-                                        {headerGroup.headers.map((header) => {
-                                            return (
-                                                <th
-                                                    key={header.id}
-                                                    colSpan={header.colSpan}
-                                                    className={'px-6'}
-                                                >
-                                                    {header.isPlaceholder ? null : (
-                                                        <>
-                                                            <div
-                                                                {...{
-                                                                    className:
-                                                                        header.column.getCanSort()
-                                                                            ? 'cursor-pointer  text-left text-[18px] pt-6 pb-6  w-full '
-                                                                            : '',
-                                                                    onClick:
-                                                                        header.column.getToggleSortingHandler(),
-                                                                }}
-                                                            >
-                                                                {flexRender(
-                                                                    header
-                                                                        .column
-                                                                        .columnDef
-                                                                        .header,
-                                                                    header.getContext()
-                                                                )}
-                                                                {{
-                                                                    asc: ' 🔼',
-                                                                    desc: ' 🔽',
-                                                                }[
-                                                                    header.column.getIsSorted()
-                                                                ] ?? null}
-                                                            </div>
-                                                            {header.column.getCanFilter() ? (
-                                                                <div>
-                                                                    <Filter
-                                                                        column={
-                                                                            header.column
-                                                                        }
-                                                                        table={
-                                                                            table
-                                                                        }
-                                                                    />
-                                                                </div>
-                                                            ) : null}
-                                                        </>
-                                                    )}
-                                                </th>
-                                            )
-                                        })}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody>
-                                {table.getRowModel().rows.map((row) => {
-                                    return (
-                                        <tr key={row.id}>
-                                            {row
-                                                .getVisibleCells()
-                                                .map((cell) => {
-                                                    if (
-                                                        cell.column.id ===
-                                                        'image'
-                                                    ) {
-                                                        return (
-                                                            <td
-                                                                key={cell.id}
-                                                                className={
-                                                                    'border-[1px] px-6 py-5 '
-                                                                }
-                                                            >
-                                                                <div
+        <>
+            {currentId ? (
+                <div>
+                    <BranchListHeader />
+                    <div className={'px-10 mt-8'}>
+                        {isSuccess && (
+                            <div className="p-2">
+                                <div className="h-2" />
+                                <table className={'mx-auto w-full'}>
+                                    <thead>
+                                        {table
+                                            .getHeaderGroups()
+                                            .map((headerGroup) => (
+                                                <tr key={headerGroup.id}>
+                                                    {headerGroup.headers.map(
+                                                        (header) => {
+                                                            return (
+                                                                <th
+                                                                    key={
+                                                                        header.id
+                                                                    }
+                                                                    colSpan={
+                                                                        header.colSpan
+                                                                    }
                                                                     className={
-                                                                        'flex justify-center'
+                                                                        'px-6'
                                                                     }
                                                                 >
-                                                                    <img
-                                                                        width={
-                                                                            60
-                                                                        }
-                                                                        src={`http://192.168.202.52:81/storage/stores/images/${cell.getValue()}`}
-                                                                        alt=""
-                                                                    />
-                                                                </div>
-                                                            </td>
-                                                        )
-                                                    }
-                                                    if (
-                                                        cell.column.id ===
-                                                        'more'
-                                                    ) {
-                                                        return (
-                                                            <td
-                                                                key={cell.id}
-                                                                className={
-                                                                    'border-[1px] px-6 py-5 '
-                                                                }
-                                                            >
-                                                                <More />
-                                                            </td>
-                                                        )
-                                                    }
-                                                    if (
-                                                        cell.column.id ===
-                                                        'sort'
-                                                    ) {
-                                                        return (
-                                                            <td
-                                                                key={cell.id}
-                                                                className={
-                                                                    'border-[1px] px-6 py-5  '
-                                                                }
-                                                            >
-                                                                {cell.getValue() ===
-                                                                1 ? (
-                                                                    <div
-                                                                        className={
-                                                                            'flex items-center'
-                                                                        }
-                                                                    >
-                                                                        <span
-                                                                            className={
-                                                                                'w-2 h-2 mr-2 rounded-full bg-green-600'
-                                                                            }
-                                                                        ></span>
-                                                                        <p>
-                                                                            Online
-                                                                        </p>
-                                                                    </div>
-                                                                ) : (
-                                                                    <div
-                                                                        className={
-                                                                            'flex items-center'
-                                                                        }
-                                                                    >
-                                                                        <span
-                                                                            className={
-                                                                                'w-2 h-2 mr-2 rounded-full bg-red-600'
-                                                                            }
-                                                                        ></span>
-                                                                        <p>
-                                                                            Offline
-                                                                        </p>
-                                                                    </div>
-                                                                )}
-                                                            </td>
-                                                        )
-                                                    }
-                                                    if (
-                                                        cell.column.id ===
-                                                        'status'
-                                                    ) {
-                                                        return (
-                                                            <td
-                                                                key={cell.id}
-                                                                className={
-                                                                    'border-[1px] px-6 py-5  '
-                                                                }
-                                                            >
-                                                                {cell.getValue() ===
-                                                                1 ? (
-                                                                    <Status
-                                                                        checked={
-                                                                            true
-                                                                        }
-                                                                    />
-                                                                ) : (
-                                                                    <Status
-                                                                        checked={
-                                                                            false
-                                                                        }
-                                                                    />
-                                                                )}
-                                                            </td>
-                                                        )
-                                                    }
-                                                    return (
-                                                        <td
-                                                            key={cell.id}
-                                                            className={
-                                                                'border-[1px] px-6 py-5'
-                                                            }
-                                                        >
-                                                            {flexRender(
+                                                                    {header.isPlaceholder ? null : (
+                                                                        <>
+                                                                            <div
+                                                                                {...{
+                                                                                    className:
+                                                                                        header.column.getCanSort()
+                                                                                            ? 'cursor-pointer  text-left text-[18px] pt-6 pb-6  w-full '
+                                                                                            : '',
+                                                                                    onClick:
+                                                                                        header.column.getToggleSortingHandler(),
+                                                                                }}
+                                                                            >
+                                                                                {flexRender(
+                                                                                    header
+                                                                                        .column
+                                                                                        .columnDef
+                                                                                        .header,
+                                                                                    header.getContext()
+                                                                                )}
+                                                                                {{
+                                                                                    asc: ' 🔼',
+                                                                                    desc: ' 🔽',
+                                                                                }[
+                                                                                    header.column.getIsSorted()
+                                                                                ] ??
+                                                                                    null}
+                                                                            </div>
+                                                                            {header.column.getCanFilter() ? (
+                                                                                <div>
+                                                                                    <Filter
+                                                                                        column={
+                                                                                            header.column
+                                                                                        }
+                                                                                        table={
+                                                                                            table
+                                                                                        }
+                                                                                    />
+                                                                                </div>
+                                                                            ) : null}
+                                                                        </>
+                                                                    )}
+                                                                </th>
+                                                            )
+                                                        }
+                                                    )}
+                                                </tr>
+                                            ))}
+                                    </thead>
+                                    <tbody>
+                                        {table.getRowModel().rows.map((row) => {
+                                            return (
+                                                <tr key={row.id}>
+                                                    {row
+                                                        .getVisibleCells()
+                                                        .map((cell) => {
+                                                            if (
                                                                 cell.column
-                                                                    .columnDef
-                                                                    .cell,
-                                                                cell.getContext()
-                                                            )}
-                                                        </td>
-                                                    )
-                                                })}
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                        {currentData.length < 11 ? (
-                            <div></div>
-                        ) : (
-                            <button
-                                className={
-                                    'w-full bg-[#eee] flex justify-center items-center py-4 mt-10 mb-[72px]'
-                                }
-                                onClick={(e) => {
-                                    table.setPageSize(
-                                        6 + table.getState().pagination.pageSize
-                                    )
-                                }}
-                            >
-                                Load More
-                            </button>
+                                                                    .id ===
+                                                                'image'
+                                                            ) {
+                                                                return (
+                                                                    <td
+                                                                        key={
+                                                                            cell.id
+                                                                        }
+                                                                        className={
+                                                                            'border-[1px] px-6 py-5 '
+                                                                        }
+                                                                    >
+                                                                        <div
+                                                                            className={
+                                                                                'flex justify-center'
+                                                                            }
+                                                                        >
+                                                                            <img
+                                                                                width={
+                                                                                    60
+                                                                                }
+                                                                                src={`http://192.168.202.52:81/storage/stores/images/${cell.getValue()}`}
+                                                                                alt=""
+                                                                            />
+                                                                        </div>
+                                                                    </td>
+                                                                )
+                                                            }
+                                                            if (
+                                                                cell.column
+                                                                    .id ===
+                                                                'more'
+                                                            ) {
+                                                                return (
+                                                                    <td
+                                                                        key={
+                                                                            cell.id
+                                                                        }
+                                                                        className={
+                                                                            'border-[1px] px-6 py-5 '
+                                                                        }
+                                                                    >
+                                                                        <More />
+                                                                    </td>
+                                                                )
+                                                            }
+                                                            if (
+                                                                cell.column
+                                                                    .id ===
+                                                                'sort'
+                                                            ) {
+                                                                return (
+                                                                    <td
+                                                                        key={
+                                                                            cell.id
+                                                                        }
+                                                                        className={
+                                                                            'border-[1px] px-6 py-5  '
+                                                                        }
+                                                                    >
+                                                                        {cell.getValue() ===
+                                                                        1 ? (
+                                                                            <div
+                                                                                className={
+                                                                                    'flex items-center'
+                                                                                }
+                                                                            >
+                                                                                <span
+                                                                                    className={
+                                                                                        'w-2 h-2 mr-2 rounded-full bg-green-600'
+                                                                                    }
+                                                                                ></span>
+                                                                                <p>
+                                                                                    Online
+                                                                                </p>
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div
+                                                                                className={
+                                                                                    'flex items-center'
+                                                                                }
+                                                                            >
+                                                                                <span
+                                                                                    className={
+                                                                                        'w-2 h-2 mr-2 rounded-full bg-red-600'
+                                                                                    }
+                                                                                ></span>
+                                                                                <p>
+                                                                                    Offline
+                                                                                </p>
+                                                                            </div>
+                                                                        )}
+                                                                    </td>
+                                                                )
+                                                            }
+                                                            if (
+                                                                cell.column
+                                                                    .id ===
+                                                                'status'
+                                                            ) {
+                                                                return (
+                                                                    <td
+                                                                        key={
+                                                                            cell.id
+                                                                        }
+                                                                        className={
+                                                                            'border-[1px] px-6 py-5  '
+                                                                        }
+                                                                    >
+                                                                        {cell.getValue() ===
+                                                                        1 ? (
+                                                                            <Status
+                                                                                checked={
+                                                                                    true
+                                                                                }
+                                                                            />
+                                                                        ) : (
+                                                                            <Status
+                                                                                checked={
+                                                                                    false
+                                                                                }
+                                                                            />
+                                                                        )}
+                                                                    </td>
+                                                                )
+                                                            }
+                                                            return (
+                                                                <td
+                                                                    key={
+                                                                        cell.id
+                                                                    }
+                                                                    className={
+                                                                        'border-[1px] px-6 py-5'
+                                                                    }
+                                                                >
+                                                                    {flexRender(
+                                                                        cell
+                                                                            .column
+                                                                            .columnDef
+                                                                            .cell,
+                                                                        cell.getContext()
+                                                                    )}
+                                                                </td>
+                                                            )
+                                                        })}
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                                {currentData.length < 11 ? (
+                                    <div></div>
+                                ) : (
+                                    <button
+                                        className={
+                                            'w-full bg-[#eee] flex justify-center items-center py-4 mt-10 mb-[72px]'
+                                        }
+                                        onClick={(e) => {
+                                            table.setPageSize(
+                                                6 +
+                                                    table.getState().pagination
+                                                        .pageSize
+                                            )
+                                        }}
+                                    >
+                                        Load More
+                                    </button>
+                                )}
+                            </div>
                         )}
                     </div>
-                )}
-            </div>
-        </div>
+                </div>
+            ) : (
+                <div className={'w-full flex justify-center mt-10'}>
+                    <h1 className={'text-2xl'}>Select store</h1>
+                </div>
+            )}
+        </>
     )
 }
 

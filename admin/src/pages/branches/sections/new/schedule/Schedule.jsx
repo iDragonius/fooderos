@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Day from './day/Day'
 
 const Schedule = ({ schedule, setSchedule }) => {
+    const [auto, setAuto] = useState(1)
     const times = [
         { label: '-', value: '-' },
         { label: '00:00', value: '00:00' },
@@ -49,42 +50,56 @@ const Schedule = ({ schedule, setSchedule }) => {
             </div>
             <div className={'flex flex-col mt-10'}>
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Monday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Tuesday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Wednesday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Thursday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Friday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Saturday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    auto={auto}
+                    setAuto={setAuto}
                     day={'Sunday'}
                     options={times}
                     setSchedule={setSchedule}

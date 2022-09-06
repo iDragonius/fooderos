@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Day from './day/Day'
 
-const Schedule = ({ schedule, setSchedule }) => {
+const Schedule = ({ schedule, setSchedule, base }) => {
     const times = [
         { label: '-', value: '-' },
         { label: '00:00', value: '00:00' },
@@ -49,42 +49,49 @@ const Schedule = ({ schedule, setSchedule }) => {
             </div>
             <div className={'flex flex-col mt-10'}>
                 <Day
+                    base={base}
                     day={'Monday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    base={base}
                     day={'Tuesday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    base={base}
                     day={'Wednesday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    base={base}
                     day={'Thursday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    base={base}
                     day={'Friday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    base={base}
                     day={'Saturday'}
                     options={times}
                     setSchedule={setSchedule}
                     schedule={schedule}
                 />
                 <Day
+                    base={base}
                     day={'Sunday'}
                     options={times}
                     setSchedule={setSchedule}

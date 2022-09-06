@@ -8,8 +8,8 @@ export const branchApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         branchStoreList: builder.query({
-            query: (id) => ({
-                url: `/branch/list/${id}`,
+            query: (params) => ({
+                url: `/branch/list/${params.lang}/${params.id}`,
             }),
             providesTags: ['BranchList'],
         }),
@@ -111,14 +111,92 @@ export const branchApiSlice = apiSlice.injectEndpoints({
                 formData.append('country', data.country)
                 formData.append('city', data.city)
                 formData.append('payload', data.payload)
-                formData.append('payment', payment)
-                formData.append('currency', currency)
+                formData.append('payment', payment.slice(1))
+                formData.append('currency', currency.slice(1))
                 formData.append('store_id', data.store_id)
-                formData.append('phone', data.phone)
+                formData.append('phone', '+994' + data.phone)
 
                 const response = await fetchWithBQ(
                     {
                         url: '/branch',
+                        method: 'POST',
+                        body: formData,
+                    },
+                    _queryApi,
+                    _extraOptions
+                )
+                if (response.error) throw response.error
+                return response.data
+                    ? { data: response.data }
+                    : { error: response.error }
+            },
+        }),
+        editBranch: builder.mutation({
+            async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
+                const formData = new FormData()
+                const days = [
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday',
+                    'Sunday',
+                ]
+                let schedule = ''
+                for (let i = 0; i < days.length; i++) {
+                    let temp = data.schedule[days[i]].closed ? 1 : 0
+                    schedule =
+                        schedule +
+                        data.schedule[days[i]].start +
+                        ',' +
+                        data.schedule[days[i]].end +
+                        ',' +
+                        temp +
+                        ','
+                }
+                let currency = ''
+                let payment = ''
+                for (let i = 0; i < data.currency.length; i++) {
+                    currency = currency + ',' + data.currency[i].value
+                }
+                for (let i = 0; i < data.payment.length; i++) {
+                    payment = payment + ',' + data.payment[i].value
+                }
+                formData.append('schedule', schedule.slice(0, -1))
+                formData.append('cover', data.cover)
+
+                formData.append('profile', data.profile)
+                formData.append('name', data.name)
+                formData.append('id', data.id)
+                formData.append('address', data.address)
+                for (let i = 0; i < data.languages.length; i++) {
+                    formData.append(
+                        `${data.languages[i]}_name`,
+                        data[`${data.languages[i]}_name`]
+                    )
+                    formData.append(
+                        `${data.languages[i]}_address`,
+                        data[`${data.languages[i]}_address`]
+                    )
+                }
+
+                formData.append('lat', data.lat)
+                formData.append('long', data.lng)
+                formData.append('amount', data.amount)
+                formData.append('max_distance', data.max_distance)
+                formData.append('cash_limit', data.cash_limit)
+                formData.append('country', data.country.value)
+                formData.append('city', data.city.value)
+                formData.append('payload', data.payload)
+                formData.append('payment', payment.slice(1))
+                formData.append('currency', currency.slice(1))
+                formData.append('store_id', data.store_id)
+                formData.append('phone', '+994' + data.phone)
+
+                const response = await fetchWithBQ(
+                    {
+                        url: '/branch/edit',
                         method: 'POST',
                         body: formData,
                     },
@@ -144,4 +222,5 @@ export const {
     useBranchStatusMutation,
     useDeleteBranchMutation,
     useShowBranchQuery,
+    useEditBranchMutation,
 } = branchApiSlice

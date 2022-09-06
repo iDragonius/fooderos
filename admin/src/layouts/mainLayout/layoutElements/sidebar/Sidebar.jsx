@@ -8,6 +8,8 @@ const Sidebar = () => {
     const [hovered, setHover] = useState(false)
     const [tagSec, setTagSec] = useState(false)
     const [storeSec, setStoreSec] = useState(false)
+    const [catalogsSec, setCatalogsSec] = useState(false)
+
     const location = useLocation()
 
     const handleClose = () => {
@@ -373,6 +375,112 @@ const Sidebar = () => {
                         </h1>
                     </div>
                 </NavLink>
+                <div
+                    className={'cursor-pointer'}
+                    onClick={() =>
+                        catalogsSec
+                            ? setCatalogsSec(false)
+                            : setCatalogsSec(true)
+                    }
+                >
+                    <div className={styles.navigate}>
+                        <div className={'flex items-center justify-between'}>
+                            <div className={'flex items-center'}>
+                                <div className={styles.pageCont}>
+                                    <svg
+                                        fill={'#8895AE'}
+                                        version="1.1"
+                                        viewBox="0 0 700 700"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <g>
+                                            <path d="m275.33 522.67c0 20.535-16.801 37.332-37.332 37.332h-130.67c-20.535 0-37.332-16.801-37.332-37.332v-130.67c0-20.535 16.801-37.332 37.332-37.332h130.67c20.535 0 37.332 16.801 37.332 37.332z" />
+                                            <path d="m630 429.33h-298.67c-11.199 0-18.668-7.4648-18.668-18.668v-18.668c0-11.199 7.4648-18.668 18.668-18.668h298.67z" />
+                                            <path d="m555.33 522.67h-224c-11.199 0-18.668-7.4648-18.668-18.668v-18.668c0-11.199 7.4648-18.668 18.668-18.668h224z" />
+                                            <path d="m275.33 242.67c0 20.535-16.801 37.332-37.332 37.332h-130.67c-20.535 0-37.332-16.801-37.332-37.332v-130.67c0-20.535 16.801-37.332 37.332-37.332h130.67c20.535 0 37.332 16.801 37.332 37.332z" />
+                                            <path d="m630 149.33h-298.67c-11.199 0-18.668-7.4648-18.668-18.668l0.003907-18.664c0-11.199 7.4648-18.668 18.668-18.668h298.67z" />
+                                            <path d="m555.33 242.67h-224c-11.199 0-18.668-7.4648-18.668-18.668v-18.668c0-11.199 7.4648-18.668 18.668-18.668h224z" />
+                                        </g>
+                                    </svg>
+                                </div>
+                                <h1
+                                    className={
+                                        hovered
+                                            ? 'ml-5 transition-all ease-in-out ' +
+                                              styles.hoverNav
+                                            : 'hidden transition-all ease-in-out'
+                                    }
+                                >
+                                    Catalogs
+                                </h1>
+                            </div>
+                            <div
+                                className={
+                                    hovered ? 'absolute right-5' : 'hidden'
+                                }
+                            >
+                                {catalogsSec ? (
+                                    <img
+                                        src={bottom}
+                                        alt=""
+                                        width={24}
+                                        height={24}
+                                    />
+                                ) : (
+                                    <img
+                                        src={top}
+                                        alt=""
+                                        width={24}
+                                        height={24}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className={
+                            hovered
+                                ? catalogsSec
+                                    ? styles.submenu +
+                                      ' w-full   flex  flex-col py-3 '
+                                    : 'hidden'
+                                : 'hidden'
+                        }
+                        style={{ borderBottom: '1px solid #ecf0f7' }}
+                    >
+                        <NavLink
+                            to={'/catalogs/restaurants/list'}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'px-24 py-3 bg-primary text-white font-bold '
+                                    : 'px-24 py-3 hover:bg-primary hover:text-white hover:font-bold transition-all ease-in-out'
+                            }
+                        >
+                            Restaurants
+                        </NavLink>
+                        <NavLink
+                            to={'/catalogs/grocery/list'}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'px-24 py-3 bg-primary text-white font-bold '
+                                    : 'px-24 py-3 hover:bg-primary hover:text-white hover:font-bold transition-all ease-in-out'
+                            }
+                        >
+                            Grocery
+                        </NavLink>
+                        <NavLink
+                            to={'/catalogs/pastries/list'}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'px-24 py-3 bg-primary text-white font-bold '
+                                    : 'px-24 py-3 hover:bg-primary hover:text-white hover:font-bold transition-all ease-in-out'
+                            }
+                        >
+                            Pastries
+                        </NavLink>
+                    </div>
+                </div>
                 <NavLink
                     to={'/users/list'}
                     className={({ isActive }) =>

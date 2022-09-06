@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import LocationModal from '../../../../../components/modals/locationModal/LocationModal'
 import {
     Autocomplete,
@@ -39,7 +39,10 @@ const LocationMap = ({ open, setOpen, currentLoc, setCurrentLoc }) => {
                         placeholder="Location"
                     />
                 </Autocomplete>
-                <button className={'bg-primary text-white py-2 px-5 ml-4'}>
+                <button
+                    className={'bg-primary text-white py-2 px-5 ml-4'}
+                    onClick={() => setOpen(false)}
+                >
                     Save
                 </button>
             </div>
@@ -52,12 +55,12 @@ const LocationMap = ({ open, setOpen, currentLoc, setCurrentLoc }) => {
                 <Marker
                     position={currentLoc}
                     draggable={true}
-                    onDragEnd={(e) =>
+                    onDragEnd={(e) => {
                         setCurrentLoc({
                             lng: e.latLng.lng(),
                             lat: e.latLng.lat(),
                         })
-                    }
+                    }}
                 />
             </GoogleMap>
         </LocationModal>

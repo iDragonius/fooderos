@@ -18,12 +18,15 @@ const branchSliceList = createSlice({
         status: false,
         currBranch: {},
         currBranchSchedule: {},
+        completed: false,
     },
     reducers: {
         setCurrent: (state, action) => {
             const { name, id } = action.payload
             state.currentStore = name
             state.currentStoreId = id
+            localStorage.setItem('store', name)
+            localStorage.setItem('store_id', id)
         },
 
         incrementChanged: (state) => {
@@ -52,6 +55,9 @@ const branchSliceList = createSlice({
         },
         destroyStatus: (state) => {
             state.status = false
+        },
+        destroyCompleted: (state) => {
+            state.completed = false
         },
     },
     extraReducers: (builder) => {
@@ -91,7 +97,15 @@ const branchSliceList = createSlice({
                 (state, { payload }) => {
                     let data = []
                     payload.map((store) => {
-                        data = [...data, { ...store, sort: store.status }]
+                        data = [
+                            ...data,
+                            {
+                                ...store,
+                                name: store.locals[0].name,
+                                address: store.locals[0].address,
+                                sort: store.status,
+                            },
+                        ]
                     })
                     state.data = [...data]
                 }
@@ -107,6 +121,22 @@ const branchSliceList = createSlice({
             .addMatcher(
                 apiSlice.endpoints.showBranch.matchFulfilled,
                 (state, { payload }) => {
+                    let days = [
+                        'Monday',
+                        'Tuesday',
+                        'Wednesday',
+                        'Thursday',
+                        'Friday',
+                        'Saturday',
+                        'Sunday',
+                    ]
+                    for (let i = 0; i < payload.schedule.length; i++) {
+                        state.currBranchSchedule[days[i]] = {
+                            start: payload.schedule[i].start,
+                            end: payload.schedule[i].end,
+                            closed: payload.schedule[i].isclosed,
+                        }
+                    }
                     let currency = []
                     for (
                         let i = 0;
@@ -133,8 +163,8 @@ const branchSliceList = createSlice({
                     state.currBranch.amount = payload.amount
                     state.currBranch.cash_limit = payload.cash_limit
                     state.currBranch.coordinates = {
-                        lat: payload.lat,
-                        lng: payload.long,
+                        lat: Number(payload.lat),
+                        lng: Number(payload.long),
                     }
                     state.currBranch.currency = currency
                     state.currBranch.payment = payment
@@ -157,23 +187,7 @@ const branchSliceList = createSlice({
                         state.addresses[`${state.languages[i]}_address`] =
                             payload.locals[i].address
                     }
-                    let days = [
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday',
-                    ]
-                    for (let i = 0; i < payload.schedule.length; i++) {
-                        console.log(payload.schedule)
-                        state.currBranchSchedule[days[i]] = {
-                            start: payload.schedule[i].start,
-                            end: payload.schedule[i].end,
-                            closed: payload.schedule[i].isclosed,
-                        }
-                    }
+                    state.completed = true
                 }
             )
     },
@@ -186,6 +200,7 @@ export const {
     checkBranchData,
     setBranchData,
     destroyStatus,
+    destroyCompleted,
 } = branchSliceList.actions
 
 export default branchSliceList.reducer
@@ -202,3 +217,4 @@ export const currAddresses = (state) => state.branchList.addresses
 export const branchStatus = (state) => state.branchList.status
 export const currBranch = (state) => state.branchList.currBranch
 export const currBranchSchedule = (state) => state.branchList.currBranchSchedule
+export const completed = (state) => state.branchList.completed
