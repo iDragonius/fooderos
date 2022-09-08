@@ -12,10 +12,7 @@ import {
     destroyStatus,
     setNames,
 } from '../../../../store/slices/catalogSlice'
-import {
-    useCreateCatalogMutation,
-    useEditCatalogMutation,
-} from '../../../../store/slices/api/catalogApiSlice'
+import { useEditCatalogMutation } from '../../../../store/slices/api/catalogApiSlice'
 import { toast } from 'react-toastify'
 
 const CatalogEditHeader = ({ type, store, image, unique, name }) => {

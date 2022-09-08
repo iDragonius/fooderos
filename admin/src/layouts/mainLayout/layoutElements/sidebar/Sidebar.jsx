@@ -3,12 +3,12 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import top from '../../../../assets/img/arrowUp.png'
 import bottom from '../../../../assets/img/downSide.png'
-import branch from '../../../../assets/img/pages/branch.svg'
 const Sidebar = () => {
     const [hovered, setHover] = useState(false)
     const [tagSec, setTagSec] = useState(false)
     const [storeSec, setStoreSec] = useState(false)
     const [catalogsSec, setCatalogsSec] = useState(false)
+    const [productSec, setProductSec] = useState(false)
 
     const location = useLocation()
 
@@ -20,6 +20,8 @@ const Sidebar = () => {
         } else {
             setTagSec(false)
             setStoreSec(false)
+            setProductSec(false)
+            setCatalogsSec(false)
         }
 
         setHover(false)
@@ -471,6 +473,120 @@ const Sidebar = () => {
                         </NavLink>
                         <NavLink
                             to={'/catalogs/pastries/list'}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'px-24 py-3 bg-primary text-white font-bold '
+                                    : 'px-24 py-3 hover:bg-primary hover:text-white hover:font-bold transition-all ease-in-out'
+                            }
+                        >
+                            Pastries
+                        </NavLink>
+                    </div>
+                </div>
+                <div
+                    className={'cursor-pointer'}
+                    onClick={() =>
+                        productSec ? setProductSec(false) : setProductSec(true)
+                    }
+                >
+                    <div className={styles.navigate}>
+                        <div className={'flex items-center justify-between'}>
+                            <div className={'flex items-center'}>
+                                <div className={styles.pageCont}>
+                                    <svg
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        x="0px"
+                                        y="0px"
+                                        width="483.809px"
+                                        fill={'#8895AE'}
+                                        height="483.809px"
+                                        viewBox="0 0 483.809 483.809"
+                                    >
+                                        <g>
+                                            <g>
+                                                <polygon
+                                                    points="390.611,119.602 483.809,65.746 476.982,50.548 359.666,89.442 336.832,142.263 173.758,142.263 173.758,182.925
+			197.291,182.925 229.261,431.905 390.742,431.905 422.713,182.925 446.244,182.925 446.244,142.263 380.814,142.263 		"
+                                                />
+                                                <polygon points="187.177,308.452 19.289,308.452 0,327.741 0,328.252 19.289,347.54 192.196,347.54 		" />
+                                                <path d="M176.17,222.733H85.31c-32.697,0-59.205,26.506-59.205,59.206v7.026h158.57L176.17,222.733z" />
+                                                <path
+                                                    d="M26.105,367.028v7.026c0,32.698,26.508,59.206,59.205,59.206h100.936c5.782,0,11.367-0.844,16.65-2.391l-8.197-63.842
+			H26.105z"
+                                                />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <h1
+                                    className={
+                                        hovered
+                                            ? 'ml-5 transition-all ease-in-out ' +
+                                              styles.hoverNav
+                                            : 'hidden transition-all ease-in-out'
+                                    }
+                                >
+                                    Products
+                                </h1>
+                            </div>
+                            <div
+                                className={
+                                    hovered ? 'absolute right-5' : 'hidden'
+                                }
+                            >
+                                {productSec ? (
+                                    <img
+                                        src={bottom}
+                                        alt=""
+                                        width={24}
+                                        height={24}
+                                    />
+                                ) : (
+                                    <img
+                                        src={top}
+                                        alt=""
+                                        width={24}
+                                        height={24}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className={
+                            hovered
+                                ? productSec
+                                    ? styles.submenu +
+                                      ' w-full   flex  flex-col py-3 '
+                                    : 'hidden'
+                                : 'hidden'
+                        }
+                        style={{ borderBottom: '1px solid #ecf0f7' }}
+                    >
+                        <NavLink
+                            to={'/products/restaurants/list'}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'px-24 py-3 bg-primary text-white font-bold '
+                                    : 'px-24 py-3 hover:bg-primary hover:text-white hover:font-bold transition-all ease-in-out'
+                            }
+                        >
+                            Restaurants
+                        </NavLink>
+                        <NavLink
+                            to={'/products/grocery/list'}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'px-24 py-3 bg-primary text-white font-bold '
+                                    : 'px-24 py-3 hover:bg-primary hover:text-white hover:font-bold transition-all ease-in-out'
+                            }
+                        >
+                            Grocery
+                        </NavLink>
+                        <NavLink
+                            to={'/products/pastries/list'}
                             className={({ isActive }) =>
                                 isActive
                                     ? 'px-24 py-3 bg-primary text-white font-bold '

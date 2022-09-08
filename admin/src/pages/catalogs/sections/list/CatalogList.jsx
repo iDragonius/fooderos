@@ -173,9 +173,9 @@ const CatalogList = () => {
     // useEffect(() => {
     //     dispatch(deleteData())
     // }, [])
-    // useEffect(() => {
-    //     refetch()
-    // }, [locate, currentLanguage])
+    useEffect(() => {
+        refetch()
+    }, [locate, currentLanguage])
     useEffect(() => {
         if (table.getState().columnFilters[0]?.id === 'fullName') {
             if (table.getState().sorting[0]?.id !== 'fullName') {

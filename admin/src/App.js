@@ -33,6 +33,10 @@ import Catalogs from './pages/catalogs/Catalogs'
 import CatalogList from './pages/catalogs/sections/list/CatalogList'
 import NewCatalog from './pages/catalogs/sections/new/NewCatalog'
 import CatalogEdit from './pages/catalogs/sections/edit/CatalogEdit'
+import Products from './pages/produts/Products'
+import ProductList from './pages/produts/sections/list/ProductList'
+import NewProduct from './pages/produts/sections/new/NewProduct'
+import ProductEdit from './pages/produts/sections/edit/ProductEdit'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -180,6 +184,50 @@ function App() {
                                     <Route
                                         path={'edit/:id'}
                                         element={<CatalogEdit />}
+                                    />
+                                </Route>
+                            </Route>
+                            <Route path={'products/'} element={<Products />}>
+                                <Route path={'restaurants/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<ProductList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewProduct />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<ProductEdit />}
+                                    />
+                                </Route>
+                                <Route path={'grocery/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<ProductList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewProduct />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<ProductEdit />}
+                                    />
+                                </Route>
+                                <Route path={'pastries/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<ProductList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewProduct />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<ProductEdit />}
                                     />
                                 </Route>
                             </Route>

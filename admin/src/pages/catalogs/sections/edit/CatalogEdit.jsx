@@ -43,7 +43,7 @@ const CatalogEdit = () => {
 
     useEffect(() => {
         refetch()
-    }, [currentLanguage])
+    }, [currentLanguage, location])
     return (
         <>
             <CatalogEditHeader
