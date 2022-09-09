@@ -10,13 +10,21 @@ import Review from './steps/Review'
 
 const NewProduct = () => {
     const [active, setActive] = useState('General Info')
+    const [generalFile, setGeneralFile] = useState([])
+
     return (
         <>
-            <NewProductHeader active={active} setActive={setActive} />
+            <NewProductHeader
+                active={active}
+                setActive={setActive}
+                file={generalFile}
+            />
             <NewProductLanguages />
             <Step active={active} setActive={setActive} />
             <div className={'p-10'}>
-                {active === 'General Info' && <General />}
+                {active === 'General Info' && (
+                    <General file={generalFile} setFile={setGeneralFile} />
+                )}
                 {active === 'Variant Info' && <Variants />}
                 {active === 'Add on' && <Addons />}
                 {active === 'Review' && <Review />}

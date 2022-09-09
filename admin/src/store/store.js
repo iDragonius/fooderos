@@ -7,6 +7,7 @@ import tagSlice from './slices/tagSlice'
 import storeSlice from './slices/storeSlice'
 import branchListSlice from './slices/branchListSlice'
 import catalogSlice from './slices/catalogSlice'
+import productSlice from './slices/productSlice'
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
@@ -17,6 +18,7 @@ export const store = configureStore({
         store: storeSlice,
         branchList: branchListSlice,
         catalog: catalogSlice,
+        product: productSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),

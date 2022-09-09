@@ -1,21 +1,21 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { allSteps } from '../../../../../store/slices/productSlice'
 
 const Controller = ({ active, setActive }) => {
     const sections = ['General Info', 'Variant Info', 'Add on', 'Review']
-
+    const steps = useSelector(allSteps)
     const back = () => {
         if (sections.indexOf(active) === 0) {
             return
         }
-        const i = sections.indexOf(active) - 1
-        setActive(sections[i])
+        setActive(steps[steps.indexOf(active) - 1])
     }
     const next = () => {
         if (sections.indexOf(active) === 3) {
             return
         }
-        const i = sections.indexOf(active) + 1
-        setActive(sections[i])
+        setActive(steps[steps.indexOf(active) + 1])
     }
     return (
         <div className={'flex justify-between'}>

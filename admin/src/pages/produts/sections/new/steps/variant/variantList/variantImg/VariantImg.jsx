@@ -1,7 +1,8 @@
-import styles from './ImgUploads.module.scss'
+import React from 'react'
 import { useDropzone } from 'react-dropzone'
+import styles from './VariantImg.module.scss'
 
-const ImgUpload = ({ file, setFile, path }) => {
+const VariantImg = ({ setFile, file, path }) => {
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': [],
@@ -21,7 +22,7 @@ const ImgUpload = ({ file, setFile, path }) => {
             <div className={'p-3 border-[1px] rounded-md'}>
                 <img
                     src={files.preview}
-                    className={'w-[240px] h-[240px]'}
+                    className={'w-[88px] h-[88px]'}
                     onLoad={() => {
                         URL.revokeObjectURL(files.preview)
                     }}
@@ -49,7 +50,7 @@ const ImgUpload = ({ file, setFile, path }) => {
                             <div className={'p-3 border-[1px] rounded-md'}>
                                 <img
                                     src={`http://192.168.202.52:81/storage/catagory/images/${path}`}
-                                    className={'w-[240px] h-[240px]'}
+                                    className={'w-[88px] h-[88px]'}
                                     alt=""
                                 />
                             </div>
@@ -88,4 +89,4 @@ const ImgUpload = ({ file, setFile, path }) => {
     )
 }
 
-export default ImgUpload
+export default VariantImg
