@@ -37,6 +37,9 @@ import Products from './pages/produts/Products'
 import ProductList from './pages/produts/sections/list/ProductList'
 import NewProduct from './pages/produts/sections/new/NewProduct'
 import ProductEdit from './pages/produts/sections/edit/ProductEdit'
+import BranchCatalogs from './pages/branchCatalogs/BranchCatalogs'
+import BranchCatalogList from './pages/branchCatalogs/sections/list/BranchCatalogList'
+import NewBranchCatalog from './pages/branchCatalogs/sections/new/NewBranchCatalog'
 
 function App() {
     const skip = useSelector(isSkip)
@@ -184,6 +187,53 @@ function App() {
                                     <Route
                                         path={'edit/:id'}
                                         element={<CatalogEdit />}
+                                    />
+                                </Route>
+                            </Route>
+                            <Route
+                                path={'branch-catalogs/'}
+                                element={<BranchCatalogs />}
+                            >
+                                <Route path={'restaurants/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<BranchCatalogList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewBranchCatalog />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<NewBranchCatalog />}
+                                    />
+                                </Route>
+                                <Route path={'grocery/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<BranchCatalogList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewBranchCatalog />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<NewBranchCatalog />}
+                                    />
+                                </Route>
+                                <Route path={'pastries/'}>
+                                    <Route
+                                        path={'list'}
+                                        element={<BranchCatalogList />}
+                                    />
+                                    <Route
+                                        path={'new'}
+                                        element={<NewBranchCatalog />}
+                                    />
+                                    <Route
+                                        path={'edit/:id'}
+                                        element={<NewBranchCatalog />}
                                     />
                                 </Route>
                             </Route>

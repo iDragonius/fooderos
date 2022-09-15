@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styles from './VariantImg.module.scss'
+import { useDispatch } from 'react-redux'
+import { setCombinationData } from '../../../../../../../../store/slices/productSlice'
 
-const VariantImg = ({ setFile, file, path }) => {
+const VariantImg = ({
+    setFile,
+    file,
+    path,
+    setAllImgs,
+    id,
+    allImgs,
+    position,
+}) => {
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': [],
@@ -15,8 +25,16 @@ const VariantImg = ({ setFile, file, path }) => {
                     })
                 )
             )
+            let update = {}
+            update[position] = acceptedFiles.map((file) =>
+                Object.assign(file, {
+                    preview: URL.createObjectURL(file),
+                })
+            )[0]
+            setAllImgs((allImgs) => ({ ...allImgs, ...update }))
         },
     })
+
     const thumbs = file.map((files) => (
         <div key={files.name}>
             <div className={'p-3 border-[1px] rounded-md'}>

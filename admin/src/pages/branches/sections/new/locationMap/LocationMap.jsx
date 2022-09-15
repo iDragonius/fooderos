@@ -6,6 +6,7 @@ import {
     Marker,
     useJsApiLoader,
 } from '@react-google-maps/api'
+import { doc } from 'prettier'
 
 const LocationMap = ({ open, setOpen, currentLoc, setCurrentLoc }) => {
     const [libraries] = useState(['places'])
@@ -41,7 +42,10 @@ const LocationMap = ({ open, setOpen, currentLoc, setCurrentLoc }) => {
                 </Autocomplete>
                 <button
                     className={'bg-primary text-white py-2 px-5 ml-4'}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                        setOpen(false)
+                        document.body.style.overflow = 'auto'
+                    }}
                 >
                     Save
                 </button>

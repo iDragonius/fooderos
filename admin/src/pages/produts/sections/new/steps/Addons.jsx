@@ -5,7 +5,7 @@ const Addons = () => {
     const [addonsList, setAddonsList] = useState([])
     const [id, setId] = useState(0)
     const addAddon = () => {
-        setAddonsList(addonsList.concat(<Addon key={`${id}_azd`} />))
+        setAddonsList(addonsList.concat(<Addon key={`${id}_azd`} id={id} />))
         setId((old) => (old = old + 1))
     }
     useEffect(() => {

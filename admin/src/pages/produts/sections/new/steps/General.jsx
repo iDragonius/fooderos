@@ -7,6 +7,7 @@ import {
     addSteps,
     allManagers,
     allSteps,
+    allStores,
     deleteSteps,
     namesTemp,
     setGeneralData,
@@ -21,29 +22,35 @@ const General = ({ file, setFile }) => {
     const [haveVariants, setHaveVariants] = useState(false)
     const [haveAddons, setHaveAddons] = useState(false)
     const [vendor, setVendor] = useState([])
+    const [store, setStore] = useState([])
+
     const steps = useSelector(allSteps)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const temp = useSelector(namesTemp)
     const managers = useSelector(allManagers)
+    const stores = useSelector(allStores)
+
     const location = useLocation()
     const { data: manag, isSuccess: success } = useManagersQuery()
-    const { data, isSuccess, refetch } = useCatalogTypesQuery({
+    const { data } = useCatalogTypesQuery({
         lang: localStorage.getItem('lang'),
         rest: location.pathname.split('/')[2],
     })
     useEffect(() => {
         steps.indexOf('Variant Info') > -1 && setHaveVariants(true)
         steps.indexOf('Add on') > -1 && setHaveAddons(true)
-    }, [])
+    }, [steps])
     useEffect(() => {
         setDescription(temp.description ? temp.description : '')
         setName(temp.name ? temp.name : '')
     }, [temp])
     useEffect(() => {
         setVendor(managers ? managers : [])
-        console.log(123)
     }, [managers])
+    useEffect(() => {
+        setStore(stores ? stores : [])
+    }, [stores])
     const dispatch = useDispatch()
     return (
         <div className={'mt-4 '}>
@@ -63,50 +70,45 @@ const General = ({ file, setFile }) => {
                         type="checkbox"
                         checked={special}
                         className={'mr-3'}
-                        onChange={(e) => setSpecial(e.target.checked)}
+                        onChange={(e) => {
+                            setSpecial(e.target.checked)
+                            dispatch(
+                                setGeneralData({
+                                    type: 'haveStore',
+                                    value: e.target.checked ? 1 : 0,
+                                })
+                            )
+                        }}
                     />
                     <label
                         className={'select-none text-[#424b56] text-[20px]'}
-                        onClick={() =>
+                        onClick={() => {
                             special ? setSpecial(false) : setSpecial(true)
-                        }
+                            dispatch(
+                                setGeneralData({
+                                    type: 'haveStore',
+                                    value: special ? 0 : 1,
+                                })
+                            )
+                        }}
                     >
                         This product special for any market?{' '}
                     </label>
                 </div>
                 {special && (
                     <div className={'w-[600px] ml-12'}>
-                        <div className={styles.phoneOpt}>
-                            <select
-                                type="text"
-                                className={styles.inp}
-                                required={true}
-                                onChange={(e) =>
-                                    dispatch(
-                                        setGeneralData({
-                                            type: 'store_id',
-                                            value: e.target.value,
-                                        })
-                                    )
-                                }
-                            >
-                                {isSuccess && (
-                                    <>
-                                        {data.stores.map((store, i) => (
-                                            <>
-                                                <option
-                                                    value={store}
-                                                    key={`tag_${store}+${i}`}
-                                                >
-                                                    {store}
-                                                </option>
-                                            </>
-                                        ))}
-                                    </>
-                                )}
-                            </select>
-                            <label className={styles.phoneL}>Store Name</label>
-                        </div>
+                        <Select
+                            options={store}
+                            onChange={(data) => {
+                                dispatch(
+                                    setGeneralData({
+                                        type: 'store_id',
+                                        value: data.value,
+                                    })
+                                )
+                            }}
+                            className={'  mb-10'}
+                        />
                     </div>
                 )}
             </div>
@@ -304,7 +306,18 @@ const General = ({ file, setFile }) => {
                     Vendor
                 </h1>
                 <div className={'mt-10'}>
-                    <Select options={vendor} className={'w-1/3 ml-12 mb-10'} />
+                    <Select
+                        options={vendor}
+                        onChange={(data) => {
+                            dispatch(
+                                setGeneralData({
+                                    type: 'manager',
+                                    value: data.value,
+                                })
+                            )
+                        }}
+                        className={'w-1/3 ml-12 mb-10'}
+                    />
                 </div>
             </div>
             <div

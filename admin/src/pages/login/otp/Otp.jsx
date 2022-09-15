@@ -42,6 +42,11 @@ const Otp = ({ setStep, step }) => {
     })
     const handleLogin = async (e) => {
         e.preventDefault()
+        console.log({
+            phone: sessionStorage.getItem('phone'),
+            otp: otpRef.current.value,
+            token,
+        })
         if (!otpRef.current.value) {
             toast.warn('Security code input must be filled out')
         }

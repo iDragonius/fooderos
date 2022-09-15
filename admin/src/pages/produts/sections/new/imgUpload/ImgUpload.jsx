@@ -1,5 +1,6 @@
 import styles from './ImgUploads.module.scss'
 import { useDropzone } from 'react-dropzone'
+import { useEffect } from 'react'
 
 const ImgUpload = ({ file, setFile, path }) => {
     const { getRootProps, getInputProps } = useDropzone({
@@ -8,19 +9,22 @@ const ImgUpload = ({ file, setFile, path }) => {
         },
         onDrop: (acceptedFiles) => {
             setFile(
-                acceptedFiles.map((file) =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file),
-                    })
+                file.concat(
+                    acceptedFiles.map((file) =>
+                        Object.assign(file, {
+                            preview: URL.createObjectURL(file),
+                        })
+                    )
                 )
             )
         },
     })
+
     const thumbs = file.map((files) => (
         <div key={files.name}>
             <div className={'p-3 border-[1px] rounded-md'}>
                 <img
-                    src={files.preview}
+                    src={URL.createObjectURL(file[0])}
                     className={'w-[240px] h-[240px]'}
                     onLoad={() => {
                         URL.revokeObjectURL(files.preview)

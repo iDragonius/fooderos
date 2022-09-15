@@ -10,6 +10,7 @@ import {
     setProductLocales,
     setTemp,
     changeLanguage,
+    currStep,
 } from '../../../../store/slices/productSlice'
 
 const NewProductLanguages = () => {
@@ -20,11 +21,12 @@ const NewProductLanguages = () => {
     const currentLang = useSelector(currLang)
     const currentNames = useSelector(localNames)
     const currentDescriptions = useSelector(localDescription)
+    const currentStep = useSelector(currStep)
     const activeLang = (lang) => {
         if (lang === currentLang) {
             return
         }
-        dispatch(setProductLocales({ ...temp }))
+        dispatch(setProductLocales())
         if (currentNames[`${lang}_name`]) {
             setActive(lang)
             dispatch(changeLanguage(lang))
@@ -37,6 +39,7 @@ const NewProductLanguages = () => {
             return
         }
         dispatch(setTemp({ name: '', description: '' }))
+
         dispatch(changeLanguage(lang))
         setActive(lang)
     }

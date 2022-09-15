@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { currCombinations } from '../../../../../../../store/slices/productSlice'
 import VariantRow from './variantRow/VariantRow'
 
-const VariantList = () => {
+const VariantList = ({ allImgs, setAllImgs }) => {
     const currentVariantCombinations = useSelector(currCombinations)
 
     return (
@@ -21,7 +21,13 @@ const VariantList = () => {
             </div>
             <div>
                 {currentVariantCombinations.map((comb, i) => (
-                    <VariantRow variants={comb} key={`${i}_xzc123`} />
+                    <VariantRow
+                        setAllImgs={setAllImgs}
+                        allImgs={allImgs}
+                        variants={comb}
+                        key={`${i}_xzc123`}
+                        position={i}
+                    />
                 ))}
             </div>
         </div>

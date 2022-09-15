@@ -12,6 +12,7 @@ import {
     productTypes,
     setCombinations,
 } from '../../../../../../store/slices/productSlice'
+import CreatableSelect from 'react-select/creatable'
 const customStyles = {
     valueContainer: () => ({
         height: '54px',
@@ -22,7 +23,6 @@ const customStyles = {
     control: (provided) => ({
         ...provided,
         border: '1px solid rgba(0, 0, 0, 0.1)',
-        marginTop: '24px',
     }),
     placeholder: () => ({
         height: '52px',
@@ -38,7 +38,18 @@ const customStyles = {
         zIndex: '1000',
     }),
 }
+
 const Variant = ({ variantKey, setDel, types }) => {
+    const [defaultValues, setDefaultValues] = useState([
+        {
+            value: 'size',
+            label: 'size',
+        },
+        {
+            value: 'color',
+            label: 'color',
+        },
+    ])
     const [optionsList, setOptionsList] = useState([])
     const [id, setId] = useState(0)
     const [deleteId, setDeleteId] = useState(null)
@@ -47,9 +58,9 @@ const Variant = ({ variantKey, setDel, types }) => {
     const [type, setType] = useState(null)
     const currentProductTypes = useSelector(productTypes)
     const [typesOptions, setTypesOptions] = useState([])
-
+    const [name, setName] = useState()
     const addOption = () => {
-        if (!type) {
+        if (!name) {
             toast.warning('Choose name')
             return
         }
@@ -57,23 +68,38 @@ const Variant = ({ variantKey, setDel, types }) => {
             toast.warning('Option input must be full filled')
             return
         }
-        if (currentVariantsTypes[type.value].indexOf(option) > -1) {
+        if (currentVariantsTypes[name.value].indexOf(option) > -1) {
             toast.warning('You have created this option')
             return
         }
+        const key =
+            option +
+            '__' +
+            id +
+            '__' +
+            Array(5)
+                .fill()
+                .map((n) => ((Math.random() * 36) | 0).toString(36))
+                .join('')
         setOptionsList(
             optionsList.concat(
                 <Option
+                    type={name.value}
                     value={option}
-                    keyData={option + '__' + id}
+                    keyData={key}
                     setDeleted={setDeleteId}
                     del={deleteId}
-                    type={type.value}
-                    key={option + '__' + id}
+                    key={key}
                 />
             )
         )
-        dispatch(addVariantsToOption({ type: type.value, option }))
+        dispatch(
+            addVariantsToOption({
+                type: name.value,
+                option,
+                keyData: key,
+            })
+        )
         setOption('')
         setId((old) => (old = old + 1))
     }
@@ -83,43 +109,41 @@ const Variant = ({ variantKey, setDel, types }) => {
     }, [deleteId])
     return (
         <div className={'flex  relative mr-52 mb-10 mt-5'}>
-            <Select
-                options={types}
-                placeholder={'Name'}
-                styles={customStyles}
-                className={'ml-10 w-1/3'}
-                value={type}
-                onChange={(data) => {
-                    if (data === type) {
-                        return
-                    }
-                    if (
-                        Object.keys(currentVariantsTypes).indexOf(data.value) >
-                        -1
-                    ) {
-                        if (type) {
-                            dispatch(deleteOption(type.value))
+            <div className={styles.tagName + ' w-1/3 ml-10 mr-20'}>
+                <CreatableSelect
+                    styles={customStyles}
+                    onChange={(data) => {
+                        if (
+                            Object.keys(currentVariantsTypes).indexOf(
+                                data.value
+                            ) > -1
+                        ) {
+                            setName(name)
+                            toast.warn('This name already used')
+                            return
                         }
-
-                        setType([])
-                        return
-                    }
-                    if (type) {
-                        dispatch(deleteOption(type.value))
-                    }
-                    setType(data)
-                    dispatch(addVariants(data.value))
-
-                    console.log(Object.keys(currentVariantsTypes))
-                }}
-            />
+                        dispatch(
+                            addVariants({
+                                newName: data.value,
+                                oldName: name ? name.value : '',
+                            })
+                        )
+                        setName(data)
+                    }}
+                    value={name}
+                    options={defaultValues}
+                />
+            </div>
             <div className={styles.tagName + ' w-1/3 ml-10'}>
                 <div className={styles.phoneOpt}>
                     <input type="text" className={styles.inp} required={true} />
                     <label className={styles.phoneL}>Description</label>
                 </div>
             </div>
-            <div className={' w-1/3 relative'}>
+            <form
+                className={' w-1/3 relative'}
+                onSubmit={(e) => e.preventDefault()}
+            >
                 <div className={styles.tagName + '  ml-10'}>
                     <div className={styles.phoneOpt}>
                         <input
@@ -144,14 +168,13 @@ const Variant = ({ variantKey, setDel, types }) => {
                         + Add option
                     </button>
                 </div>
-            </div>
+            </form>
 
             <button
                 className={'absolute -top-2 right-0 text-[#989da2] font-medium'}
                 onClick={() => {
-                    console.log(types)
-                    if (type) {
-                        dispatch(deleteOption(type.value))
+                    if (name) {
+                        dispatch(deleteOption({ name: name.value }))
                     }
                     setDel(variantKey)
                 }}
