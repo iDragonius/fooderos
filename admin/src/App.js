@@ -33,12 +33,14 @@ import Catalogs from './pages/catalogs/Catalogs'
 import CatalogList from './pages/catalogs/sections/list/CatalogList'
 import NewCatalog from './pages/catalogs/sections/new/NewCatalog'
 import CatalogEdit from './pages/catalogs/sections/edit/CatalogEdit'
-import Products from './pages/produts/Products'
-import ProductList from './pages/produts/sections/list/ProductList'
-import NewProduct from './pages/produts/sections/new/NewProduct'
-import ProductEdit from './pages/produts/sections/edit/ProductEdit'
+import Products from './pages/products/Products'
+import ProductList from './pages/products/sections/list/ProductList'
+import NewProduct from './pages/products/sections/new/NewProduct'
+import ProductEdit from './pages/products/sections/edit/ProductEdit'
 import BranchCatalogs from './pages/branchCatalogs/BranchCatalogs'
+import NewBranchCatalogList from './pages/branchCatalogs/sections/new/NewBranchCatalogList'
 import BranchCatalogList from './pages/branchCatalogs/sections/list/BranchCatalogList'
+import BranchCatalogEdit from './pages/branchCatalogs/sections/edit/BranchCatalogEdit'
 import NewBranchCatalog from './pages/branchCatalogs/sections/new/NewBranchCatalog'
 
 function App() {
@@ -205,7 +207,7 @@ function App() {
                                     />
                                     <Route
                                         path={'edit/:id'}
-                                        element={<NewBranchCatalog />}
+                                        element={<BranchCatalogEdit />}
                                     />
                                 </Route>
                                 <Route path={'grocery/'}>
@@ -219,7 +221,7 @@ function App() {
                                     />
                                     <Route
                                         path={'edit/:id'}
-                                        element={<NewBranchCatalog />}
+                                        element={<BranchCatalogEdit />}
                                     />
                                 </Route>
                                 <Route path={'pastries/'}>
@@ -233,7 +235,7 @@ function App() {
                                     />
                                     <Route
                                         path={'edit/:id'}
-                                        element={<NewBranchCatalog />}
+                                        element={<BranchCatalogEdit />}
                                     />
                                 </Route>
                             </Route>

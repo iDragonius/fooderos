@@ -23,6 +23,12 @@ const productSlice = createSlice({
         combinationData: {},
         addonData: [],
         productsData: [],
+        editCombinationData: [],
+        editOptions: {},
+        editVariants: [],
+        newEditOptions: {},
+        newEditCombinationData: [],
+        completedProductData: false,
     },
     reducers: {
         changeStep: (state, action) => {
@@ -32,7 +38,6 @@ const productSlice = createSlice({
             state.descriptions[`${state.language}_description`] =
                 state.temp.description
             state.namesLocal[`${state.language}_name`] = state.temp.name
-            // state.temp = {}
         },
         deleteData: (state) => {
             state.language = 'Az'
@@ -46,6 +51,12 @@ const productSlice = createSlice({
             state.optionLocals = {}
             state.general = {}
             state.temp = {}
+            state.completedProductData = false
+            state.editCombinationData = []
+            state.addonData = []
+            state.editOptions = {}
+            state.editVariants = []
+            state.namesLocal = {}
         },
         setTemp: (state, action) => {
             const { description, name } = action.payload
@@ -74,17 +85,35 @@ const productSlice = createSlice({
         setCombinationData: (state, action) => {
             const { name, type, value } = action.payload
             let nameStr = ''
-            name.map((option) => {
-                nameStr = nameStr + ',' + option
-            })
-            nameStr = nameStr.slice(1)
-            if (!state.combinationData[nameStr]) {
-                state.combinationData[nameStr] = {}
+            if (typeof name === 'object') {
+                name.map((option) => {
+                    nameStr = nameStr + ',' + option
+                })
+                nameStr = nameStr.slice(1)
+                if (!state.combinationData[nameStr]) {
+                    state.combinationData[nameStr] = {}
+                }
+                state.combinationData[nameStr][type] = value
+            } else {
+                const temp = state.editCombinationData.find(
+                    (data) => data.name === name
+                )
+                temp[type] = value
             }
-            state.combinationData[nameStr][type] = value
+        },
+        setNewCombinationData: (state, action) => {
+            const { name, type, value } = action.payload
+
+            const temp = state.newEditCombinationData.find(
+                (data) => data.name === name
+            )
+            temp[type] = value
         },
         destroyStatus: (state) => {
             state.status = false
+        },
+        destroyDataStatus: (state) => {
+            state.completedProductData = false
         },
         setGeneralData: (state, action) => {
             const { type, value } = action.payload
@@ -97,17 +126,21 @@ const productSlice = createSlice({
             console.log(action)
         },
         setAllAddonData: (state, action) => {
-            const { name, sku, barcode, price, weight, status } = action.payload
-            state.addonData.push({
-                Az_name: name,
-                Ru_name: name,
-                En_name: name,
-                sku,
-                barcode,
-                price,
-                weight,
-                status,
-            })
+            const { name, sku, barcode, price, weight, status, id } =
+                action.payload
+            if (state.addonData.at(id) === undefined) {
+                console.log(state.addonData.at(id))
+                state.addonData.push({
+                    Az_name: name,
+                    Ru_name: name,
+                    En_name: name,
+                    sku,
+                    barcode,
+                    price,
+                    weight,
+                    status,
+                })
+            }
         },
         setAddonData: (state, action) => {
             const { id, value, type } = action.payload
@@ -185,6 +218,64 @@ const productSlice = createSlice({
             const combine = combineAll(temp)
             state.variantCombination = [...combine]
         },
+        addEditVariantsToOption: (state, action) => {
+            const { type, option, keyData } = action.payload
+            if (state.editOptions[type].indexOf(option) > -1) {
+                return
+            }
+            if (!state.newEditOptions[type]) {
+                state.newEditOptions[type] = []
+            }
+
+            state.newEditOptions[type].push(option)
+
+            const temp = []
+            temp.push([option])
+            const variants = Object.keys(state.editOptions).filter(
+                (variant) => Number(variant) !== type
+            )
+            variants.map((variant) => {
+                temp.push(
+                    state.editOptions[variant].concat(
+                        state.newEditOptions[variant]
+                            ? state.newEditOptions[variant]
+                            : []
+                    )
+                )
+            })
+
+            const combineAll = (array) => {
+                const res = []
+                let max = array.length - 1
+                const helper = (arr, i) => {
+                    for (let j = 0, l = array[i].length; j < l; j++) {
+                        let copy = arr.slice(0)
+                        copy.push(array[i][j])
+                        if (i === max) res.push(copy)
+                        else helper(copy, i + 1)
+                    }
+                }
+                helper([], 0)
+                return res
+            }
+            const combine = combineAll(temp)
+            console.log(combine)
+            combine.map((combination) => {
+                let name = ''
+                combination.map((i) => {
+                    name = name + ',' + i
+                })
+                name = name.slice(1)
+                state.newEditCombinationData.push({
+                    name,
+                    sku: '',
+                    barcode: '',
+                    price: '',
+                    weight: '',
+                    status: 1,
+                })
+            })
+        },
         setAllCombinationData: (state, action) => {
             const { sku, status, barcode, price, weight, name } = action.payload
             let nameStr = ''
@@ -193,12 +284,14 @@ const productSlice = createSlice({
             })
             nameStr = nameStr.slice(1)
 
-            state.combinationData[nameStr] = {}
-            state.combinationData[nameStr].sku = sku
-            state.combinationData[nameStr].barcode = barcode
-            state.combinationData[nameStr].price = price
-            state.combinationData[nameStr].weight = weight
-            state.combinationData[nameStr].status = status
+            if (!state.combinationData[nameStr]) {
+                state.combinationData[nameStr] = {}
+                state.combinationData[nameStr].sku = sku
+                state.combinationData[nameStr].barcode = barcode
+                state.combinationData[nameStr].price = price
+                state.combinationData[nameStr].weight = weight
+                state.combinationData[nameStr].status = status
+            }
         },
         changeCombinationLang: (state) => {
             let data = []
@@ -232,12 +325,12 @@ const productSlice = createSlice({
             state.variantCombination = [...combine]
         },
         deleteOption: (state, action) => {
-            console.log(action.payload.name)
             delete state.variants[action.payload.name]
             delete state.optionLocals[action.payload.name]
             state.variantCombination = []
             const temp = []
             if (Object.keys(state.variants).length > 0) {
+                console.log(1231)
                 Object.keys(state.variants).map((variant) => {
                     temp.push(state.variants[variant])
                 })
@@ -261,7 +354,6 @@ const productSlice = createSlice({
             }
         },
         deleteOptions: (state, action) => {
-            console.log(action.payload)
             delete state.variants[action.payload.branch].splice(
                 state.variants[action.payload.branch].indexOf(
                     action.payload.value
@@ -323,7 +415,7 @@ const productSlice = createSlice({
                     payload.map((manager) => {
                         state.managers.push({
                             label: manager.name,
-                            value: manager.name,
+                            value: manager.id,
                         })
                     })
                 }
@@ -331,6 +423,7 @@ const productSlice = createSlice({
             .addMatcher(
                 apiSlice.endpoints.catalogTypes.matchFulfilled,
                 (state, { payload }) => {
+                    state.stores = []
                     payload.stores.map((store) => {
                         state.stores.push({ value: store, label: store })
                     })
@@ -339,7 +432,6 @@ const productSlice = createSlice({
             .addMatcher(
                 apiSlice.endpoints.showProducts.matchFulfilled,
                 (state, { payload }) => {
-                    console.log(payload)
                     state.productsData = []
                     payload.map((product) => {
                         state.productsData.push({
@@ -352,6 +444,86 @@ const productSlice = createSlice({
                             image: product.image,
                         })
                     })
+                }
+            )
+            .addMatcher(
+                apiSlice.endpoints.showProduct.matchFulfilled,
+                (state, { payload }) => {
+                    state.completedProductData = false
+                    state.general = {
+                        isVariants: payload.isVariant,
+                        isAddons: payload.isAddons,
+                        id: payload.id,
+                        store_id: payload.store[0] && payload.store[0].name,
+                        image: payload.image,
+                        price: payload.price,
+                        sku: payload.sku,
+                        barcode: payload.barcode,
+                        positionId: payload.position_id,
+                        haveStore: payload.store.length > 0 ? 1 : 0,
+                    }
+                    state.steps = ['General Info']
+                    if (payload.isVariant === 1) {
+                        console.log('variant')
+                        state.steps.push('Variant Info')
+                    }
+                    if (payload.isAddons === 1) {
+                        console.log('add')
+                        state.steps.push('Add on')
+                    }
+                    state.steps.push('Review')
+
+                    payload.locals.map((local) => {
+                        state.descriptions[`${local.lang}_description`] =
+                            local.description
+                        state.namesLocal[`${local.lang}_name`] = local.name
+                    })
+                    payload.addons.map((addon) => {
+                        const tempLang = {}
+                        addon.locales.map((local) => {
+                            tempLang[`${local.lang}_name`] = local.name
+                        })
+                        state.addonData.push({
+                            ...tempLang,
+                            sku: addon.sku,
+                            barcode: addon.barcode,
+                            weight: addon.weight,
+                            price: addon.unit_price,
+                            status: addon.status,
+                        })
+                    })
+                    state.general.manager = payload.manager_id
+                    payload.variants.map((variant) => {
+                        let temp = ''
+                        variant.combination.map((combination) => {
+                            temp =
+                                temp + ',' + combination.locales_value[0].name
+                        })
+                        state.editCombinationData.push({
+                            name: temp.slice(1),
+                            id: variant.id,
+                            image: variant.image,
+                            sku: variant.sku,
+                            barcode: variant.barcode,
+                            price: variant.price,
+                            weight: variant.weight,
+                            status: variant.status,
+                        })
+                    })
+                    payload.option.map((variant) => {
+                        let index = state.editVariants.length
+                        state.editVariants.push({
+                            name: variant.locales[0].name,
+                            id: variant.id,
+                        })
+
+                        state.editOptions[index] = []
+
+                        variant.values.map((opt) => {
+                            state.editOptions[index].push(opt.values[0].name)
+                        })
+                    })
+                    state.completedProductData = true
                 }
             )
     },
@@ -379,6 +551,9 @@ export const {
     setAllCombinationData,
     setAddonData,
     setAllAddonData,
+    destroyDataStatus,
+    addEditVariantsToOption,
+    setNewCombinationData,
 } = productSlice.actions
 
 export default productSlice.reducer
@@ -400,3 +575,10 @@ export const currStep = (state) => state.product.currentStep
 export const combData = (state) => state.product.combinationData
 export const addonData = (state) => state.product.addonData
 export const productsData = (state) => state.product.productsData
+export const dataStatus = (state) => state.product.completedProductData
+export const editVariantsData = (state) => state.product.editCombinationData
+export const editVariantsTypes = (state) => state.product.editVariants
+export const editVariantsOptions = (state) => state.product.editOptions
+export const newEditVariantOptions = (state) => state.product.newEditOptions
+export const newCombinationData = (state) =>
+    state.product.newEditCombinationData

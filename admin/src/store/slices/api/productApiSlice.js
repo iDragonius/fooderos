@@ -34,6 +34,39 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
+        productEditOptions: builder.mutation({
+            query: (credentials) => ({
+                url: '/product/edit',
+                method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
+        productEdit: builder.mutation({
+            async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
+                const formData = new FormData()
+                console.log(data.data)
+                formData.append('test', JSON.stringify(data.data))
+                Object.keys(data.images).map((img) => {
+                    formData.append(img, data.images[img])
+                })
+                formData.append('product_id', data.product_id)
+                formData.append('page', data.page)
+                console.log(...formData)
+                const response = await fetchWithBQ(
+                    {
+                        url: '/product/edit',
+                        method: 'POST',
+                        body: formData,
+                    },
+                    _queryApi,
+                    _extraOptions
+                )
+                if (response.error) throw response.error
+                return response.data
+                    ? { data: response.data }
+                    : { error: response.error }
+            },
+        }),
         st2: builder.mutation({
             query: (credentials) => ({
                 url: '/test/st2',
@@ -119,7 +152,6 @@ export const productApiSlice = apiSlice.injectEndpoints({
                         data[`${lang}_description`]
                     )
                 })
-                console.log(...formData)
                 const response = await fetchWithBQ(
                     {
                         url: '/product',
@@ -174,7 +206,9 @@ export const {
     useCreateVariantsMutation,
     useProductAddonsMutation,
     useShowProductsQuery,
+    useProductEditMutation,
     useDeleteProductMutation,
     useProductStatusMutation,
-    useProductShowQuery,
+    useShowProductQuery,
+    useProductEditOptionsMutation,
 } = productApiSlice

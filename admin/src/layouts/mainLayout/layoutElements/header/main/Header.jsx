@@ -32,7 +32,8 @@ const Header = () => {
         >
             <div className={'flex items-center'}>
                 <div className={'h-10 w-10 bg-[#1063fb] mr-16'}></div>
-                {location.pathname.split('/')[1] === 'branches' ? (
+                {location.pathname.split('/')[1] === 'branches' ||
+                location.pathname.split('/')[1] === 'branch-catalogs' ? (
                     <div className={'relative'}>
                         <div
                             className={

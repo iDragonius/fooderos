@@ -1,0 +1,19 @@
+.drop {
+  @apply  flex justify-center items-center cursor-pointer;
+  width:360px;
+  height: 360px;
+  border: 2px dashed #d0e3fc;
+  border-radius:8px ;
+}
+.dropContent {
+  @apply   px-6 ;
+  font-size: 20px;
+  padding-block: 5px;
+  border: 1px solid #ced4dd;
+  background: #fbfbfc;
+  border-radius: 4px;
+}
+.orr {
+  @apply  w-32 text-center mt-2;
+  color:#90a2b2 ;
+}
