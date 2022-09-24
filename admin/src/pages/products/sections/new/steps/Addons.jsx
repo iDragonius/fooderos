@@ -23,8 +23,6 @@ const Addons = () => {
             setAddonsList(addonsList.concat(temp))
             setId(addonId)
         } else {
-            console.log(1)
-
             addAddon()
         }
     }, [])

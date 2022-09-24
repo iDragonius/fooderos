@@ -4,6 +4,7 @@ import {
     addLocalsToOption,
     changeCombinationLang,
     currLang,
+    deleteNewOption,
     deleteOptions,
     optionLocals,
 } from '../../../../../../../store/slices/productSlice'
@@ -41,9 +42,7 @@ const Option = ({ value, type, keyData, setDeleted, old }) => {
                 onClick={() => {
                     // dispatch(deleteOptions({ branch: type, value: value }))
                     // setDeleted(keyData)
-                    if (old) {
-                        return
-                    }
+                    if (old) return
                     dispatch(
                         addLocalsToOption({ lang, option: val, keyData, type })
                     )
@@ -56,11 +55,9 @@ const Option = ({ value, type, keyData, setDeleted, old }) => {
                     'text-[#96a2af] font-bold text-[20px] cursor-pointer absolute top-8  right-5 '
                 }
                 onClick={() => {
-                    if (old) {
-                        return
-                    }
+                    if (old) return
                     dispatch(
-                        deleteOptions({ branch: type, value: value, keyData })
+                        deleteNewOption({ branch: type, value: value, keyData })
                     )
                     setDeleted(keyData)
                 }}

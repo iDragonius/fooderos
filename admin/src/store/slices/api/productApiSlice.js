@@ -41,11 +41,19 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
+        productEditAddons: builder.mutation({
+            query: (credentials) => ({
+                url: '/product/edit',
+                method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
+
         productEdit: builder.mutation({
             async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
                 const formData = new FormData()
                 console.log(data.data)
-                formData.append('test', JSON.stringify(data.data))
+                formData.append('variants', JSON.stringify(data.data))
                 Object.keys(data.images).map((img) => {
                     formData.append(img, data.images[img])
                 })
@@ -54,7 +62,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 console.log(...formData)
                 const response = await fetchWithBQ(
                     {
-                        url: '/product/edit',
+                        url: '/product/edit/variants',
                         method: 'POST',
                         body: formData,
                     },
@@ -122,6 +130,46 @@ export const productApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
+        productEditGeneral: builder.mutation({
+            async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
+                console.log(data)
+                const formData = new FormData()
+
+                formData.append('name', data.Az_name)
+                formData.append('description', data.Az_description)
+                formData.append('image', data.image)
+                formData.append('sku', data.sku)
+                formData.append('barcode', data.barcode)
+                formData.append('position_id', data.positionId)
+                formData.append('price', data.price)
+
+                data.haveStore === 1 && formData.append('store', data.store_id)
+                formData.append('product_id', data.id)
+                formData.append('page', data.page)
+
+                formData.append('manager', data.manager)
+                data.langs.map((lang) => {
+                    formData.append(`${lang}_name`, data[`${lang}_name`])
+                    formData.append(
+                        `${lang}_description`,
+                        data[`${lang}_description`]
+                    )
+                })
+                const response = await fetchWithBQ(
+                    {
+                        url: '/product/edit',
+                        method: 'POST',
+                        body: formData,
+                    },
+                    _queryApi,
+                    _extraOptions
+                )
+                if (response.error) throw response.error
+                return response.data
+                    ? { data: response.data }
+                    : { error: response.error }
+            },
+        }),
         createProduct: builder.mutation({
             async queryFn(data, _queryApi, _extraOptions, fetchWithBQ) {
                 console.log(data)
@@ -139,7 +187,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
                     data.isVariants ? data.isVariants : 0
                 )
                 formData.append('isAddons', data.isAddons ? data.isAddons : 0)
-                formData.append('isGroup', 1)
+
                 formData.append('weight', data.weight)
                 data.haveStore === 1 && formData.append('store', data.store_id)
 
@@ -211,4 +259,6 @@ export const {
     useProductStatusMutation,
     useShowProductQuery,
     useProductEditOptionsMutation,
+    useProductEditAddonsMutation,
+    useProductEditGeneralMutation,
 } = productApiSlice

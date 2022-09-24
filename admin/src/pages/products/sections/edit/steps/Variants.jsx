@@ -15,7 +15,6 @@ import VariantList from './variant/variantList/VariantList'
 import {
     useProductEditMutation,
     useProductEditOptionsMutation,
-    useProductOptionsMutation,
 } from '../../../../../store/slices/api/productApiSlice'
 
 const Variants = ({ allImgs, setAllImgs }) => {
@@ -38,71 +37,6 @@ const Variants = ({ allImgs, setAllImgs }) => {
             )
         )
         setVariantId((old) => old + 1)
-    }
-    const general = useSelector(generalInfo)
-    const combinations = useSelector(editVariantsData)
-    const [edit] = useProductEditMutation()
-    const [createOptions] = useProductEditOptionsMutation()
-    const newOptions = useSelector(newEditVariantOptions)
-    const variants = useSelector(editVariantsTypes)
-    const newVariants = useSelector(newCombinationData)
-    const editVariant = async () => {
-        console.log(Object.keys(newOptions))
-        if (Object.keys(newOptions).length > 0) {
-            console.log(123)
-            const temp = {}
-            Object.keys(newOptions).map((option, k) => {
-                temp[k] = {}
-                temp[k].id = variants[Number(option)].id
-                temp[k].values = {}
-                newOptions[option].map((opt, i) => {
-                    temp[k].values[i] = {
-                        Az_name: opt,
-                        En_name: opt,
-                        Ru_name: opt,
-                    }
-                })
-            })
-            console.log(temp)
-            const data = []
-            newVariants.map((newVar) => {
-                let names = []
-                newVar.name.split(',').map((name) => {
-                    names.push(name)
-                })
-                data.push({
-                    options: names,
-
-                    sku: newVar.sku,
-                    barcode: newVar.barcode,
-                    price: newVar.price,
-                    status: newVar.status,
-                    weight: newVar.weight,
-                })
-            })
-            console.log(data)
-            await createOptions({
-                product_id: general.id,
-                options: temp,
-                page: 'options',
-            })
-                .unwrap()
-                .then(async (res) => {
-                    await edit({
-                        product_id: general.id,
-                        data: [...combinations, ...data],
-                        page: 'variants',
-                        images: allImgs,
-                    })
-                })
-        } else {
-            await edit({
-                product_id: general.id,
-                data: [...combinations],
-                page: 'variants',
-                images: allImgs,
-            })
-        }
     }
 
     useEffect(() => {
@@ -159,7 +93,6 @@ const Variants = ({ allImgs, setAllImgs }) => {
                     <h1 className={'text-[#1a242f] text-[24px] py-6 px-12'}>
                         Variant Combination
                     </h1>
-                    <button onClick={editVariant}>save</button>
                 </div>
 
                 <div>

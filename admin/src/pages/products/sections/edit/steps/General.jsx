@@ -404,37 +404,9 @@ const General = ({ file, setFile }) => {
                         type="checkbox"
                         checked={haveVariants}
                         className={'mr-3'}
-                        onChange={(e) => {
-                            setHaveVariants(e.target.checked)
-                            e.target.checked
-                                ? dispatch(addSteps('Variant Info'))
-                                : dispatch(deleteSteps('Variant Info'))
-                            dispatch(
-                                setGeneralData({
-                                    type: 'isVariants',
-                                    value: e.target.checked ? 1 : 0,
-                                })
-                            )
-                        }}
+                        readOnly={true}
                     />
-                    <label
-                        className={'select-none text-[#424b56] text-[20px]'}
-                        onClick={() => {
-                            haveVariants
-                                ? setHaveVariants(false)
-                                : setHaveVariants(true)
-
-                            haveVariants
-                                ? dispatch(deleteSteps('Variant Info'))
-                                : dispatch(addSteps('Variant Info'))
-                            dispatch(
-                                setGeneralData({
-                                    type: 'isVariants',
-                                    value: haveVariants ? 0 : 1,
-                                })
-                            )
-                        }}
-                    >
+                    <label className={'select-none text-[#424b56] text-[20px]'}>
                         This product has multiple options, like different sizes
                         or colors
                     </label>
@@ -456,36 +428,9 @@ const General = ({ file, setFile }) => {
                         type="checkbox"
                         checked={haveAddons}
                         className={'mr-3'}
-                        onChange={(e) => {
-                            setHaveAddons(e.target.checked)
-                            e.target.checked
-                                ? dispatch(addSteps('Add on'))
-                                : dispatch(deleteSteps('Add on'))
-                            dispatch(
-                                setGeneralData({
-                                    type: 'isAddons',
-                                    value: e.target.checked ? 1 : 0,
-                                })
-                            )
-                        }}
+                        readOnly={true}
                     />
-                    <label
-                        className={'select-none text-[#424b56] text-[20px]'}
-                        onClick={() => {
-                            haveAddons
-                                ? setHaveAddons(false)
-                                : setHaveAddons(true)
-                            haveAddons
-                                ? dispatch(deleteSteps('Add on'))
-                                : dispatch(addSteps('Add on'))
-                            dispatch(
-                                setGeneralData({
-                                    type: 'isAddons',
-                                    value: haveAddons ? 0 : 1,
-                                })
-                            )
-                        }}
-                    >
+                    <label className={'select-none text-[#424b56] text-[20px]'}>
                         This product has add ons
                     </label>
                 </div>

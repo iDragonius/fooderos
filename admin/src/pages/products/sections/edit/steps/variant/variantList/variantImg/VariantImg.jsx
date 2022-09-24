@@ -26,7 +26,7 @@ const VariantImg = ({
                 )
             )
             let update = {}
-            update[position] = acceptedFiles.map((file) =>
+            update[id] = acceptedFiles.map((file) =>
                 Object.assign(file, {
                     preview: URL.createObjectURL(file),
                 })
@@ -35,15 +35,16 @@ const VariantImg = ({
         },
     })
     useEffect(() => {
-        if (allImgs[position]) {
-            setFile([allImgs[position]])
+        console.log(id)
+        if (allImgs[id]) {
+            setFile([allImgs[id]])
         }
     }, [])
     const thumbs = file.map((files) => (
         <div key={files.name}>
             <div className={'p-3 border-[1px] rounded-md'}>
                 <img
-                    src={URL.createObjectURL(allImgs[position])}
+                    src={URL.createObjectURL(allImgs[id])}
                     className={'w-[88px] h-[88px]'}
                     onLoad={() => {
                         URL.revokeObjectURL(files.preview)

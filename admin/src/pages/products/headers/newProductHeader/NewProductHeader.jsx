@@ -83,7 +83,6 @@ const NewProductHeader = ({ setActive, active, file, allImgs }) => {
                             }
                         })
                     })
-                    console.log(temp)
                     await optionCreate({
                         product_id: res.product_id,
                         options: temp,
@@ -122,6 +121,7 @@ const NewProductHeader = ({ setActive, active, file, allImgs }) => {
                     console.log(addonsData)
                     await addonCreate({
                         addons: addonsData,
+                        general_limit: 1,
                         product_id: res.product_id,
                     })
                 }

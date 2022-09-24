@@ -29,6 +29,7 @@ const Addon = ({ id }) => {
                 weight,
                 barcode,
                 status,
+                limit: 1,
             })
         )
         // setName(data[id][`${lang}_name`])

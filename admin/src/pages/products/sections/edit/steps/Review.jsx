@@ -44,32 +44,38 @@ const Review = ({ file }) => {
                 <p className={'font-semibold text-[24px] mb-5'}>
                     {general.price}AZN
                 </p>
-                <div className={'mt-8'}>
-                    <p className={'mb-6 text-[16px] font-bold'}>
-                        Choose variant
-                    </p>
-                    {data.map((combination) => (
-                        <div className={'flex text-[16px]'}>
-                            <div className={'mr-10 min-w-[200px]'}>
-                                <input type="checkbox" className={'mr-3'} />
-                                <span>{combination.name}</span>
+                {general.isVariants === 1 && (
+                    <div className={'mt-8'}>
+                        <p className={'mb-6 text-[16px] font-bold'}>
+                            Choose variant
+                        </p>
+                        {data.map((combination) => (
+                            <div className={'flex text-[16px]'}>
+                                <div className={'mr-10 min-w-[200px]'}>
+                                    <input type="checkbox" className={'mr-3'} />
+                                    <span>{combination.name}</span>
+                                </div>
+                                <p>{combination.price} AZN</p>
                             </div>
-                            <p>{combination.price} AZN</p>
-                        </div>
-                    ))}
-                </div>
-                <div className={'mt-8 mb-20'}>
-                    <p className={'mb-6 ext-[16px] font-bold'}>Choose add on</p>
-                    {addons.map((addon) => (
-                        <div className={'flex text-[16px]'}>
-                            <div className={'mr-10 min-w-[200px]'}>
-                                <input type="checkbox" className={'mr-3'} />
-                                <span>{addon[`${lang}_name`]}</span>
+                        ))}
+                    </div>
+                )}
+                {general.isAddons === 1 && (
+                    <div className={'mt-8 mb-20'}>
+                        <p className={'mb-6 ext-[16px] font-bold'}>
+                            Choose add on
+                        </p>
+                        {addons.map((addon) => (
+                            <div className={'flex text-[16px]'}>
+                                <div className={'mr-10 min-w-[200px]'}>
+                                    <input type="checkbox" className={'mr-3'} />
+                                    <span>{addon[`${lang}_name`]}</span>
+                                </div>
+                                <p>{addon.price} AZN</p>
                             </div>
-                            <p>{addon.price} AZN</p>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     )

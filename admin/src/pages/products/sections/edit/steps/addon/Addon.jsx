@@ -8,7 +8,7 @@ import {
     setAllAddonData,
 } from '../../../../../../store/slices/productSlice'
 
-const Addon = ({ id }) => {
+const Addon = ({ id, old }) => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [sku, setSku] = useState('')
@@ -19,22 +19,27 @@ const Addon = ({ id }) => {
     const addons = useSelector(addonData)
     useEffect(() => {
         console.log(id)
-        setName(addons[id].Az_name)
-        setPrice(addons[id].price)
-        setStatus(addons[id].status === 1)
-        setSku(addons[id].sku)
-        setWeight(addons[id].weight)
-        setBarcode(addons[id].barcode)
-        // dispatch(
-        //     setAllAddonData({
-        //         name,
-        //         price,
-        //         sku,
-        //         weight,
-        //         barcode,
-        //         status,
-        //     })
-        // )
+        if (old) {
+            setName(addons[id]?.Az_name)
+            setPrice(addons[id]?.price)
+            setStatus(addons[id]?.status === 1)
+            setSku(addons[id]?.sku)
+            setWeight(addons[id]?.weight)
+            setBarcode(addons[id]?.barcode)
+        } else {
+            dispatch(
+                setAllAddonData({
+                    name,
+                    price,
+                    sku,
+                    weight,
+                    limit: 1,
+                    barcode,
+                    status,
+                    id,
+                })
+            )
+        }
     }, [])
     return (
         <div

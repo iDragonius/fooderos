@@ -8,19 +8,22 @@ const Addons = () => {
     const [id, setId] = useState(0)
     const addons = useSelector(addonData)
     const addAddon = () => {
-        setAddonsList(addonsList.concat(<Addon key={`${id}_azd`} id={id} />))
+        setAddonsList(
+            addonsList.concat(<Addon key={`${id}_azd`} id={id} old={false} />)
+        )
         setId((old) => (old = old + 1))
     }
     useEffect(() => {
         const temp = []
         let tempId = 0
-        addons.map((addon) => {
-            temp.push(<Addon key={`${tempId}_azd`} id={tempId} />)
+        addons.map(() => {
+            temp.push(<Addon key={`${tempId}_azd`} id={tempId} old={true} />)
             tempId++
         })
         setId(tempId)
         setAddonsList(temp)
     }, [])
+
     return (
         <div
             className={'rounded-[6px]  mb-10 pb-1 w-[1500px]    '}

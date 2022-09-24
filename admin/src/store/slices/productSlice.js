@@ -57,6 +57,8 @@ const productSlice = createSlice({
             state.editOptions = {}
             state.editVariants = []
             state.namesLocal = {}
+            state.newEditCombinationData = []
+            state.newEditOptions = {}
         },
         setTemp: (state, action) => {
             const { description, name } = action.payload
@@ -126,10 +128,9 @@ const productSlice = createSlice({
             console.log(action)
         },
         setAllAddonData: (state, action) => {
-            const { name, sku, barcode, price, weight, status, id } =
+            const { name, sku, barcode, price, weight, status, id, limit } =
                 action.payload
             if (state.addonData.at(id) === undefined) {
-                console.log(state.addonData.at(id))
                 state.addonData.push({
                     Az_name: name,
                     Ru_name: name,
@@ -138,7 +139,9 @@ const productSlice = createSlice({
                     barcode,
                     price,
                     weight,
+                    limit,
                     status,
+                    id: null,
                 })
             }
         },
@@ -353,6 +356,23 @@ const productSlice = createSlice({
                 state.variantCombination = [...combine]
             }
         },
+        deleteNewOption: (state, action) => {
+            const { branch, value } = action.payload
+            const index = state.editVariants.findIndex(
+                (data) => data.name === branch
+            )
+            console.log(index)
+            const newData = state.newEditOptions[index].filter(
+                (data) => data !== value
+            )
+
+            const combs = state.newEditCombinationData.filter(
+                (data) => data.name.split(',').indexOf(value) === -1
+            )
+            state.newEditCombinationData = combs
+            state.newEditOptions[index] = newData
+        },
+
         deleteOptions: (state, action) => {
             delete state.variants[action.payload.branch].splice(
                 state.variants[action.payload.branch].indexOf(
@@ -412,6 +432,7 @@ const productSlice = createSlice({
             .addMatcher(
                 apiSlice.endpoints.managers.matchFulfilled,
                 (state, { payload }) => {
+                    state.managers = []
                     payload.map((manager) => {
                         state.managers.push({
                             label: manager.name,
@@ -485,11 +506,13 @@ const productSlice = createSlice({
                         })
                         state.addonData.push({
                             ...tempLang,
+                            id: addon.id,
                             sku: addon.sku,
                             barcode: addon.barcode,
                             weight: addon.weight,
                             price: addon.unit_price,
                             status: addon.status,
+                            limit: addon.addon_limit,
                         })
                     })
                     state.general.manager = payload.manager_id
@@ -554,6 +577,7 @@ export const {
     destroyDataStatus,
     addEditVariantsToOption,
     setNewCombinationData,
+    deleteNewOption,
 } = productSlice.actions
 
 export default productSlice.reducer

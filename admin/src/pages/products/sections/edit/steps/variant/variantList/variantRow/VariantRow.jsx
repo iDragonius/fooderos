@@ -25,12 +25,13 @@ const VariantRow = ({ variants, setAllImgs, allImgs, position, data }) => {
 
     const dispatch = useDispatch()
     useEffect(() => {
-        setPrice(data[position].price)
-        setStatus(data[position].status === 1)
-        setBarcode(data[position].barcode)
-        setSku(data[position].sku)
-        setWeight(data[position].weight)
-    }, [])
+        const temp = data.find((data) => data.name === variants)
+        setPrice(temp.price)
+        setStatus(temp.status === 1)
+        setBarcode(temp.barcode)
+        setSku(temp.sku)
+        setWeight(temp.weight)
+    }, [data])
 
     return (
         <div className={'py-2 border-b-[1px] pl-14 flex items-center'}>
