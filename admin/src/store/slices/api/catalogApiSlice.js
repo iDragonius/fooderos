@@ -9,7 +9,9 @@ export const branchApiSlice = apiSlice.injectEndpoints({
         }),
         catalogs: builder.query({
             query: (params) => ({
-                url: `/catagory/show/${params.lang}/${params.rest}`,
+                url: `/catagory/show/${params.lang}${
+                    params.rest ? '/' + params.rest : ''
+                }`,
             }),
             providesTags: ['Catalog'],
         }),

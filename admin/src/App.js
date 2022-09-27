@@ -38,7 +38,6 @@ import ProductList from './pages/products/sections/list/ProductList'
 import NewProduct from './pages/products/sections/new/NewProduct'
 import ProductEdit from './pages/products/sections/edit/ProductEdit'
 import BranchCatalogs from './pages/branchCatalogs/BranchCatalogs'
-import NewBranchCatalogList from './pages/branchCatalogs/sections/new/NewBranchCatalogList'
 import BranchCatalogList from './pages/branchCatalogs/sections/list/BranchCatalogList'
 import BranchCatalogEdit from './pages/branchCatalogs/sections/edit/BranchCatalogEdit'
 import NewBranchCatalog from './pages/branchCatalogs/sections/new/NewBranchCatalog'
@@ -196,48 +195,18 @@ function App() {
                                 path={'branch-catalogs/'}
                                 element={<BranchCatalogs />}
                             >
-                                <Route path={'restaurants/'}>
-                                    <Route
-                                        path={'list'}
-                                        element={<BranchCatalogList />}
-                                    />
-                                    <Route
-                                        path={'new'}
-                                        element={<NewBranchCatalog />}
-                                    />
-                                    <Route
-                                        path={'edit/:id'}
-                                        element={<BranchCatalogEdit />}
-                                    />
-                                </Route>
-                                <Route path={'grocery/'}>
-                                    <Route
-                                        path={'list'}
-                                        element={<BranchCatalogList />}
-                                    />
-                                    <Route
-                                        path={'new'}
-                                        element={<NewBranchCatalog />}
-                                    />
-                                    <Route
-                                        path={'edit/:id'}
-                                        element={<BranchCatalogEdit />}
-                                    />
-                                </Route>
-                                <Route path={'pastries/'}>
-                                    <Route
-                                        path={'list'}
-                                        element={<BranchCatalogList />}
-                                    />
-                                    <Route
-                                        path={'new'}
-                                        element={<NewBranchCatalog />}
-                                    />
-                                    <Route
-                                        path={'edit/:id'}
-                                        element={<BranchCatalogEdit />}
-                                    />
-                                </Route>
+                                <Route
+                                    path={'list'}
+                                    element={<BranchCatalogList />}
+                                />
+                                <Route
+                                    path={'new'}
+                                    element={<NewBranchCatalog />}
+                                />
+                                <Route
+                                    path={'edit/:id'}
+                                    element={<BranchCatalogEdit />}
+                                />
                             </Route>
                             <Route path={'products/'} element={<Products />}>
                                 <Route path={'restaurants/'}>

@@ -1,14 +1,23 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styles from '../../../tagList/headers/Header.module.scss'
+import { useShowBranchCatalogsQuery } from '../../../../store/slices/api/branchCatalogApiSlice'
 
 const BranchCatalogListHeader = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const changePage = (e) => {
         e.preventDefault()
-        navigate(`/branch-catalogs/${location.pathname.split('/')[2]}/new`)
+        navigate(`/branch-catalogs/new`)
     }
+    const changeEdit = (e) => {
+        e.preventDefault()
+        navigate(`/branch-catalogs/edit/${localStorage.getItem('store_id')}`)
+    }
+    const { data, isSuccess } = useShowBranchCatalogsQuery({
+        lang: localStorage.getItem('lang'),
+        id: localStorage.getItem('store_id'),
+    })
     return (
         <>
             <div className={styles.main}>
@@ -33,16 +42,27 @@ const BranchCatalogListHeader = () => {
                         </svg>
                         <h1 className={styles.section}>Branch Catalog List</h1>
                     </div>
-
-                    <div className={styles.btns}>
-                        <button
-                            className={styles.tag + ' ' + styles.btn}
-                            onClick={changePage}
-                        >
-                            <span>+</span>
-                            New Catalog
-                        </button>
-                    </div>
+                    {isSuccess &&
+                        (data.length > 0 ? (
+                            <div className={styles.btns}>
+                                <button
+                                    className={styles.tag + ' ' + styles.btn}
+                                    onClick={changeEdit}
+                                >
+                                    Edit Catalog
+                                </button>
+                            </div>
+                        ) : (
+                            <div className={styles.btns}>
+                                <button
+                                    className={styles.tag + ' ' + styles.btn}
+                                    onClick={changePage}
+                                >
+                                    <span>+</span>
+                                    New Catalog
+                                </button>
+                            </div>
+                        ))}
                 </div>
             </div>
         </>

@@ -3,7 +3,7 @@ import styles from '../../../tagList/headers/Header.module.scss'
 import arrow from '../../../../assets/img/pages/arrow.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const NewBranchCatalogHeader = () => {
+const BranchCatalogEditHeader = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -19,7 +19,7 @@ const NewBranchCatalogHeader = () => {
                         <h1 className={styles.section}>
                             <img src={arrow} alt="arrow" />
                         </h1>
-                        <h1 className={styles.section}> New Branch Catalog</h1>
+                        <h1 className={styles.section}> Edit Branch Catalog</h1>
                     </div>
                 </div>
             </div>
@@ -27,4 +27,4 @@ const NewBranchCatalogHeader = () => {
     )
 }
 
-export default NewBranchCatalogHeader
+export default BranchCatalogEditHeader

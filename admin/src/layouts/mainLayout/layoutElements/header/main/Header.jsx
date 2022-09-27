@@ -2,7 +2,6 @@ import Status from '../status/Status'
 import Notifications from '../notifications/Notifications'
 import User from '../user/User'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useBranchStoresQuery } from '../../../../../store/slices/api/branchApiSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     allStores,
@@ -67,7 +66,7 @@ const Header = () => {
                                             })
                                         )
                                         setView(false)
-                                        navigate('/branches/list')
+                                        // navigate('/branches/list')
                                     }}
                                 >
                                     {store.name}
