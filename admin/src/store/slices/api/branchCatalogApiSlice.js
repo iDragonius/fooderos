@@ -22,6 +22,13 @@ export const branchCatalogApiSlice = apiSlice.injectEndpoints({
                 url: `/branch/catalogs/show/${params.id}/${params.lang}`,
             }),
         }),
+        branchCatalogStatus: builder.mutation({
+            query: (credentials) => ({
+                url: `/branch/catalogs/status`,
+                method: 'POST',
+                body: { ...credentials },
+            }),
+        }),
     }),
 })
 
@@ -29,4 +36,5 @@ export const {
     useCreateBranchCatalogMutation,
     useShowBranchCatalogsQuery,
     useEditBranchCatalogMutation,
+    useBranchCatalogStatusMutation,
 } = branchCatalogApiSlice

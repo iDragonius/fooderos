@@ -112,19 +112,26 @@ const branchCatalogSlice = createSlice({
                         while (sub) {
                             if (tree) {
                                 for (let k = 0; k < tree.length; k++) {
-                                    tree[k].name = tree[k].catalocales[0]
-                                        ? tree[k].catalocales[0].name
-                                        : 'asd'
+                                    if (tree[k].isActive == 1) {
+                                        tree[k].name = tree[k].catalocales[0]
+                                            ? tree[k].catalocales[0].name
+                                            : 'asd'
+                                    } else {
+                                        console.log(tree[k])
+                                    }
 
                                     for (
                                         let j = 0;
                                         j < tree[k].sub.length;
                                         j++
                                     ) {
-                                        tree[k].sub[j].name = tree[k].sub[j]
-                                            .catalocales[0]
-                                            ? tree[k].sub[j].catalocales[0].name
-                                            : 'asd'
+                                        if (tree[k].sub[j].isActive == 1) {
+                                            tree[k].sub[j].name = tree[k].sub[j]
+                                                .catalocales[0]
+                                                ? tree[k].sub[j].catalocales[0]
+                                                      .name
+                                                : 'asd'
+                                        }
                                     }
                                 }
 

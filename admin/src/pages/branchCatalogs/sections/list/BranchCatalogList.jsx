@@ -31,8 +31,8 @@ import { catalogData } from '../../../../store/slices/catalogSlice'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { currLanguage } from '../../../../store/slices/userInfoSlice'
 import { useCatalogsQuery } from '../../../../store/slices/api/catalogApiSlice'
-import More from '../../../catalogs/sections/list/more/More'
-import Status from '../../../catalogs/sections/list/status/Status'
+import More from './more/More'
+import Status from './status/Status'
 import styles from '../../../store/sections/list/StoreList.module.scss'
 
 const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -290,7 +290,7 @@ const BranchCatalogList = () => {
                                                                             width={
                                                                                 60
                                                                             }
-                                                                            src={`http://192.168.202.52:81/storage/images/${cell.getValue()}`}
+                                                                            src={`http://192.168.202.52:81/storage/catagory/images/${cell.getValue()}`}
                                                                             alt=""
                                                                         />
                                                                     </div>
